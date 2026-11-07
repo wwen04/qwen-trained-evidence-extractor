@@ -13,7 +13,7 @@ from PIL import Image
 
 import hint_experiments as hints
 from evaluate_selector import bootstrap_accuracy, comparison_fingerprint, paired_comparison, summarize
-from project_data import ROOT, digest, file_hash, pixel_hash, read_json, read_jsonl, write_json
+from project_data import ROOT, digest, file_hash, pixel_hash, load_questions, read_json, read_jsonl, write_json
 
 
 def good_judgment():
@@ -110,6 +110,80 @@ class HintExperimentTests(unittest.TestCase):
                 return_value={"selector_checkpoint": "fixture", "gate_mode": "identity"}):
             with self.assertRaisesRegex(ValueError, "active selector"):
                 hints.generate(args)
+
+
+class AI2DFrozenJudgingTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.folder = Path(self.temp.name)
+        self.items = load_questions("ai2d", "test")
+        self.frozen = read_json(ROOT / "manifests/ai2d/test_judge_selection.json")
+        self.expected_ids = {entry["item_id"] for entry in self.frozen["items"]}
+        self.rows = []
+        first_selected = next(item["item_id"] for item in self.items if item["item_id"] in self.expected_ids)
+        first_outside = next(item["item_id"] for item in self.items if item["item_id"] not in self.expected_ids)
+        for item in self.items:
+            public = {**item, "image_path": str(Path(item["image_path"]).relative_to(ROOT))}
+            for tier in (1, 2, 3):
+                failed = item["item_id"] in {first_selected, first_outside} and tier == 1
+                self.rows.append({"item_id": item["item_id"], "tier": tier, "status": "failed" if failed else "ok",
+                                  "hint": None if failed else "Fixture hint; no model was called.",
+                                  "public_inputs": public, "input_sha256": digest(public),
+                                  "image_sha256": file_hash(item["image_path"])})
+        self.run = {"schema": "selector-hints-v1", "status": "complete", "dataset": "ai2d", "split": "test",
+                    "condition": "B", "item_ids": [item["item_id"] for item in self.items]}
+
+    def test_all_conditions_share_existing_30_ids_and_package_only_90_outcomes(self):
+        for condition in ("B", "D", "E"):
+            rows, selection = hints.select_judging_rows({**self.run, "condition": condition}, list(reversed(self.rows)))
+            self.assertEqual(len(rows), 90)
+            self.assertEqual(set(selection["item_ids"]), self.expected_ids)
+            self.assertEqual(sum(row["status"] == "failed" for row in rows), 1)
+        for seed in (42, 99):
+            run_dir, package_dir = self.folder / f"run-{seed}", self.folder / f"package-{seed}"
+            write_json(run_dir / "run.json", self.run)
+            (run_dir / "hints.jsonl").write_text("".join(json.dumps(row) + "\n" for row in self.rows), encoding="utf-8")
+            with redirect_stdout(io.StringIO()):
+                hints.package(argparse.Namespace(run_dir=run_dir, output_dir=package_dir, seed=seed))
+            mapping = read_jsonl(package_dir / "record_map_PRIVATE.jsonl")
+            manifest = read_json(package_dir / "manifest.json")
+            self.assertEqual({row["item_id"] for row in mapping}, self.expected_ids)
+            self.assertEqual(len(mapping), 90)
+            self.assertEqual((manifest["generated_questions"], manifest["generated_hints"]), (100, 300))
+            self.assertEqual((manifest["judging_questions"], manifest["planned_hints"], manifest["judge_cases"]), (30, 90, 89))
+            self.assertEqual(len(list((package_dir / "attachments/cases").glob("*/case.json"))), 89)
+            returned = self.folder / f"returned-{seed}"
+            returned.mkdir()
+            output = self.folder / f"metrics-{seed}.json"
+            with redirect_stdout(io.StringIO()):
+                hints.summarize(argparse.Namespace(package_dir=package_dir, judgments_dir=returned, output=output))
+            report = read_json(output)
+            self.assertEqual(report["generation_failures"], 1)
+            self.assertEqual(report["planned_hints"], 90)
+            self.assertEqual(report["generated_hints"], 300)
+            self.assertEqual(len(report["pending"]), 89)
+
+    def test_incomplete_pilot_and_modified_selected_inputs_are_rejected(self):
+        with self.assertRaisesRegex(ValueError, "all 30"):
+            hints.select_judging_rows({**self.run, "item_ids": self.run["item_ids"][:1]}, self.rows[:3])
+        changed = copy.deepcopy(self.rows)
+        row = next(row for row in changed if row["item_id"] in self.expected_ids)
+        row["public_inputs"]["context"] = "Changed input"
+        row["input_sha256"] = digest(row["public_inputs"])
+        with self.assertRaisesRegex(ValueError, "differs from the frozen"):
+            hints.select_judging_rows(self.run, changed)
+
+    def test_mismatched_parent_manifest_is_rejected(self):
+        actual_read = hints.read_json
+        def read(path):
+            result = actual_read(path)
+            if Path(path).name == "test_judge_selection.json":
+                result["parent_selection_sha256"] = "different"
+            return result
+        with patch.object(hints, "read_json", side_effect=read):
+            with self.assertRaisesRegex(ValueError, "mismatched frozen"):
+                hints.select_judging_rows(self.run, self.rows)
 
 
 class EvaluationTests(unittest.TestCase):

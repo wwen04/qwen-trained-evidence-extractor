@@ -4,6 +4,7 @@ No judge API calls and no training. Gold references are opened only when making
 the private judging package, never during generation.
 """
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import random
@@ -89,6 +90,43 @@ def generate(args):
     write_json(output / "run.json", {**run, "status":"complete", "failures":failures})
 
 
+def legacy_json_digest(value):
+    """Retain the compact JSON fingerprint used by the copied judging manifest."""
+    return hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=False,
+                                    separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def select_judging_rows(run, rows):
+    if run["dataset"] != "ai2d":
+        return rows, {"method": "All generated questions", "item_ids": run["item_ids"], "manifest": None}
+    if run["split"] != "test":
+        raise ValueError("AI2D judging uses only the frozen test selection")
+    relative = "manifests/ai2d/test_judge_selection.json"
+    selection = read_json(ROOT / relative)
+    entries = selection["items"]
+    ids = [entry["item_id"] for entry in entries]
+    parent = read_json(ROOT / "manifests/ai2d/test_selection.json")
+    if (selection.get("dataset_name") != "ai2d" or selection.get("size") != 30
+            or selection.get("tiers") != [1, 2, 3] or len(ids) != 30 or len(set(ids)) != 30
+            or not set(ids) <= {item["item_id"] for item in parent["items"]}
+            or legacy_json_digest(parent) != selection["parent_selection_sha256"]):
+        raise ValueError("Invalid or mismatched frozen AI2D 30-question judging selection")
+    if not set(ids) <= set(run["item_ids"]):
+        raise ValueError("Run does not contain all 30 frozen AI2D judging questions; generate the full 100-question set")
+    expected = {entry["item_id"]: entry["input_sha256"] for entry in entries}
+    selected = [row for row in rows if row["item_id"] in expected]
+    for row in selected:
+        public = row["public_inputs"]
+        snapshot = {key: public[key] for key in ("question", "context", "choices")}
+        snapshot["image_sha256"] = row["image_sha256"]
+        if digest(public) != row["input_sha256"] or legacy_json_digest(snapshot) != expected[row["item_id"]]:
+            raise ValueError("AI2D judging input differs from the frozen selection")
+    order = {key: index for index, key in enumerate(ids)}
+    selected.sort(key=lambda row: (order[row["item_id"]], row["tier"]))
+    return selected, {"method": "Existing frozen 30 AI2D test questions, all three tiers; independent of outcomes",
+                      "manifest": relative, "manifest_sha256": file_hash(ROOT / relative), "item_ids": ids}
+
+
 def package(args):
     run_dir = args.run_dir.resolve()
     run = read_json(run_dir / "run.json")
@@ -102,6 +140,8 @@ def package(args):
     if any(r["status"] not in {"ok", "failed"} or
            (r["status"] == "ok" and (not isinstance(r["hint"], str) or not r["hint"].strip())) for r in rows):
         raise ValueError("Invalid hint status or empty successful hint")
+    generated_hints = len(rows)
+    rows, selection = select_judging_rows(run, rows)
     # Reference material enters only this separate evaluation phase.
     refs = load_references(run["dataset"], run["split"])
     output = args.output_dir.resolve()
@@ -145,13 +185,19 @@ def package(args):
             stream.write(json.dumps(entry)+"\n")
     write_json(output / "manifest.json", {"run_dir":str(run_dir), "run_sha256":file_hash(run_dir / "run.json"),
                "hints_sha256":file_hash(run_dir / "hints.jsonl"), "map_sha256":file_hash(output / "record_map_PRIVATE.jsonl"),
-               "seed":args.seed, "planned_hints":len(rows), "judge_cases":sum(r["status"] == "ok" for r in rows)})
-    print({"attachments_to_share":str(attachments), "planned_hints":len(rows)})
+               "seed":args.seed, "generated_questions":len(run["item_ids"]), "generated_hints":generated_hints,
+               "judging_questions":len(selection["item_ids"]), "selection":selection,
+               "planned_hints":len(rows), "judge_cases":sum(r["status"] == "ok" for r in rows)})
+    print({"attachments_to_share":str(attachments), "generated_hints":generated_hints,
+           "judging_questions":len(selection["item_ids"]), "planned_hints":len(rows)})
 
 
 def summarize(args):
     package_dir = args.package_dir.resolve()
     manifest = read_json(package_dir / "manifest.json")
+    selection = manifest.get("selection", {})
+    if selection.get("manifest") and file_hash(ROOT / selection["manifest"]) != selection["manifest_sha256"]:
+        raise ValueError("Frozen judging selection changed since package creation")
     run_dir = Path(manifest["run_dir"])
     if (file_hash(package_dir / "record_map_PRIVATE.jsonl") != manifest["map_sha256"]
             or file_hash(run_dir / "run.json") != manifest["run_sha256"]
@@ -177,7 +223,9 @@ def summarize(args):
     unexpected = [p.name for p in args.judgments_dir.glob("judgment_*.json") if p.name not in expected_files]
     if unexpected:
         raise ValueError("Judgments do not belong to this package: " + str(unexpected[:5]))
-    report = {"planned_hints":len(mapping), "valid_judgments":len(joined), "pending":missing,
+    report = {"planned_hints":len(mapping), "generated_hints":manifest.get("generated_hints", len(mapping)),
+              "judging_questions":manifest.get("judging_questions", len({row["item_id"] for row in mapping})),
+              "valid_judgments":len(joined), "pending":missing,
               "generation_failures":sum(r["status"] != "ok" for r in mapping),
               "overall":metrics([r["judgment"] for r in joined]),
               "by_tier":{str(t):metrics([r["judgment"] for r in joined if r["tier"] == t]) for t in (1,2,3)},
@@ -205,7 +253,7 @@ def main(argv=None):
     pack = sub.add_parser("package")
     pack.add_argument("--run-dir", type=Path, required=True)
     pack.add_argument("--output-dir", type=Path, required=True)
-    pack.add_argument("--seed", type=int, default=42)
+    pack.add_argument("--seed", type=int, default=42, help="Shuffle case order only; AI2D always uses the existing frozen 30 IDs")
     summary = sub.add_parser("summarize")
     summary.add_argument("--package-dir", type=Path, required=True)
     summary.add_argument("--judgments-dir", type=Path, required=True)

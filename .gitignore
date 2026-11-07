@@ -8,3 +8,6 @@ outputs/
 .env.*
 !.env.example
 /notebook/
+
+# Local documentation
+/docs/

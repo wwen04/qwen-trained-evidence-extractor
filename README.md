@@ -54,9 +54,9 @@ python prepare_selector_data.py
 
 Preparation creates its caches when needed; the old project folder is not required. Hub/AI2D downloads use `data/cache/huggingface` in this folder. The inherited ScienceQA dataset cache uses `%LOCALAPPDATA%/IE4422/datasets` (or `~/.cache/IE4422/datasets`); it may reuse an existing pinned download. After a cache exists, the preparation scripts support `--offline`. `python finalize_data.py --check-only` validates the retained ScienceQA audit without rewriting outputs.
 
-The original audited ScienceQA selection remains **613 train / 219 validation / 173 test**. For model training/evaluation, `prepare_selector_data.py` derives a separate image-disjoint selection: **456 train / 179 validation / 173 test**. Identical decoded RGB images are grouped; test takes priority over validation, then training. Lower-priority members are excluded, never moved. All original records and manifests remain intact. Repeated question templates on different images are reported but retained. Near duplicates are not detected. The derived policy, IDs, exclusion reasons, image fingerprints and gold-letter counts live in `manifests/selector/splits.json`.
+Training and evaluation use the complete original audited ScienceQA selection: **613 train / 219 validation / 173 test**. `prepare_selector_data.py` records these exact IDs and their order in `manifests/selector/splits.json`, together with image fingerprints, gold-letter counts and cross-split image overlaps. All original records are retained; image overlap is reported without additional exclusions. These are the original splits, which can share identical images.
 
-AI2D remains the original frozen 100-question **test-only** sample; it is never used for training or hyperparameter selection. No cross-dataset contamination guarantee is made. The UI offers the full original ScienceQA selection for inspection; CLI training and evaluation use the derived selection.
+AI2D remains the original frozen 100-question **test-only** sample; it is never used for training or hyperparameter selection. No cross-dataset contamination guarantee is made. The UI offers the full original ScienceQA selection for inspection; CLI training and evaluation use the same complete original selection.
 
 ## Browser tutor before and after training
 
@@ -156,6 +156,13 @@ python hint_experiments.py generate --condition B --output-dir outputs/hints/B
 python hint_experiments.py generate --condition D --output-dir outputs/hints/D
 python hint_experiments.py generate --condition E --checkpoint outputs/training/selector-rho03-seed42/best --output-dir outputs/hints/E
 python hint_experiments.py package --run-dir outputs/hints/E --output-dir outputs/judging/E
+```
+
+ScienceQA packages include all generated questions from the chosen validation/test split (219 validation questions produce 657 planned hints per condition). AI2D generation defaults to **all 100 test questions / 300 hints per condition**. Its package automatically selects the **same existing 30 questions / 90 planned hints per condition** from `manifests/ai2d/test_judge_selection.json` across B/D/E. The package seed changes only case order. Selected failures stay in the 90-outcome denominator and are never replaced. A pilot missing any of the fixed 30 IDs cannot produce the main AI2D package.
+
+```powershell
+python hint_experiments.py generate --dataset ai2d --split test --condition E --checkpoint outputs/training/selector-rho03-seed42/best --output-dir outputs/hints/ai2d/E
+python hint_experiments.py package --run-dir outputs/hints/ai2d/E --output-dir outputs/judging/ai2d/E
 ```
 
 Share only `outputs/judging/E/attachments` with the judge. Keep the private record map outside its input. The same seven-field Part A rubric is used; package files include the image, question, choices, tier, hint and reference answer. No judge is called automatically. Save returned files as `judgment_r_000001.json`, etc., then:

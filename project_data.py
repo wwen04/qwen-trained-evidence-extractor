@@ -63,14 +63,12 @@ def load_questions(dataset="scienceqa", split="validation", *, root=ROOT, clean=
         raise ValueError("Question exports differ from their original audit manifest")
     if dataset == "scienceqa" and clean:
         selection = read_json(root / "manifests/selector/splits.json")
+        if (selection.get("selection_policy") != "original-audited-splits-v1"
+                or selection["ids"][split] != [r["item_id"] for r in rows]):
+            raise ValueError("Selector audit must retain the original split IDs; rerun prepare_selector_data.py")
         for rel, expected in selection["source_files"].items():
             if file_hash(root / rel) != expected:
                 raise ValueError("Selector split provenance changed; rerun prepare_selector_data.py")
-        ids = selection["ids"][split]
-        wanted = set(ids)
-        rows = [r for r in rows if r["item_id"] in wanted]
-        if [r["item_id"] for r in rows] != ids:
-            raise ValueError("Derived split IDs differ from public questions")
     result = []
     for row in rows:
         image = (root / row["image_path"]).resolve()

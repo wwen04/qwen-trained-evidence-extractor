@@ -1,36 +1,48 @@
 {
-  "schema": "selector-splits-v1",
-  "policy": "Identical RGB image groups; test > validation > train. Exclude lower-priority members; never reassign original splits. Repeated question templates with different diagrams are reported but retained.",
+  "schema": "selector-splits-v2",
+  "selection_policy": "original-audited-splits-v1",
+  "policy": "Retain all original finalized ScienceQA train/validation/test IDs and their order. Identical-image overlaps are reported without exclusions or reassignment.",
   "source_files": {
     "data/final/scienceqa/questions/train.jsonl": "b9bc1ce0187da5da3d8a000b6ea1ded03b3a066e60ba8961565f8fefe4a3b52f",
     "data/final/scienceqa/references/train.jsonl": "b0b6b9166390b02617d64b5579da4e15a65ca46c16f983a1632c54b8448b27f0",
+    "manifests/scienceqa/train_final_ids.json": "3bcd42a022092b6eb5307c9f28797a4215b57e446d22d4c223d11cb33a3addbd",
     "data/final/scienceqa/questions/validation.jsonl": "c4f9f7304327add87c1f460c5b84c6bde1f9c12601f4aa0b60305c3fd77bf8a3",
     "data/final/scienceqa/references/validation.jsonl": "a9468accacef1865f23e776293d2ed94e97fa777a3473cb27fdeddad1dcee4a3",
+    "manifests/scienceqa/validation_final_ids.json": "c455d9594fa3f21f0d2f9db95c47138bed6fc54b8a62d5586e7ffc93210faf98",
     "data/final/scienceqa/questions/test.jsonl": "7c503693086150b717d3025e36b68c09ab966919ab30f8ffbe4e05e4d5020365",
-    "data/final/scienceqa/references/test.jsonl": "32500594b10d6afadcde2a73ef15bc5a211d9f02e89839a1ef87c575e38bfd57"
+    "data/final/scienceqa/references/test.jsonl": "32500594b10d6afadcde2a73ef15bc5a211d9f02e89839a1ef87c575e38bfd57",
+    "manifests/scienceqa/test_final_ids.json": "31b588d762a23172bc3a5cd3e1e4db0ae1ef8ec4c038944c88c49fb3cd1e80bb"
   },
   "ids": {
     "train": [
       "train_000006",
       "train_000007",
       "train_000010",
+      "train_000021",
+      "train_000032",
       "train_000057",
       "train_000077",
       "train_000093",
       "train_000095",
       "train_000103",
+      "train_000124",
       "train_000134",
+      "train_000135",
       "train_000136",
       "train_000138",
+      "train_000158",
       "train_000164",
       "train_000166",
       "train_000219",
       "train_000237",
+      "train_000277",
       "train_000296",
       "train_000297",
       "train_000312",
+      "train_000315",
       "train_000335",
       "train_000357",
+      "train_000382",
       "train_000388",
       "train_000392",
       "train_000410",
@@ -40,15 +52,19 @@
       "train_000453",
       "train_000485",
       "train_000513",
+      "train_000566",
       "train_000569",
+      "train_000580",
       "train_000606",
       "train_000661",
       "train_000664",
       "train_000684",
       "train_000691",
       "train_000724",
+      "train_000739",
       "train_000750",
       "train_000751",
+      "train_000765",
       "train_000777",
       "train_000793",
       "train_000795",
@@ -56,6 +72,7 @@
       "train_000825",
       "train_000849",
       "train_000864",
+      "train_000867",
       "train_000887",
       "train_000889",
       "train_000899",
@@ -70,13 +87,18 @@
       "train_001168",
       "train_001174",
       "train_001189",
+      "train_001197",
       "train_001263",
       "train_001271",
+      "train_001301",
       "train_001335",
       "train_001370",
       "train_001380",
       "train_001411",
+      "train_001413",
       "train_001439",
+      "train_001446",
+      "train_001457",
       "train_001476",
       "train_001484",
       "train_001508",
@@ -85,6 +107,8 @@
       "train_001514",
       "train_001549",
       "train_001566",
+      "train_001568",
+      "train_001575",
       "train_001583",
       "train_001585",
       "train_001626",
@@ -95,35 +119,57 @@
       "train_001695",
       "train_001728",
       "train_001740",
+      "train_001748",
       "train_001773",
+      "train_001781",
       "train_001782",
       "train_001791",
       "train_001795",
       "train_001800",
+      "train_001809",
+      "train_001817",
       "train_001842",
       "train_001873",
       "train_001887",
+      "train_001898",
       "train_001924",
       "train_001943",
       "train_001954",
+      "train_001964",
+      "train_002001",
       "train_002014",
+      "train_002069",
       "train_002074",
+      "train_002101",
       "train_002144",
       "train_002150",
+      "train_002163",
       "train_002214",
       "train_002231",
       "train_002236",
       "train_002258",
+      "train_002324",
+      "train_002379",
       "train_002394",
+      "train_002408",
       "train_002426",
+      "train_002480",
       "train_002482",
+      "train_002484",
+      "train_002512",
       "train_002526",
+      "train_002537",
       "train_002579",
       "train_002610",
+      "train_002625",
       "train_002629",
       "train_002630",
+      "train_002659",
       "train_002664",
+      "train_002673",
+      "train_002682",
       "train_002695",
+      "train_002772",
       "train_002788",
       "train_002825",
       "train_002880",
@@ -131,28 +177,34 @@
       "train_002895",
       "train_002940",
       "train_002951",
+      "train_002954",
       "train_002973",
       "train_003000",
+      "train_003005",
       "train_003042",
       "train_003066",
       "train_003073",
+      "train_003076",
       "train_003090",
       "train_003105",
       "train_003122",
       "train_003136",
       "train_003141",
+      "train_003172",
       "train_003194",
       "train_003213",
       "train_003253",
       "train_003265",
       "train_003295",
       "train_003356",
+      "train_003395",
       "train_003409",
       "train_003416",
       "train_003445",
       "train_003452",
       "train_003482",
       "train_003492",
+      "train_003510",
       "train_003550",
       "train_003590",
       "train_003599",
@@ -161,7 +213,9 @@
       "train_003653",
       "train_003667",
       "train_003672",
+      "train_003682",
       "train_003699",
+      "train_003703",
       "train_003716",
       "train_003723",
       "train_003741",
@@ -174,12 +228,14 @@
       "train_003963",
       "train_003986",
       "train_003994",
+      "train_004015",
       "train_004017",
       "train_004031",
       "train_004053",
       "train_004098",
       "train_004126",
       "train_004134",
+      "train_004139",
       "train_004148",
       "train_004158",
       "train_004160",
@@ -197,11 +253,14 @@
       "train_004426",
       "train_004493",
       "train_004494",
+      "train_004535",
+      "train_004539",
       "train_004556",
       "train_004562",
       "train_004581",
       "train_004609",
       "train_004615",
+      "train_004636",
       "train_004649",
       "train_004662",
       "train_004688",
@@ -212,33 +271,51 @@
       "train_004826",
       "train_004831",
       "train_004870",
+      "train_004887",
       "train_004973",
+      "train_004977",
       "train_005036",
+      "train_005049",
+      "train_005060",
       "train_005094",
+      "train_005129",
+      "train_005150",
       "train_005207",
+      "train_005208",
       "train_005230",
       "train_005234",
       "train_005251",
       "train_005268",
+      "train_005270",
       "train_005277",
       "train_005296",
       "train_005329",
       "train_005457",
+      "train_005508",
+      "train_005523",
+      "train_005533",
       "train_005560",
       "train_005563",
       "train_005582",
       "train_005583",
       "train_005604",
+      "train_005607",
       "train_005619",
       "train_005626",
       "train_005643",
+      "train_005680",
       "train_005696",
       "train_005709",
       "train_005726",
+      "train_005743",
       "train_005751",
       "train_005791",
+      "train_005822",
       "train_005840",
       "train_005841",
+      "train_005846",
+      "train_005874",
+      "train_005894",
       "train_005945",
       "train_005975",
       "train_006075",
@@ -247,25 +324,40 @@
       "train_006203",
       "train_006225",
       "train_006231",
+      "train_006251",
       "train_006258",
       "train_006269",
+      "train_006291",
       "train_006355",
       "train_006364",
       "train_006368",
+      "train_006457",
       "train_006463",
       "train_006490",
+      "train_006505",
+      "train_006576",
+      "train_006603",
       "train_006604",
       "train_006611",
       "train_006642",
       "train_006660",
+      "train_006665",
+      "train_006685",
       "train_006708",
+      "train_006751",
+      "train_006781",
       "train_006843",
       "train_006853",
       "train_006864",
+      "train_006907",
       "train_006952",
+      "train_006990",
+      "train_007000",
       "train_007005",
       "train_007007",
+      "train_007034",
       "train_007039",
+      "train_007065",
       "train_007096",
       "train_007141",
       "train_007169",
@@ -273,72 +365,102 @@
       "train_007330",
       "train_007347",
       "train_007379",
+      "train_007380",
       "train_007381",
+      "train_007389",
+      "train_007404",
       "train_007409",
       "train_007423",
       "train_007441",
+      "train_007458",
       "train_007464",
       "train_007484",
+      "train_007491",
+      "train_007500",
       "train_007522",
       "train_007526",
       "train_007530",
       "train_007534",
       "train_007624",
       "train_007626",
+      "train_007637",
       "train_007666",
       "train_007684",
+      "train_007713",
       "train_007732",
+      "train_007737",
       "train_007752",
+      "train_007761",
       "train_007777",
+      "train_007781",
       "train_007819",
       "train_007845",
       "train_007860",
       "train_007872",
       "train_007882",
       "train_007898",
+      "train_007947",
       "train_007986",
       "train_007988",
       "train_008031",
       "train_008049",
+      "train_008058",
       "train_008101",
+      "train_008115",
       "train_008117",
       "train_008187",
+      "train_008188",
       "train_008189",
       "train_008222",
       "train_008231",
+      "train_008275",
       "train_008277",
       "train_008290",
+      "train_008339",
       "train_008445",
       "train_008454",
       "train_008463",
+      "train_008475",
       "train_008496",
       "train_008497",
+      "train_008499",
       "train_008519",
+      "train_008529",
+      "train_008554",
       "train_008558",
       "train_008627",
       "train_008630",
+      "train_008668",
       "train_008693",
       "train_008727",
       "train_008739",
       "train_008743",
+      "train_008766",
       "train_008775",
       "train_008777",
       "train_008783",
       "train_008785",
+      "train_008803",
       "train_008809",
       "train_008817",
       "train_008818",
       "train_008821",
       "train_008829",
       "train_008838",
+      "train_008847",
       "train_008866",
       "train_008870",
+      "train_008910",
       "train_008940",
+      "train_008981",
       "train_009000",
       "train_009006",
+      "train_009007",
       "train_009016",
       "train_009017",
       "train_009037",
+      "train_009042",
+      "train_009049",
       "train_009098",
       "train_009106",
       "train_009154",
@@ -350,14 +472,18 @@
       "train_009296",
       "train_009333",
       "train_009341",
+      "train_009343",
       "train_009344",
       "train_009429",
       "train_009470",
       "train_009485",
       "train_009496",
       "train_009516",
+      "train_009560",
       "train_009574",
       "train_009585",
+      "train_009600",
+      "train_009621",
       "train_009630",
       "train_009636",
       "train_009694",
@@ -366,6 +492,7 @@
       "train_009717",
       "train_009761",
       "train_009770",
+      "train_009774",
       "train_009791",
       "train_009800",
       "train_009856",
@@ -375,38 +502,54 @@
       "train_009977",
       "train_010000",
       "train_010017",
+      "train_010032",
+      "train_010064",
       "train_010147",
       "train_010154",
+      "train_010170",
       "train_010193",
       "train_010245",
       "train_010265",
       "train_010278",
+      "train_010297",
       "train_010312",
       "train_010314",
       "train_010325",
       "train_010340",
       "train_010355",
       "train_010390",
+      "train_010410",
       "train_010423",
       "train_010469",
+      "train_010488",
       "train_010556",
       "train_010602",
       "train_010617",
       "train_010713",
+      "train_010720",
+      "train_010800",
       "train_010808",
+      "train_010831",
       "train_010836",
       "train_010843",
       "train_010878",
+      "train_010886",
       "train_010922",
       "train_010941",
       "train_010958",
       "train_010969",
       "train_010989",
+      "train_011013",
       "train_011018",
       "train_011035",
+      "train_011045",
+      "train_011050",
+      "train_011069",
       "train_011087",
       "train_011125",
+      "train_011139",
       "train_011216",
+      "train_011218",
       "train_011259",
       "train_011262",
       "train_011266",
@@ -414,11 +557,13 @@
       "train_011326",
       "train_011335",
       "train_011337",
+      "train_011345",
       "train_011381",
       "train_011475",
       "train_011500",
       "train_011507",
       "train_011519",
+      "train_011580",
       "train_011643",
       "train_011644",
       "train_011668",
@@ -429,18 +574,25 @@
       "train_011757",
       "train_011763",
       "train_011767",
+      "train_011769",
       "train_011787",
+      "train_011788",
       "train_011805",
+      "train_011825",
       "train_011826",
       "train_011830",
+      "train_011891",
       "train_011911",
+      "train_011961",
       "train_011962",
       "train_012013",
       "train_012024",
       "train_012026",
       "train_012041",
       "train_012043",
+      "train_012071",
       "train_012072",
+      "train_012092",
       "train_012146",
       "train_012163",
       "train_012165",
@@ -448,6 +600,8 @@
       "train_012202",
       "train_012219",
       "train_012234",
+      "train_012239",
+      "train_012244",
       "train_012272",
       "train_012289",
       "train_012311",
@@ -456,20 +610,30 @@
       "train_012421",
       "train_012430",
       "train_012442",
+      "train_012444",
+      "train_012475",
       "train_012486",
       "train_012489",
       "train_012514",
+      "train_012520",
       "train_012524",
       "train_012531",
       "train_012556",
+      "train_012579",
       "train_012598",
       "train_012602",
+      "train_012620",
+      "train_012624",
       "train_012689",
+      "train_012704",
       "train_012707",
       "train_012712"
     ],
     "validation": [
+      "validation_000008",
       "validation_000029",
+      "validation_000085",
+      "validation_000100",
       "validation_000106",
       "validation_000112",
       "validation_000146",
@@ -482,12 +646,17 @@
       "validation_000321",
       "validation_000332",
       "validation_000357",
+      "validation_000360",
+      "validation_000384",
       "validation_000391",
       "validation_000395",
       "validation_000403",
       "validation_000454",
       "validation_000479",
       "validation_000532",
+      "validation_000555",
+      "validation_000585",
+      "validation_000621",
       "validation_000622",
       "validation_000652",
       "validation_000659",
@@ -506,44 +675,62 @@
       "validation_000959",
       "validation_000960",
       "validation_001021",
+      "validation_001028",
+      "validation_001069",
+      "validation_001073",
       "validation_001084",
       "validation_001094",
       "validation_001112",
+      "validation_001128",
       "validation_001130",
       "validation_001133",
       "validation_001158",
+      "validation_001177",
       "validation_001181",
+      "validation_001182",
       "validation_001231",
       "validation_001237",
       "validation_001255",
       "validation_001277",
       "validation_001294",
+      "validation_001305",
       "validation_001320",
       "validation_001338",
+      "validation_001398",
       "validation_001423",
       "validation_001472",
+      "validation_001487",
+      "validation_001497",
       "validation_001545",
       "validation_001563",
+      "validation_001602",
       "validation_001607",
       "validation_001664",
       "validation_001705",
       "validation_001729",
       "validation_001730",
+      "validation_001733",
       "validation_001748",
       "validation_001780",
+      "validation_001817",
       "validation_001845",
+      "validation_001854",
       "validation_001872",
       "validation_001907",
       "validation_001935",
       "validation_001957",
       "validation_001972",
       "validation_001979",
+      "validation_002001",
       "validation_002038",
+      "validation_002044",
       "validation_002113",
       "validation_002149",
       "validation_002161",
+      "validation_002180",
       "validation_002184",
       "validation_002188",
+      "validation_002200",
       "validation_002238",
       "validation_002264",
       "validation_002299",
@@ -554,16 +741,20 @@
       "validation_002362",
       "validation_002365",
       "validation_002373",
+      "validation_002381",
       "validation_002453",
       "validation_002462",
       "validation_002470",
+      "validation_002477",
       "validation_002482",
       "validation_002491",
       "validation_002497",
       "validation_002515",
       "validation_002523",
+      "validation_002527",
       "validation_002536",
       "validation_002563",
+      "validation_002568",
       "validation_002622",
       "validation_002624",
       "validation_002637",
@@ -575,7 +766,9 @@
       "validation_002777",
       "validation_002795",
       "validation_002814",
+      "validation_002829",
       "validation_002834",
+      "validation_002845",
       "validation_002919",
       "validation_002925",
       "validation_002935",
@@ -603,30 +796,36 @@
       "validation_003267",
       "validation_003268",
       "validation_003276",
+      "validation_003289",
       "validation_003311",
       "validation_003372",
       "validation_003392",
       "validation_003396",
+      "validation_003429",
       "validation_003444",
       "validation_003452",
       "validation_003458",
       "validation_003508",
       "validation_003518",
+      "validation_003521",
       "validation_003567",
       "validation_003568",
       "validation_003587",
       "validation_003593",
       "validation_003615",
+      "validation_003643",
       "validation_003664",
       "validation_003665",
       "validation_003669",
       "validation_003698",
+      "validation_003744",
       "validation_003762",
       "validation_003828",
       "validation_003832",
       "validation_003848",
       "validation_003852",
       "validation_003854",
+      "validation_003884",
       "validation_003895",
       "validation_003913",
       "validation_003939",
@@ -635,6 +834,7 @@
       "validation_003986",
       "validation_004001",
       "validation_004004",
+      "validation_004022",
       "validation_004027",
       "validation_004053",
       "validation_004106",
@@ -647,7 +847,8 @@
       "validation_004185",
       "validation_004193",
       "validation_004212",
-      "validation_004225"
+      "validation_004225",
+      "validation_004228"
     ],
     "test": [
       "test_000009",
@@ -826,1194 +1027,11 @@
     ]
   },
   "counts": {
-    "train": 456,
-    "validation": 179,
+    "train": 613,
+    "validation": 219,
     "test": 173
   },
-  "excluded": [
-    {
-      "item_id": "train_000021",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000021"
-    },
-    {
-      "item_id": "train_000032",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000032"
-    },
-    {
-      "item_id": "train_000124",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000124"
-    },
-    {
-      "item_id": "train_000135",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000135"
-    },
-    {
-      "item_id": "train_000158",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000158"
-    },
-    {
-      "item_id": "train_000277",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000277"
-    },
-    {
-      "item_id": "train_000315",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000315"
-    },
-    {
-      "item_id": "train_000382",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000382"
-    },
-    {
-      "item_id": "train_000566",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000566"
-    },
-    {
-      "item_id": "train_000580",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_000739",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000739"
-    },
-    {
-      "item_id": "train_000765",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000765"
-    },
-    {
-      "item_id": "train_000867",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000867"
-    },
-    {
-      "item_id": "train_001197",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001197"
-    },
-    {
-      "item_id": "train_001301",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001301"
-    },
-    {
-      "item_id": "train_001413",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000765"
-    },
-    {
-      "item_id": "train_001446",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000765"
-    },
-    {
-      "item_id": "train_001457",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001457"
-    },
-    {
-      "item_id": "train_001568",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001568"
-    },
-    {
-      "item_id": "train_001575",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "train_001748",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001748"
-    },
-    {
-      "item_id": "train_001781",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001781"
-    },
-    {
-      "item_id": "train_001809",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001809"
-    },
-    {
-      "item_id": "train_001817",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001817"
-    },
-    {
-      "item_id": "train_001898",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "train_001964",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000124"
-    },
-    {
-      "item_id": "train_002001",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000315"
-    },
-    {
-      "item_id": "train_002069",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "train_002101",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002101"
-    },
-    {
-      "item_id": "train_002163",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002163"
-    },
-    {
-      "item_id": "train_002324",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002324"
-    },
-    {
-      "item_id": "train_002379",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002379"
-    },
-    {
-      "item_id": "train_002408",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002408"
-    },
-    {
-      "item_id": "train_002480",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002480"
-    },
-    {
-      "item_id": "train_002484",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000566"
-    },
-    {
-      "item_id": "train_002512",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "train_002537",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002537"
-    },
-    {
-      "item_id": "train_002625",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002625"
-    },
-    {
-      "item_id": "train_002659",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002659"
-    },
-    {
-      "item_id": "train_002673",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002673"
-    },
-    {
-      "item_id": "train_002682",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002682"
-    },
-    {
-      "item_id": "train_002772",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002772"
-    },
-    {
-      "item_id": "train_002954",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002954"
-    },
-    {
-      "item_id": "train_003005",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_003076",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000382"
-    },
-    {
-      "item_id": "train_003172",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_003172"
-    },
-    {
-      "item_id": "train_003395",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_003395"
-    },
-    {
-      "item_id": "train_003510",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_003510"
-    },
-    {
-      "item_id": "train_003682",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_003172"
-    },
-    {
-      "item_id": "train_003703",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000315"
-    },
-    {
-      "item_id": "train_004015",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001197"
-    },
-    {
-      "item_id": "train_004139",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002673"
-    },
-    {
-      "item_id": "train_004535",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002163"
-    },
-    {
-      "item_id": "train_004539",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002101"
-    },
-    {
-      "item_id": "train_004636",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001568"
-    },
-    {
-      "item_id": "train_004887",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000315"
-    },
-    {
-      "item_id": "train_004977",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001809"
-    },
-    {
-      "item_id": "train_005049",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005049"
-    },
-    {
-      "item_id": "train_005060",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001197"
-    },
-    {
-      "item_id": "train_005129",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005129"
-    },
-    {
-      "item_id": "train_005150",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_005208",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001568"
-    },
-    {
-      "item_id": "train_005270",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002772"
-    },
-    {
-      "item_id": "train_005508",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002625"
-    },
-    {
-      "item_id": "train_005523",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005523"
-    },
-    {
-      "item_id": "train_005533",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000032"
-    },
-    {
-      "item_id": "train_005607",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005607"
-    },
-    {
-      "item_id": "train_005680",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005680"
-    },
-    {
-      "item_id": "train_005743",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_005822",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001817"
-    },
-    {
-      "item_id": "train_005846",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002379"
-    },
-    {
-      "item_id": "train_005874",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000739"
-    },
-    {
-      "item_id": "train_005894",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_006251",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000315"
-    },
-    {
-      "item_id": "train_006291",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005607"
-    },
-    {
-      "item_id": "train_006457",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000277"
-    },
-    {
-      "item_id": "train_006505",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_006576",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_006603",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001748"
-    },
-    {
-      "item_id": "train_006665",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001197"
-    },
-    {
-      "item_id": "train_006685",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_006685"
-    },
-    {
-      "item_id": "train_006751",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002625"
-    },
-    {
-      "item_id": "train_006781",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002163"
-    },
-    {
-      "item_id": "train_006907",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002379"
-    },
-    {
-      "item_id": "train_006990",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000765"
-    },
-    {
-      "item_id": "train_007000",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002673"
-    },
-    {
-      "item_id": "train_007034",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_007065",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000867"
-    },
-    {
-      "item_id": "train_007380",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001568"
-    },
-    {
-      "item_id": "train_007389",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_007389"
-    },
-    {
-      "item_id": "train_007404",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005680"
-    },
-    {
-      "item_id": "train_007458",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000382"
-    },
-    {
-      "item_id": "train_007491",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002324"
-    },
-    {
-      "item_id": "train_007500",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "train_007637",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005049"
-    },
-    {
-      "item_id": "train_007713",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_007713"
-    },
-    {
-      "item_id": "train_007737",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_007761",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_003395"
-    },
-    {
-      "item_id": "train_007781",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002772"
-    },
-    {
-      "item_id": "train_007947",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001817"
-    },
-    {
-      "item_id": "train_008058",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002537"
-    },
-    {
-      "item_id": "train_008115",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008115"
-    },
-    {
-      "item_id": "train_008188",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008188"
-    },
-    {
-      "item_id": "train_008275",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008275"
-    },
-    {
-      "item_id": "train_008339",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008339"
-    },
-    {
-      "item_id": "train_008475",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008475"
-    },
-    {
-      "item_id": "train_008499",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008499"
-    },
-    {
-      "item_id": "train_008529",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008529"
-    },
-    {
-      "item_id": "train_008554",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001568"
-    },
-    {
-      "item_id": "train_008668",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_008766",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001817"
-    },
-    {
-      "item_id": "train_008803",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008803"
-    },
-    {
-      "item_id": "train_008847",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001781"
-    },
-    {
-      "item_id": "train_008910",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001568"
-    },
-    {
-      "item_id": "train_008981",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_003510"
-    },
-    {
-      "item_id": "train_009007",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002772"
-    },
-    {
-      "item_id": "train_009042",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000124"
-    },
-    {
-      "item_id": "train_009049",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001817"
-    },
-    {
-      "item_id": "train_009343",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001457"
-    },
-    {
-      "item_id": "train_009560",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002772"
-    },
-    {
-      "item_id": "train_009600",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_009600"
-    },
-    {
-      "item_id": "train_009621",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002954"
-    },
-    {
-      "item_id": "train_009774",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_003172"
-    },
-    {
-      "item_id": "train_010032",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_010032"
-    },
-    {
-      "item_id": "train_010064",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001748"
-    },
-    {
-      "item_id": "train_010170",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "train_010297",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008475"
-    },
-    {
-      "item_id": "train_010410",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_010488",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005680"
-    },
-    {
-      "item_id": "train_010720",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "train_010800",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000765"
-    },
-    {
-      "item_id": "train_010831",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_010831"
-    },
-    {
-      "item_id": "train_010886",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001781"
-    },
-    {
-      "item_id": "train_011013",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001457"
-    },
-    {
-      "item_id": "train_011045",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002324"
-    },
-    {
-      "item_id": "train_011050",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "train_011069",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002682"
-    },
-    {
-      "item_id": "train_011139",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000315"
-    },
-    {
-      "item_id": "train_011218",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005680"
-    },
-    {
-      "item_id": "train_011345",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005680"
-    },
-    {
-      "item_id": "train_011580",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008115"
-    },
-    {
-      "item_id": "train_011769",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000315"
-    },
-    {
-      "item_id": "train_011788",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008115"
-    },
-    {
-      "item_id": "train_011825",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_011825"
-    },
-    {
-      "item_id": "train_011891",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "train_011961",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008115"
-    },
-    {
-      "item_id": "train_012071",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "train_012092",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000315"
-    },
-    {
-      "item_id": "train_012239",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005607"
-    },
-    {
-      "item_id": "train_012244",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001568"
-    },
-    {
-      "item_id": "train_012444",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001817"
-    },
-    {
-      "item_id": "train_012475",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008115"
-    },
-    {
-      "item_id": "train_012520",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_012520"
-    },
-    {
-      "item_id": "train_012579",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_012579"
-    },
-    {
-      "item_id": "train_012620",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001817"
-    },
-    {
-      "item_id": "train_012624",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000277"
-    },
-    {
-      "item_id": "train_012704",
-      "split": "train",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001457"
-    },
-    {
-      "item_id": "validation_000008",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001781"
-    },
-    {
-      "item_id": "validation_000085",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_007713"
-    },
-    {
-      "item_id": "validation_000100",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001568"
-    },
-    {
-      "item_id": "validation_000360",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000032"
-    },
-    {
-      "item_id": "validation_000384",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000382"
-    },
-    {
-      "item_id": "validation_000555",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "validation_000585",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005680"
-    },
-    {
-      "item_id": "validation_000621",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001197"
-    },
-    {
-      "item_id": "validation_001028",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "validation_001069",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000135"
-    },
-    {
-      "item_id": "validation_001073",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "validation_001128",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005680"
-    },
-    {
-      "item_id": "validation_001177",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002408"
-    },
-    {
-      "item_id": "validation_001182",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005129"
-    },
-    {
-      "item_id": "validation_001305",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002659"
-    },
-    {
-      "item_id": "validation_001398",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005129"
-    },
-    {
-      "item_id": "validation_001487",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "validation_001497",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001197"
-    },
-    {
-      "item_id": "validation_001602",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000315"
-    },
-    {
-      "item_id": "validation_001733",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005049"
-    },
-    {
-      "item_id": "validation_001817",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002408"
-    },
-    {
-      "item_id": "validation_001854",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002379"
-    },
-    {
-      "item_id": "validation_002001",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002659"
-    },
-    {
-      "item_id": "validation_002044",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "validation_002180",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001748"
-    },
-    {
-      "item_id": "validation_002200",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000135"
-    },
-    {
-      "item_id": "validation_002381",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "validation_002477",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    },
-    {
-      "item_id": "validation_002527",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005129"
-    },
-    {
-      "item_id": "validation_002568",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_008275"
-    },
-    {
-      "item_id": "validation_002829",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001197"
-    },
-    {
-      "item_id": "validation_002845",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_012579"
-    },
-    {
-      "item_id": "validation_003289",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001748"
-    },
-    {
-      "item_id": "validation_003429",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000382"
-    },
-    {
-      "item_id": "validation_003521",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000765"
-    },
-    {
-      "item_id": "validation_003643",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005607"
-    },
-    {
-      "item_id": "validation_003744",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_005049"
-    },
-    {
-      "item_id": "validation_003884",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_000580"
-    },
-    {
-      "item_id": "validation_004022",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_002324"
-    },
-    {
-      "item_id": "validation_004228",
-      "split": "validation",
-      "reason": "Shares identical RGB pixels with a higher-priority held-out split",
-      "group": "train_001575"
-    }
-  ],
+  "excluded": [],
   "groups": {
     "train_000006": [
       "train_000006"
@@ -4537,6 +3555,853 @@
       "test_004183"
     ]
   },
+  "cross_split_image_groups": [
+    {
+      "group": "train_000021",
+      "item_ids": [
+        "train_000021",
+        "test_002818"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_000032",
+      "item_ids": [
+        "train_000032",
+        "train_005533",
+        "validation_000360",
+        "test_002929"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_000124",
+      "item_ids": [
+        "train_000124",
+        "train_001964",
+        "train_009042",
+        "validation_001338"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_000135",
+      "item_ids": [
+        "train_000135",
+        "validation_001069",
+        "validation_002200",
+        "test_003321"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_000158",
+      "item_ids": [
+        "train_000158",
+        "test_004028"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_000277",
+      "item_ids": [
+        "train_000277",
+        "train_006457",
+        "train_012624",
+        "validation_001237"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_000315",
+      "item_ids": [
+        "train_000315",
+        "train_002001",
+        "train_003703",
+        "train_004887",
+        "train_006251",
+        "train_011139",
+        "train_011769",
+        "train_012092",
+        "validation_001602",
+        "test_000594",
+        "test_001341",
+        "test_003003"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_000382",
+      "item_ids": [
+        "train_000382",
+        "train_003076",
+        "train_007458",
+        "validation_000384",
+        "validation_003429",
+        "test_003735"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_000566",
+      "item_ids": [
+        "train_000566",
+        "train_002484",
+        "validation_001021"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_000580",
+      "item_ids": [
+        "train_000580",
+        "train_003005",
+        "train_005150",
+        "train_005743",
+        "train_005894",
+        "train_006505",
+        "train_006576",
+        "train_007034",
+        "train_007737",
+        "train_008668",
+        "train_010410",
+        "train_011891",
+        "validation_000555",
+        "validation_001487",
+        "validation_002044",
+        "validation_002381",
+        "validation_003884",
+        "test_000365"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_000739",
+      "item_ids": [
+        "train_000739",
+        "train_005874",
+        "test_003512"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_000765",
+      "item_ids": [
+        "train_000765",
+        "train_001413",
+        "train_001446",
+        "train_006990",
+        "train_010800",
+        "validation_003521",
+        "test_001805"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_000867",
+      "item_ids": [
+        "train_000867",
+        "train_007065",
+        "validation_002310"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_001197",
+      "item_ids": [
+        "train_001197",
+        "train_004015",
+        "train_005060",
+        "train_006665",
+        "validation_000621",
+        "validation_001497",
+        "validation_002829",
+        "test_001388"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_001301",
+      "item_ids": [
+        "train_001301",
+        "validation_000332",
+        "validation_000766",
+        "validation_000956"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_001457",
+      "item_ids": [
+        "train_001457",
+        "train_009343",
+        "train_011013",
+        "train_012704",
+        "validation_003138"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_001568",
+      "item_ids": [
+        "train_001568",
+        "train_004636",
+        "train_005208",
+        "train_007380",
+        "train_008554",
+        "train_008910",
+        "train_012244",
+        "validation_000100",
+        "test_000930",
+        "test_003240"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_001575",
+      "item_ids": [
+        "train_001575",
+        "train_001898",
+        "train_002069",
+        "train_002512",
+        "train_007500",
+        "train_010170",
+        "train_010720",
+        "train_011050",
+        "train_012071",
+        "validation_001028",
+        "validation_001073",
+        "validation_002477",
+        "validation_004228",
+        "test_000171",
+        "test_000841",
+        "test_001026",
+        "test_001607",
+        "test_001889",
+        "test_002142"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_001748",
+      "item_ids": [
+        "train_001748",
+        "train_006603",
+        "train_010064",
+        "validation_002180",
+        "validation_003289",
+        "test_000469",
+        "test_002012"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_001781",
+      "item_ids": [
+        "train_001781",
+        "train_008847",
+        "train_010886",
+        "validation_000008",
+        "test_002681"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_001809",
+      "item_ids": [
+        "train_001809",
+        "train_004977",
+        "validation_001729"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_001817",
+      "item_ids": [
+        "train_001817",
+        "train_005822",
+        "train_007947",
+        "train_008766",
+        "train_009049",
+        "train_012444",
+        "train_012620",
+        "validation_003458"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_002101",
+      "item_ids": [
+        "train_002101",
+        "train_004539",
+        "validation_000206",
+        "validation_001133"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_002163",
+      "item_ids": [
+        "train_002163",
+        "train_004535",
+        "train_006781",
+        "test_003598"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_002324",
+      "item_ids": [
+        "train_002324",
+        "train_007491",
+        "train_011045",
+        "validation_004022",
+        "test_002243"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_002379",
+      "item_ids": [
+        "train_002379",
+        "train_005846",
+        "train_006907",
+        "validation_001854",
+        "test_000050"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_002408",
+      "item_ids": [
+        "train_002408",
+        "validation_001177",
+        "validation_001817",
+        "test_003361"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_002480",
+      "item_ids": [
+        "train_002480",
+        "validation_002523",
+        "validation_004106"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_002537",
+      "item_ids": [
+        "train_002537",
+        "train_008058",
+        "validation_002238"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_002625",
+      "item_ids": [
+        "train_002625",
+        "train_005508",
+        "train_006751",
+        "validation_004004"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_002659",
+      "item_ids": [
+        "train_002659",
+        "validation_001305",
+        "validation_002001",
+        "test_003429"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_002673",
+      "item_ids": [
+        "train_002673",
+        "train_004139",
+        "train_007000",
+        "test_000612"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_002682",
+      "item_ids": [
+        "train_002682",
+        "train_011069",
+        "test_002425"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_002772",
+      "item_ids": [
+        "train_002772",
+        "train_005270",
+        "train_007781",
+        "train_009007",
+        "train_009560",
+        "validation_002352"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_002954",
+      "item_ids": [
+        "train_002954",
+        "train_009621",
+        "validation_003518"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_003172",
+      "item_ids": [
+        "train_003172",
+        "train_003682",
+        "train_009774",
+        "validation_000391"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_003395",
+      "item_ids": [
+        "train_003395",
+        "train_007761",
+        "test_000514",
+        "test_001955",
+        "test_002056",
+        "test_002090"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_003510",
+      "item_ids": [
+        "train_003510",
+        "train_008981",
+        "test_002208"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_005049",
+      "item_ids": [
+        "train_005049",
+        "train_007637",
+        "validation_001733",
+        "validation_003744",
+        "test_000009",
+        "test_002088"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_005129",
+      "item_ids": [
+        "train_005129",
+        "validation_001182",
+        "validation_001398",
+        "validation_002527",
+        "test_000347"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_005523",
+      "item_ids": [
+        "train_005523",
+        "validation_002998"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_005607",
+      "item_ids": [
+        "train_005607",
+        "train_006291",
+        "train_012239",
+        "validation_003643",
+        "test_004105"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_005680",
+      "item_ids": [
+        "train_005680",
+        "train_007404",
+        "train_010488",
+        "train_011218",
+        "train_011345",
+        "validation_000585",
+        "validation_001128",
+        "test_000712",
+        "test_003412"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_006685",
+      "item_ids": [
+        "train_006685",
+        "test_003513"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_007389",
+      "item_ids": [
+        "train_007389",
+        "validation_000207"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_007713",
+      "item_ids": [
+        "train_007713",
+        "validation_000085",
+        "test_002971"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_008115",
+      "item_ids": [
+        "train_008115",
+        "train_011580",
+        "train_011788",
+        "train_011961",
+        "train_012475",
+        "validation_001255"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_008188",
+      "item_ids": [
+        "train_008188",
+        "test_001239",
+        "test_001998"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_008275",
+      "item_ids": [
+        "train_008275",
+        "validation_002568",
+        "test_000128",
+        "test_002326"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_008339",
+      "item_ids": [
+        "train_008339",
+        "validation_003268"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_008475",
+      "item_ids": [
+        "train_008475",
+        "train_010297",
+        "validation_001423"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_008499",
+      "item_ids": [
+        "train_008499",
+        "test_002771"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_008529",
+      "item_ids": [
+        "train_008529",
+        "test_002766"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_008803",
+      "item_ids": [
+        "train_008803",
+        "validation_003828"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_009600",
+      "item_ids": [
+        "train_009600",
+        "validation_000029",
+        "validation_003852"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_010032",
+      "item_ids": [
+        "train_010032",
+        "validation_000659"
+      ],
+      "splits": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "group": "train_010831",
+      "item_ids": [
+        "train_010831",
+        "test_003195",
+        "test_003230",
+        "test_004014"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_011825",
+      "item_ids": [
+        "train_011825",
+        "test_000923",
+        "test_001073",
+        "test_002740"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_012520",
+      "item_ids": [
+        "train_012520",
+        "test_001058"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "group": "train_012579",
+      "item_ids": [
+        "train_012579",
+        "validation_002845",
+        "test_001241",
+        "test_003070"
+      ],
+      "splits": [
+        "test",
+        "train",
+        "validation"
+      ]
+    }
+  ],
   "fingerprints": {
     "train_000006": {
       "pixel_sha256": "f2913bc68d232a0f3c6de6e61635c33814647c961c04ad29fc36e73950cd5f18",
@@ -10429,18 +10294,18 @@
   ],
   "gold_letter_counts": {
     "train": {
-      "A": 158,
-      "C": 141,
-      "B": 136,
-      "E": 7,
-      "D": 14
+      "A": 217,
+      "C": 161,
+      "B": 186,
+      "E": 15,
+      "D": 34
     },
     "validation": {
-      "C": 58,
-      "B": 54,
-      "A": 58,
-      "D": 6,
-      "E": 3
+      "B": 68,
+      "C": 61,
+      "E": 7,
+      "A": 72,
+      "D": 11
     },
     "test": {
       "B": 71,
@@ -10451,7 +10316,8 @@
     }
   },
   "limitations": [
+    "Original splits can share identical images; this policy retains them and is not image-disjoint.",
     "Near duplicates and pretrained-model contamination are not detected.",
-    "AI2D remains a separate test-only dataset; no cross-dataset near-duplicate guarantee."
+    "AI2D remains test-only; no cross-dataset near-duplicate guarantee."
   ]
 }
