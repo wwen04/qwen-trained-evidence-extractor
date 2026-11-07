@@ -33,6 +33,9 @@ STAGES = {
     "feedback": ("Preparing positive feedback", 88),
     "complete": ("Finished", 100),
 }
+COMPARISON_MODES = (
+    "identity", "soft", "hard", "random", "remove", "remove_random", "null", "no_image",
+)
 
 
 def validate_origin(value):
@@ -115,6 +118,8 @@ class TutorWebApp:
             raise ValueError("Choose supported dataset splits.")
         self.jobs = {}
         self.jobs_lock = threading.Lock()
+        self.comparison_jobs = {}
+        self.comparison_jobs_lock = threading.Lock()
         self.inference_lock = threading.Lock()
         self.model_lock = threading.Lock()
         self.tutor = None
@@ -236,6 +241,175 @@ class TutorWebApp:
         worker.start()
         return job_id
 
+    def start_comparison(self, payload):
+        split = payload.get("split", "test")
+        if split not in ("validation", "test"):
+            raise ValueError("Choose the validation or test split for comparison.")
+        self.check_split(split)
+        if not self.runtime_config.get("selector_checkpoint"):
+            raise ValueError(
+                "Start the UI with --selector-checkpoint pointing to the trained selector."
+            )
+
+        job_id = uuid.uuid4().hex
+        job = {
+            "job_id": job_id,
+            "split": split,
+            "status": "running",
+            "progress": 0,
+            "completed": 0,
+            "total": 0,
+            "result": None,
+            "error": None,
+            "output_file": None,
+        }
+        with self.comparison_jobs_lock:
+            if any(value["status"] == "running" for value in self.comparison_jobs.values()):
+                raise ValueError("A selector comparison is already running.")
+            self.comparison_jobs[job_id] = job
+        worker = threading.Thread(
+            target=self.run_comparison,
+            args=(job_id, split),
+            daemon=True,
+        )
+        worker.start()
+        return job_id
+
+    def get_comparison(self, job_id):
+        with self.comparison_jobs_lock:
+            job = self.comparison_jobs.get(job_id)
+            return dict(job) if job else None
+
+    def update_comparison(self, job_id, **updates):
+        with self.comparison_jobs_lock:
+            self.comparison_jobs[job_id].update(updates)
+
+    def compare_selector(self, split, job_id):
+        import torch
+
+        from evaluate_selector import comparison_fingerprint, paired_comparison, summarize
+        from project_data import (
+            digest, file_hash, load_questions, load_references, pixel_hash, stable_seed,
+        )
+
+        runtime = self.get_tutor().runtime
+        if runtime.metadata is None:
+            raise ValueError("The configured UI runtime did not load a trained selector checkpoint.")
+        items = load_questions("scienceqa", split, root=self.root)
+        references = load_references("scienceqa", split, root=self.root)
+        if not items:
+            raise ValueError(f"No ScienceQA {split} questions are available for comparison.")
+        if any(item["item_id"] not in references for item in items):
+            raise ValueError("The answer references do not cover every comparison question.")
+
+        provenance = runtime.provenance()
+        comparison_sha256 = comparison_fingerprint(provenance)
+        rho = runtime.metadata["target_rho"]
+        mode_rows = {mode: [] for mode in COMPARISON_MODES}
+        self.update_comparison(job_id, total=len(items))
+        for index, item in enumerate(items, start=1):
+            gold = references[item["item_id"]]["gold_option_id"]
+            common = {
+                "item_id": item["item_id"],
+                "gold": gold,
+                "input_sha256": digest({key: value for key, value in item.items() if key != "image_path"}),
+                "image_sha256": file_hash(item["image_path"]),
+                "pixel_sha256": pixel_hash(item["image_path"]),
+                "comparison_sha256": comparison_sha256,
+            }
+            seed = stable_seed(42, item["item_id"])
+            with torch.no_grad():
+                for mode in COMPARISON_MODES:
+                    logits, gates = runtime.answer_forward(
+                        item, mode=mode, rho=rho, seed=seed,
+                    )
+                    restricted = logits[:, runtime.letter_ids[:len(item["choices"])]].float()
+                    if not torch.isfinite(restricted).all():
+                        raise RuntimeError(f"Nonfinite answer scores for {item['item_id']}.")
+                    predicted = chr(65 + restricted.argmax(-1).item())
+                    mode_rows[mode].append({
+                        **common,
+                        "condition": f"{mode}:{rho}",
+                        "predicted": predicted,
+                        "correct": predicted == gold,
+                        "status": "ok",
+                        "mean_gate": float(gates.float().mean()) if len(gates) else None,
+                        "seed": seed,
+                    })
+            self.update_comparison(
+                job_id,
+                completed=index,
+                progress=round(index * 100 / len(items)),
+            )
+
+        identity_rows = mode_rows["identity"]
+        results = {}
+        for mode, rows in mode_rows.items():
+            metrics = summarize(rows)
+            metrics["paired_vs_identity"] = paired_comparison(rows, identity_rows)
+            results[mode] = metrics
+        best_mode = max(COMPARISON_MODES, key=lambda mode: results[mode]["accuracy"])
+        report = {
+            "dataset": "scienceqa",
+            "split": split,
+            "questions": len(items),
+            "rho": rho,
+            "random_seed": 42,
+            "modes": list(COMPARISON_MODES),
+            "results": results,
+            "best_mode": best_mode,
+            "trained_checkpoint": {
+                "path": runtime.config["selector_checkpoint"],
+                "weights_sha256": runtime.metadata["weights_sha256"],
+                "selector_config": runtime.metadata["selector_config"],
+                "target_rho": rho,
+                "seed": runtime.metadata["train_config"].get("seed"),
+                "best_validation": runtime.metadata.get("validation"),
+            },
+            "checkpoint_weights_sha256": runtime.metadata["weights_sha256"],
+            "comparison_sha256": comparison_sha256,
+            "predictions": mode_rows,
+            "note": (
+                "All modes use the same frozen Qwen, questions, images, options, preprocessing "
+                "and answer scoring. Identity is the unchanged-feature baseline. Soft uses "
+                "learned continuous gates; hard keeps the top rho fraction; random keeps a "
+                "seeded random rho fraction; remove replaces the selector's top rho fraction; "
+                "remove_random replaces a seeded random rho fraction; null replaces all image "
+                "features; no_image omits the image. Validation was used for checkpoint/model "
+                "selection, so compare modes here for exploration only; use the held-out test "
+                "once for final reporting. Paired p-values are exploratory and are not adjusted "
+                "for the seven mode comparisons. Accuracy does not measure hint quality or prove "
+                "visual faithfulness."
+            ),
+        }
+        output_dir = self.root / "outputs/comparisons"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_file = f"selector_comparison_{job_id}.json"
+        (output_dir / output_file).write_text(
+            json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+            encoding="utf-8",
+        )
+        return report, output_file
+
+    def run_comparison(self, job_id, split):
+        try:
+            with self.inference_lock:
+                report, output_file = self.compare_selector(split, job_id)
+            self.update_comparison(
+                job_id,
+                status="complete",
+                progress=100,
+                result=report,
+                output_file=output_file,
+            )
+        except Exception as error:
+            traceback.print_exc()
+            self.update_comparison(
+                job_id,
+                status="failed",
+                error=f"{type(error).__name__}: {error}",
+            )
+
     def run_job(self, job_id, mode, item, reference, answer, explanation, hint_level):
         try:
             with self.inference_lock:
@@ -307,6 +481,7 @@ class TutorWebApp:
         return {"prepared": any(counts.values()), "counts": counts,
                 "pid": os.getpid(), "instance_id": self.instance_id,
                 "model_loaded": self.tutor is not None,
+                "comparison_available": bool(self.runtime_config.get("selector_checkpoint")),
                 "selector": runtime_status(self.runtime_config)}
 
     def handler(self):
@@ -447,6 +622,31 @@ class TutorWebApp:
                             self.send_json(404, {"error": "Job not found."})
                         else:
                             self.send_json(200, job)
+                    elif parsed.path.startswith("/api/comparisons/"):
+                        parts = parsed.path.strip("/").split("/")
+                        if len(parts) == 4 and parts[3] == "result":
+                            job = app.get_comparison(parts[2])
+                            if job is None or job["status"] != "complete":
+                                self.send_json(404, {"error": "Completed comparison not found."})
+                            else:
+                                output_dir = (app.root / "outputs/comparisons").resolve()
+                                path = (output_dir / job["output_file"]).resolve()
+                                if path.parent != output_dir:
+                                    raise ValueError("Invalid comparison result path.")
+                                self.send_bytes(
+                                    200,
+                                    path.read_bytes(),
+                                    "application/json; charset=utf-8",
+                                    path.name,
+                                )
+                        elif len(parts) == 3:
+                            job = app.get_comparison(parts[2])
+                            if job is None:
+                                self.send_json(404, {"error": "Comparison not found."})
+                            else:
+                                self.send_json(200, job)
+                        else:
+                            self.send_json(404, {"error": "Not found."})
                     elif parsed.path.startswith("/api/results/"):
                         job_id = parsed.path.rsplit("/", 1)[-1]
                         job = app.get_job(job_id)
@@ -482,7 +682,7 @@ class TutorWebApp:
 
             def do_POST(self):
                 request_path = urlparse(self.path).path
-                if request_path != "/api/jobs":
+                if request_path not in ("/api/jobs", "/api/comparisons"):
                     self.send_json(404, {"error": "Not found."})
                     return
                 try:
@@ -501,7 +701,10 @@ class TutorWebApp:
                     payload = json.loads(self.rfile.read(length))
                     if not isinstance(payload, dict):
                         raise ValueError("Request body must be a JSON object.")
-                    job_id = app.start_job(payload)
+                    if request_path == "/api/comparisons":
+                        job_id = app.start_comparison(payload)
+                    else:
+                        job_id = app.start_job(payload)
                     self.send_json(202, {"job_id": job_id})
                 except (ValueError, KeyError, json.JSONDecodeError) as error:
                     self.send_json(400, {"error": str(error)})

@@ -23,10 +23,23 @@ const feedbackCard = document.querySelector("#feedback-card");
 const feedbackText = document.querySelector("#feedback-text");
 const outcomeBadge = document.querySelector("#outcome-badge");
 const resultFile = document.querySelector("#result-file");
+const comparisonSplit = document.querySelector("#comparison-split");
+const comparisonButton = document.querySelector("#comparison-button");
+const comparisonAvailability = document.querySelector("#comparison-availability");
+const comparisonProgress = document.querySelector("#comparison-progress");
+const comparisonProgressBar = document.querySelector("#comparison-progress-bar");
+const comparisonProgressText = document.querySelector("#comparison-progress-text");
+const comparisonError = document.querySelector("#comparison-error");
+const comparisonResult = document.querySelector("#comparison-result");
+const comparisonFile = document.querySelector("#comparison-file");
+const comparisonDisplay = document.querySelector("#comparison-display");
+const comparisonPredictions = document.querySelector("#comparison-predictions");
 const stageNames = ["evidence", "assessment", "response"];
 
 let selectedQuestion = null;
 let busy = false;
+let comparisonBusy = false;
+let comparisonAvailable = false;
 let inspectionUrl = null;
 
 function showMessage(element, message) {
@@ -43,13 +56,18 @@ async function getJson(url, options) {
 
 function updateRunButton() {
   const hasAnswer = document.querySelector('input[name="student-answer"]:checked');
-  hintButton.disabled = busy || !selectedQuestion;
-  checkButton.disabled = busy || !selectedQuestion || !hasAnswer || !reasoningInput.value.trim();
-  inspectionButton.disabled = !selectedQuestion;
+  const unavailable = busy || comparisonBusy;
+  hintButton.disabled = unavailable || !selectedQuestion;
+  checkButton.disabled = unavailable || !selectedQuestion || !hasAnswer || !reasoningInput.value.trim();
+  inspectionButton.disabled = unavailable || !selectedQuestion;
   hintButton.querySelector("span:first-child").textContent =
-    busy ? "Tutor is thinking…" : "I'm stuck — give me a hint";
+    unavailable ? "Please wait…" : "I'm stuck — give me a hint";
   checkButton.querySelector("span:first-child").textContent =
-    busy ? "Tutor is thinking…" : "Check my answer";
+    unavailable ? "Please wait…" : "Check my answer";
+  comparisonButton.disabled = unavailable || !comparisonAvailable;
+  comparisonSplit.disabled = unavailable;
+  comparisonButton.querySelector("span:first-child").textContent =
+    comparisonBusy ? "Comparing all modes…" : "Compare all modes";
 }
 
 function clearResult() {
@@ -282,6 +300,157 @@ async function runTutor(mode) {
   }
 }
 
+function formatAccuracy(value) {
+  return `${(value * 100).toFixed(1)}%`;
+}
+
+function renderComparison(job) {
+  const result = job.result;
+  const identityAccuracy = result.results.identity.accuracy;
+  const best = result.results[result.best_mode];
+  document.querySelector("#comparison-verdict").textContent =
+    `Best on ${result.split}: ${result.best_mode} (${formatAccuracy(best.accuracy)})`;
+  document.querySelector("#comparison-count").textContent =
+    `${result.questions} ${result.split} questions · trained ${result.trained_checkpoint.selector_config.layers}-layer selector, ` +
+    `rho=${result.rho}, seed=${result.trained_checkpoint.seed}`;
+  const checkpointValidation = result.trained_checkpoint.best_validation;
+  document.querySelector("#comparison-checkpoint").textContent = checkpointValidation
+    ? `Best checkpoint validation accuracy: ${formatAccuracy(checkpointValidation.accuracy)} ` +
+      `(${checkpointValidation.questions} questions).`
+    : "Checkpoint validation metrics are unavailable.";
+
+  const labels = {
+    identity: "Original features; unchanged baseline",
+    soft: `Learned continuous feature blending (training target rho=${result.rho})`,
+    hard: `Keep top-scoring ceil(N × ${result.rho}) features`,
+    random: `Keep seeded random ceil(N × ${result.rho}) features`,
+    remove: `Replace top-scoring ceil(N × ${result.rho}) features with null`,
+    remove_random: `Replace seeded random ceil(N × ${result.rho}) features with null`,
+    null: "Replace all visual features with the learned null feature",
+    no_image: "Omit the image entirely",
+  };
+  const modeBody = document.querySelector("#comparison-modes-body");
+  modeBody.replaceChildren();
+  for (const mode of result.modes) {
+    const metrics = result.results[mode];
+    const paired = metrics.paired_vs_identity;
+    const delta = (metrics.accuracy - identityAccuracy) * 100;
+    const row = document.createElement("tr");
+    row.dataset.best = String(mode === result.best_mode);
+    const values = [
+      mode,
+      labels[mode] || "Selector evaluation mode",
+      `${formatAccuracy(metrics.accuracy)} · ` +
+        `${formatAccuracy(metrics.accuracy_ci95_image_group_bootstrap[0])}–` +
+        `${formatAccuracy(metrics.accuracy_ci95_image_group_bootstrap[1])}`,
+      `${delta > 0 ? "+" : ""}${delta.toFixed(1)} pp`,
+      `${paired.won} / ${paired.lost}`,
+      paired.mcnemar_exact_p.toPrecision(3),
+    ];
+    for (const value of values) {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.append(cell);
+    }
+    modeBody.append(row);
+  }
+  document.querySelector("#comparison-note").textContent = result.note;
+  comparisonFile.href = `/api/comparisons/${encodeURIComponent(job.job_id)}/result`;
+  comparisonFile.hidden = false;
+  comparisonDisplay.hidden = false;
+  comparisonDisplay.textContent = "Display all mode predictions";
+  comparisonDisplay.setAttribute("aria-expanded", "false");
+  const predictionHead = document.querySelector("#predictions-head");
+  const header = document.createElement("tr");
+  for (const label of ["Question", "Correct answer", ...result.modes]) {
+    const cell = document.createElement("th");
+    cell.scope = "col";
+    cell.textContent = label;
+    header.append(cell);
+  }
+  predictionHead.replaceChildren(header);
+  const rowsByMode = Object.fromEntries(result.modes.map(
+    mode => [mode, new Map(result.predictions[mode].map(row => [row.item_id, row]))],
+  ));
+  const body = document.querySelector("#predictions-body");
+  body.replaceChildren();
+  for (const original of result.predictions.identity) {
+    const itemId = original.item_id;
+    const row = document.createElement("tr");
+    for (const value of [itemId, original.gold]) {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.append(cell);
+    }
+    for (const mode of result.modes) {
+      const prediction = rowsByMode[mode].get(itemId);
+      if (!prediction) throw new Error(`Missing ${mode} prediction for ${itemId}.`);
+      const cell = document.createElement("td");
+      cell.textContent = `${prediction.predicted} · ${prediction.correct ? "correct" : "wrong"}`;
+      cell.dataset.correct = String(prediction.correct);
+      row.append(cell);
+    }
+    body.append(row);
+  }
+  document.querySelector("#predictions-count").textContent =
+    `${result.questions} questions · correct and wrong labels shown per mode`;
+  comparisonResult.hidden = false;
+}
+
+function toggleComparisonPredictions() {
+  const expanded = comparisonDisplay.getAttribute("aria-expanded") === "true";
+  comparisonDisplay.setAttribute("aria-expanded", String(!expanded));
+  comparisonDisplay.textContent = expanded
+    ? "Display all mode predictions"
+    : "Hide all mode predictions";
+  comparisonPredictions.hidden = expanded;
+}
+
+async function pollComparison(jobId) {
+  while (true) {
+    const job = await getJson(`/api/comparisons/${encodeURIComponent(jobId)}`);
+    comparisonProgressBar.value = job.progress || 0;
+    comparisonProgressText.textContent = job.total
+      ? `Scored ${job.completed} of ${job.total} questions`
+      : "Loading the model and evaluation data…";
+    if (job.status === "complete") {
+      renderComparison(job);
+      return;
+    }
+    if (job.status === "failed") throw new Error(job.error || "The comparison failed.");
+    await new Promise(resolve => setTimeout(resolve, 900));
+  }
+}
+
+async function runComparison() {
+  if (busy || comparisonBusy || !comparisonAvailable) return;
+  comparisonBusy = true;
+  comparisonError.hidden = true;
+  comparisonResult.hidden = true;
+  comparisonFile.hidden = true;
+  comparisonDisplay.hidden = true;
+  comparisonPredictions.hidden = true;
+  comparisonDisplay.setAttribute("aria-expanded", "false");
+  comparisonProgress.hidden = false;
+  comparisonProgressBar.value = 0;
+  comparisonProgressText.textContent = "Starting paired evaluation…";
+  updateRunButton();
+  try {
+    const data = await getJson("/api/comparisons", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ split: comparisonSplit.value }),
+    });
+    await pollComparison(data.job_id);
+  } catch (error) {
+    showMessage(comparisonError, error.message);
+  } finally {
+    comparisonBusy = false;
+    comparisonProgress.hidden = true;
+    updateRunButton();
+  }
+}
+
 function toggleInspection() {
   if (!selectedQuestion) return;
   if (!inspectionFrame.hidden) {
@@ -317,6 +486,14 @@ async function initialize() {
   try {
     const status = await getJson("/api/status");
     document.querySelector("#model-status").textContent = status.selector?.label || "Local research prototype";
+    comparisonAvailable = Boolean(status.comparison_available);
+    if (!comparisonAvailable) {
+      showMessage(
+        comparisonAvailability,
+        "To enable comparison, restart the UI with --selector-checkpoint pointing to a trained selector checkpoint, such as outputs/training/selector-1layer-rho05-seed43/best.",
+      );
+    }
+    updateRunButton();
     for (const option of [...splitSelect.options]) {
       if (!(option.value in status.counts)) option.remove();
     }
@@ -345,4 +522,6 @@ sampleButton.addEventListener("click", loadDemoResponse);
 inspectionButton.addEventListener("click", toggleInspection);
 hintButton.addEventListener("click", () => runTutor("hint"));
 checkButton.addEventListener("click", () => runTutor("check"));
+comparisonButton.addEventListener("click", runComparison);
+comparisonDisplay.addEventListener("click", toggleComparisonPredictions);
 initialize();

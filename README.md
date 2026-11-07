@@ -2,11 +2,11 @@
 
 Standalone implementation of a question-conditioned visual gate after Qwen2.5-VL's existing vision encoder and merger. The Qwen backbone is frozen. The selector learns from ScienceQA's existing answer labels; hint quality is evaluated separately.
 
-**No training has been run.** There are no trained selector checkpoints in this folder. The browser tutor works before training through an exact identity path, and uses a trained checkpoint when explicitly configured. The CLI and UI run independently; an optional Colab training/evaluation notebook is available under `notebook/`.
+The one-layer selector has been trained with multiple settings. The current best validation checkpoint is `outputs/training/selector-1layer-rho05-seed43/best` (65.9% accuracy on 179 ScienceQA validation questions). The browser tutor preserves the exact identity path unless a checkpoint is explicitly configured. The CLI and UI run independently; an optional Colab training/evaluation notebook is available under `notebook/`.
 
 ## What is here
 
-- Independent copies of processed and final ScienceQA and AI2D data, including images, public questions and separate references.
+- Independent copies of processed and final ScienceQA and AI2D data, including images, public questions and separate references. Selector training uses ScienceQA only; AI2D is test-only and is not used for training or checkpoint selection.
 - Original dataset configurations, manifests, assisted visual reviews, audit reports and their preparation scripts.
 - `selector.py`: cross-attention gates, shared null token, soft/hard/straight-through modes, text-only and free-transform controls.
 - `model_runtime.py`: frozen Qwen, feature interception, answer scoring and hint generation.
@@ -71,10 +71,12 @@ The UI opens on `http://127.0.0.1:8766`. It displays **Untrained — original vi
 After you train:
 
 ```powershell
-python ui_server.py --selector-checkpoint outputs/training/selector-rho03-seed42/best
+python ui_server.py --selector-checkpoint outputs/training/selector-1layer-rho05-seed43/best
 ```
 
 The same UI loads the frozen Qwen backbone plus the trained selector's separate weights. It displays **Trained visual selector**. The backbone weights are not overwritten by selector training. You can instead set `selector_checkpoint` in `configs/runtime.json`, leaving `gate_mode` as `auto`. Restart the server after changing checkpoints; there is no silent hot reload during a request. Missing, corrupt or incompatible checkpoints fail visibly.
+
+With a trained checkpoint configured, the page offers **Compare all modes** on the same questions: identity, soft, hard, random, remove, remove-random, null and no-image. It displays accuracy, image-group bootstrap intervals, change and paired wins/losses versus identity. **Display all mode predictions** opens the per-question table. Validation is the default for mode exploration; reserve test for final reporting. The best observed checkpoint so far is the one-layer `rho=0.5`, seed 43 run at 65.9% validation accuracy; selecting among these modes on validation is exploratory and may overfit. Paired p-values are exploratory and not adjusted for multiple mode comparisons. Results and per-question predictions are saved under `outputs/comparisons/`.
 
 For hard gates, add `--gate-mode hard`. For a bypass comparison with the same checkpoint/preprocessing, use `--gate-mode identity`.
 
@@ -97,6 +99,16 @@ Edit or copy `configs/train_selector.json`. Training starts **only** with `--tra
 ```powershell
 python train_selector.py --train
 ```
+
+For a one-layer evidence selector, use the dedicated config and output directory:
+
+```powershell
+python train_selector.py --config configs/train_selector_1layer.json --preflight
+python train_selector.py --config configs/train_selector_1layer.json --check-model
+python train_selector.py --config configs/train_selector_1layer.json --train
+```
+
+The model check downloads/loads Qwen if needed but does not update weights. Run it before training to verify model compatibility and that it loads on your GPU.
 
 Each epoch reshuffles option order and remaps the gold index. Training uses restricted-letter CE plus a mean-gate budget penalty. The budget moves from 1.0 to the target during the first 20% of optimizer updates. A mean visual token is computed from training images only to initialize the shared null vector. Qwen parameters are frozen; gradients flow through its decoder into the selector. Validation runs periodically and at every epoch end. Best checkpoint selection uses validation accuracy, then CE; it never uses test labels.
 

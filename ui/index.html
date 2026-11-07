@@ -44,6 +44,81 @@
       </article>
     </section>
 
+    <section class="panel comparison-panel" aria-labelledby="comparison-title">
+      <div class="comparison-heading">
+        <div>
+          <div class="eyebrow">OPTIONAL / PAIRED MODEL EVALUATION</div>
+          <h2 id="comparison-title">Did the selector improve answer accuracy?</h2>
+        </div>
+        <span class="status-badge">Same questions · same frozen Qwen</span>
+      </div>
+      <p class="comparison-copy">
+        Compare every supported feature mode on the same ScienceQA questions. Validation is the
+        default for exploring modes; avoid tuning on test, which is held out for final reporting.
+        Paired p-values are exploratory and are not adjusted for multiple mode comparisons. This
+        measures multiple-choice accuracy, not hint quality or visual faithfulness.
+      </p>
+      <div id="comparison-availability" class="notice" role="status" hidden></div>
+      <div class="comparison-actions">
+        <label class="field" for="comparison-split">
+          <span>Evaluation split</span>
+          <select id="comparison-split">
+            <option value="validation">Validation · mode exploration</option>
+            <option value="test">Test · final held-out evaluation</option>
+          </select>
+        </label>
+        <button id="comparison-button" class="primary-button" type="button" disabled>
+          <span>Compare all modes</span><span aria-hidden="true">↗</span>
+        </button>
+      </div>
+      <div id="comparison-progress" class="comparison-progress" role="status" hidden>
+        <progress id="comparison-progress-bar" max="100" value="0"></progress>
+        <span id="comparison-progress-text"></span>
+      </div>
+      <div id="comparison-error" class="error-message comparison-error" role="alert" hidden></div>
+      <section id="comparison-result" class="comparison-result" aria-live="polite" hidden>
+        <div class="comparison-result-heading">
+          <h3 id="comparison-verdict"></h3>
+          <span id="comparison-count"></span>
+        </div>
+        <p id="comparison-checkpoint" class="comparison-note"></p>
+        <div class="mode-table-wrap">
+          <table class="mode-table">
+            <thead>
+              <tr>
+                <th scope="col">Mode</th>
+                <th scope="col">Feature behavior</th>
+                <th scope="col">Accuracy (95% image-group CI)</th>
+                <th scope="col">Change vs identity</th>
+                <th scope="col">Wins / losses</th>
+                <th scope="col">McNemar p</th>
+              </tr>
+            </thead>
+            <tbody id="comparison-modes-body"></tbody>
+          </table>
+        </div>
+        <p id="comparison-note" class="comparison-note"></p>
+        <div class="comparison-result-actions">
+          <button id="comparison-display" class="text-button" type="button" aria-expanded="false" hidden>
+            Display all mode predictions
+          </button>
+          <a id="comparison-file" class="result-file" hidden>Download paired predictions</a>
+        </div>
+        <section id="comparison-predictions" class="comparison-predictions" aria-label="Per-question paired predictions" hidden>
+          <div class="predictions-heading">
+            <h4>Per-question predictions by mode</h4>
+            <span id="predictions-count"></span>
+          </div>
+          <div class="predictions-table-wrap">
+            <table class="predictions-table">
+              <thead id="predictions-head"></thead>
+              <tbody id="predictions-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </section>
+
     <div class="workspace-grid">
       <section class="panel question-panel">
         <div class="panel-heading">
