@@ -97,33 +97,47 @@ def legacy_json_digest(value):
 
 
 def select_judging_rows(run, rows):
-    if run["dataset"] != "ai2d":
+    dataset = run["dataset"]
+    if dataset == "scienceqa" and run["split"] != "test":
         return rows, {"method": "All generated questions", "item_ids": run["item_ids"], "manifest": None}
+    if dataset not in {"scienceqa", "ai2d"}:
+        raise ValueError("Unknown judging dataset")
+    label = "ScienceQA" if dataset == "scienceqa" else "AI2D"
     if run["split"] != "test":
-        raise ValueError("AI2D judging uses only the frozen test selection")
-    relative = "manifests/ai2d/test_judge_selection.json"
+        raise ValueError(f"{label} judging uses only the frozen test selection")
+    relative = f"manifests/{dataset}/test_judge_selection.json"
     selection = read_json(ROOT / relative)
     entries = selection["items"]
     ids = [entry["item_id"] for entry in entries]
-    parent = read_json(ROOT / "manifests/ai2d/test_selection.json")
-    if (selection.get("dataset_name") != "ai2d" or selection.get("size") != 30
+    if dataset == "scienceqa":
+        parent = read_json(ROOT / "manifests/scienceqa/test_final_ids.json")
+        parent_ids = set(parent)
+        source_matches = (selection.get("split") == "test" and
+                          selection.get("source_configuration") == read_json(ROOT / "configs/scienceqa.json"))
+    else:
+        parent = read_json(ROOT / "manifests/ai2d/test_selection.json")
+        parent_ids = {item["item_id"] for item in parent["items"]}
+        source_matches = True
+    if (selection.get("dataset_name") != dataset or selection.get("size") != 30 or not source_matches
             or selection.get("tiers") != [1, 2, 3] or len(ids) != 30 or len(set(ids)) != 30
-            or not set(ids) <= {item["item_id"] for item in parent["items"]}
+            or not set(ids) <= parent_ids
             or legacy_json_digest(parent) != selection["parent_selection_sha256"]):
-        raise ValueError("Invalid or mismatched frozen AI2D 30-question judging selection")
+        raise ValueError(f"Invalid or mismatched frozen {label} 30-question judging selection")
     if not set(ids) <= set(run["item_ids"]):
-        raise ValueError("Run does not contain all 30 frozen AI2D judging questions; generate the full 100-question set")
-    expected = {entry["item_id"]: entry["input_sha256"] for entry in entries}
+        raise ValueError(f"Run does not contain all 30 frozen {label} judging questions; generate the full test set")
+    expected = {entry["item_id"]: entry for entry in entries}
     selected = [row for row in rows if row["item_id"] in expected]
     for row in selected:
         public = row["public_inputs"]
         snapshot = {key: public[key] for key in ("question", "context", "choices")}
         snapshot["image_sha256"] = row["image_sha256"]
-        if digest(public) != row["input_sha256"] or legacy_json_digest(snapshot) != expected[row["item_id"]]:
-            raise ValueError("AI2D judging input differs from the frozen selection")
+        entry = expected[row["item_id"]]
+        if (digest(public) != row["input_sha256"] or legacy_json_digest(snapshot) != entry["input_sha256"]
+                or (dataset == "scienceqa" and entry.get("image_sha256") != row["image_sha256"])):
+            raise ValueError(f"{label} judging input differs from the frozen selection")
     order = {key: index for index, key in enumerate(ids)}
     selected.sort(key=lambda row: (order[row["item_id"]], row["tier"]))
-    return selected, {"method": "Existing frozen 30 AI2D test questions, all three tiers; independent of outcomes",
+    return selected, {"method": f"Existing frozen 30 {label} test questions, all three tiers; independent of outcomes",
                       "manifest": relative, "manifest_sha256": file_hash(ROOT / relative), "item_ids": ids}
 
 
@@ -253,7 +267,7 @@ def main(argv=None):
     pack = sub.add_parser("package")
     pack.add_argument("--run-dir", type=Path, required=True)
     pack.add_argument("--output-dir", type=Path, required=True)
-    pack.add_argument("--seed", type=int, default=42, help="Shuffle case order only; AI2D always uses the existing frozen 30 IDs")
+    pack.add_argument("--seed", type=int, default=42, help="Shuffle case order only; test packages use each dataset's existing frozen 30 IDs")
     summary = sub.add_parser("summarize")
     summary.add_argument("--package-dir", type=Path, required=True)
     summary.add_argument("--judgments-dir", type=Path, required=True)

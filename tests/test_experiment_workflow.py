@@ -113,12 +113,16 @@ class HintExperimentTests(unittest.TestCase):
 
 
 class AI2DFrozenJudgingTests(unittest.TestCase):
+    DATASET = "ai2d"
+    EXPECTED_QUESTIONS = 100
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.folder = Path(self.temp.name)
-        self.items = load_questions("ai2d", "test")
-        self.frozen = read_json(ROOT / "manifests/ai2d/test_judge_selection.json")
+        self.items = load_questions(self.DATASET, "test")
+        self.assertEqual(len(self.items), self.EXPECTED_QUESTIONS)
+        self.frozen = read_json(ROOT / f"manifests/{self.DATASET}/test_judge_selection.json")
         self.expected_ids = {entry["item_id"] for entry in self.frozen["items"]}
         self.rows = []
         first_selected = next(item["item_id"] for item in self.items if item["item_id"] in self.expected_ids)
@@ -131,7 +135,7 @@ class AI2DFrozenJudgingTests(unittest.TestCase):
                                   "hint": None if failed else "Fixture hint; no model was called.",
                                   "public_inputs": public, "input_sha256": digest(public),
                                   "image_sha256": file_hash(item["image_path"])})
-        self.run = {"schema": "selector-hints-v1", "status": "complete", "dataset": "ai2d", "split": "test",
+        self.run = {"schema": "selector-hints-v1", "status": "complete", "dataset": self.DATASET, "split": "test",
                     "condition": "B", "item_ids": [item["item_id"] for item in self.items]}
 
     def test_all_conditions_share_existing_30_ids_and_package_only_90_outcomes(self):
@@ -150,7 +154,8 @@ class AI2DFrozenJudgingTests(unittest.TestCase):
             manifest = read_json(package_dir / "manifest.json")
             self.assertEqual({row["item_id"] for row in mapping}, self.expected_ids)
             self.assertEqual(len(mapping), 90)
-            self.assertEqual((manifest["generated_questions"], manifest["generated_hints"]), (100, 300))
+            self.assertEqual((manifest["generated_questions"], manifest["generated_hints"]),
+                             (self.EXPECTED_QUESTIONS, self.EXPECTED_QUESTIONS * 3))
             self.assertEqual((manifest["judging_questions"], manifest["planned_hints"], manifest["judge_cases"]), (30, 90, 89))
             self.assertEqual(len(list((package_dir / "attachments/cases").glob("*/case.json"))), 89)
             returned = self.folder / f"returned-{seed}"
@@ -161,7 +166,7 @@ class AI2DFrozenJudgingTests(unittest.TestCase):
             report = read_json(output)
             self.assertEqual(report["generation_failures"], 1)
             self.assertEqual(report["planned_hints"], 90)
-            self.assertEqual(report["generated_hints"], 300)
+            self.assertEqual(report["generated_hints"], self.EXPECTED_QUESTIONS * 3)
             self.assertEqual(len(report["pending"]), 89)
 
     def test_incomplete_pilot_and_modified_selected_inputs_are_rejected(self):
@@ -183,6 +188,33 @@ class AI2DFrozenJudgingTests(unittest.TestCase):
             return result
         with patch.object(hints, "read_json", side_effect=read):
             with self.assertRaisesRegex(ValueError, "mismatched frozen"):
+                hints.select_judging_rows(self.run, self.rows)
+
+
+class ScienceQAFrozenJudgingTests(AI2DFrozenJudgingTests):
+    DATASET = "scienceqa"
+    EXPECTED_QUESTIONS = 173
+
+    def test_mismatched_source_configuration_is_rejected(self):
+        actual_read = hints.read_json
+        def read(path):
+            result = actual_read(path)
+            if Path(path).name == "test_judge_selection.json":
+                result["source_configuration"]["dataset_revision"] = "different"
+            return result
+        with patch.object(hints, "read_json", side_effect=read):
+            with self.assertRaisesRegex(ValueError, "mismatched frozen ScienceQA"):
+                hints.select_judging_rows(self.run, self.rows)
+
+    def test_changed_manifest_image_fingerprint_is_rejected(self):
+        actual_read = hints.read_json
+        def read(path):
+            result = actual_read(path)
+            if Path(path).name == "test_judge_selection.json":
+                result["items"][0]["image_sha256"] = "different"
+            return result
+        with patch.object(hints, "read_json", side_effect=read):
+            with self.assertRaisesRegex(ValueError, "differs from the frozen"):
                 hints.select_judging_rows(self.run, self.rows)
 
 

@@ -158,12 +158,21 @@ python hint_experiments.py generate --condition E --checkpoint outputs/training/
 python hint_experiments.py package --run-dir outputs/hints/E --output-dir outputs/judging/E
 ```
 
-ScienceQA packages include all generated questions from the chosen validation/test split (219 validation questions produce 657 planned hints per condition). AI2D generation defaults to **all 100 test questions / 300 hints per condition**. Its package automatically selects the **same existing 30 questions / 90 planned hints per condition** from `manifests/ai2d/test_judge_selection.json` across B/D/E. The package seed changes only case order. Selected failures stay in the 90-outcome denominator and are never replaced. A pilot missing any of the fixed 30 IDs cannot produce the main AI2D package.
+ScienceQA test generation covers all **173 test questions / 519 hints per condition**. Test judge packages automatically select the exact **30 questions / 90 planned hints per condition** in `manifests/scienceqa/test_judge_selection.json`, copied from the supplied original-project manifest. The same IDs and all three tiers are reused across B/D/E; source configuration, parent test IDs, public-input hashes and image hashes are verified. ScienceQA validation packages continue to include all generated validation questions (219 questions / 657 planned hints per condition). AI2D generation defaults to **all 100 test questions / 300 hints per condition**. Its package automatically selects the **same existing 30 questions / 90 planned hints per condition** from `manifests/ai2d/test_judge_selection.json` across B/D/E. The package seed changes only case order. Selected failures stay in the 90-outcome denominator and are never replaced. A pilot missing any of the fixed 30 IDs cannot produce the main AI2D package.
 
 ```powershell
 python hint_experiments.py generate --dataset ai2d --split test --condition E --checkpoint outputs/training/selector-rho03-seed42/best --output-dir outputs/hints/ai2d/E
 python hint_experiments.py package --run-dir outputs/hints/ai2d/E --output-dir outputs/judging/ai2d/E
 ```
+
+For the ScienceQA test package, generate with `--dataset scienceqa --split test`, then package the completed run:
+
+```powershell
+python hint_experiments.py generate --dataset scienceqa --split test --condition E --checkpoint outputs/training/selector-rho03-seed42/best --output-dir outputs/hints/scienceqa-test/E
+python hint_experiments.py package --run-dir outputs/hints/scienceqa-test/E --output-dir outputs/judging/scienceqa-test/E
+```
+
+Both datasets use their fixed test judging IDs regardless of the package seed; the seed only shuffles case order. All 30 selected IDs must be present in the completed run. Selected failures remain in the 90-outcome denominator without replacement.
 
 Share only `outputs/judging/E/attachments` with the judge. Keep the private record map outside its input. The same seven-field Part A rubric is used; package files include the image, question, choices, tier, hint and reference answer. No judge is called automatically. Save returned files as `judgment_r_000001.json`, etc., then:
 
