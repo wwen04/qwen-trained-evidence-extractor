@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f3">
+  <title>Fieldnotes | Science hint studio</title>
+  <link rel="stylesheet" href="/assets/app.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Fieldnotes home">
+      <span class="brand-mark" aria-hidden="true">F</span>
+      <span>fieldnotes<span class="brand-period">.</span></span>
+    </a>
+    <div class="topbar-meta">
+      <span class="local-dot"></span>
+      <span id="model-status">Local research prototype</span>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="intro">
+      <div class="eyebrow"><span class="eyebrow-line"></span> VISUAL SCIENCE TUTORING</div>
+      <h1>A better hint starts<br>with <em>looking closer.</em></h1>
+      <p class="intro-copy">Stuck? Ask for a hint first. When you're ready, submit your answer and reasoning for feedback or a next step.</p>
+    </section>
+
+    <section class="workflow" aria-label="How the tutor works">
+      <article class="workflow-step">
+        <span class="step-number">01</span>
+        <div><h2>Look</h2><p>Notice relevant details in the diagram.</p></div>
+      </article>
+      <span class="workflow-arrow" aria-hidden="true">→</span>
+      <article class="workflow-step">
+        <span class="step-number">02</span>
+        <div><h2>Try</h2><p>Answer when you’re ready—or ask for a hint.</p></div>
+      </article>
+      <span class="workflow-arrow" aria-hidden="true">→</span>
+      <article class="workflow-step">
+        <span class="step-number">03</span>
+        <div><h2>Grow</h2><p>Get feedback or a next step.</p></div>
+      </article>
+    </section>
+
+    <div class="workspace-grid">
+      <section class="panel question-panel">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">01 / SET UP A QUESTION</div>
+            <h2>Start with a science question</h2>
+          </div>
+          <span id="dataset-badge" class="status-badge">Checking data…</span>
+        </div>
+
+        <div id="setup-message" class="notice" role="status" hidden></div>
+
+        <div class="field-row">
+          <label class="field">
+            <span>Dataset split</span>
+            <select id="split-select">
+              <option value="validation">Validation</option>
+              <option value="train">Train</option>
+              <option value="test">Test</option>
+            </select>
+          </label>
+          <label class="field question-select-field">
+            <span>Prepared question</span>
+            <select id="question-select" disabled>
+              <option value="">Loading questions…</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="question-card">
+          <div class="question-copy">
+            <div class="eyebrow question-kicker">THE QUESTION</div>
+            <h3 id="question-text">Choose a prepared question to begin.</h3>
+            <p id="question-context" class="context-text" hidden></p>
+            <div id="choices" class="choices-list"></div>
+          </div>
+          <figure id="diagram-frame" class="diagram-frame" hidden>
+            <img id="question-image" alt="Science question diagram">
+            <figcaption>QUESTION DIAGRAM</figcaption>
+          </figure>
+        </div>
+
+        <section class="inspection-section" aria-label="Optional question inspection">
+          <div class="section-title-row">
+            <div>
+              <div class="eyebrow">OPTIONAL / QUESTION INSPECTION</div>
+              <p class="inspection-note">The report includes the saved visual-audit decision and reference answer, lecture, and solution.</p>
+            </div>
+            <button id="inspection-button" class="text-button inspection-button" type="button" disabled>
+              Show inspection report
+            </button>
+          </div>
+          <div id="inspection-message" class="notice" role="status" hidden></div>
+          <iframe
+            id="inspection-frame"
+            class="inspection-frame"
+            title="Question inspection report"
+            sandbox="allow-same-origin"
+            referrerpolicy="no-referrer"
+            hidden
+          ></iframe>
+        </section>
+
+        <div class="response-section">
+          <div class="section-title-row">
+            <div>
+              <div class="eyebrow">02 / THE LEARNER</div>
+              <h3>Try it your way—or ask for help</h3>
+            </div>
+            <button id="sample-button" class="text-button" type="button">Load demo response</button>
+          </div>
+          <div id="demo-notice" class="demo-notice" role="status" hidden>
+            Demo inputs loaded — these are examples, not a real student's work.
+          </div>
+          <fieldset id="answer-options" class="answer-options">
+            <legend>Your answer <span class="optional-label">· optional until you check</span></legend>
+            <p class="field-help">You can get a hint without selecting an answer.</p>
+            <div id="answer-radios" class="radio-list"></div>
+          </fieldset>
+          <label class="field reasoning-field" for="reasoning-input">
+            <span>Your reasoning <span class="optional-label">· optional until you check</span></span>
+            <textarea id="reasoning-input" rows="3" placeholder="Enter the student's reasoning in their own words…"></textarea>
+          </label>
+          <label class="field hint-field">
+            <span>Hint style</span>
+            <select id="hint-level">
+              <option value="1">Level 1 · Notice the evidence</option>
+              <option value="2">Level 2 · Connect a concept</option>
+              <option value="3">Level 3 · Take a reasoning step</option>
+            </select>
+          </label>
+          <div class="form-actions">
+            <p class="privacy-note">Inputs stay on this computer. Completed runs are saved as JSON in outputs/, not written into the dataset.</p>
+            <div class="action-buttons">
+              <button id="hint-button" class="secondary-button" type="button" disabled>
+                <span>I'm stuck — give me a hint</span><span aria-hidden="true">↗</span>
+              </button>
+              <button id="check-button" class="primary-button" type="button" disabled>
+                <span>Check my answer</span><span aria-hidden="true">↗</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel result-panel">
+        <div class="panel-heading result-heading">
+          <div>
+            <div class="eyebrow">03 / THE TUTOR'S RESPONSE</div>
+            <h2>Follow the thinking</h2>
+          </div>
+          <span class="sparkle" aria-hidden="true">✳</span>
+        </div>
+        <p class="result-intro">Ask for help whenever you need it. Submit an answer when you’re ready to see whether your reasoning is on track.</p>
+
+        <ol class="stage-list">
+          <li class="stage-card" data-stage="evidence">
+            <div class="stage-marker"><span>1</span></div>
+            <div class="stage-content">
+              <div class="stage-title-row"><h3>Reading the diagram</h3><span class="stage-state">Waiting</span></div>
+              <p>Prepares the diagram for the tutor.</p>
+              <details><summary>View research details</summary><pre class="stage-output" id="evidence-output"></pre></details>
+            </div>
+          </li>
+          <li class="stage-card" data-stage="assessment">
+            <div class="stage-marker"><span>2</span></div>
+            <div class="stage-content">
+              <div class="stage-title-row"><h3>Checking your answer</h3><span class="stage-state">Waiting</span></div>
+              <p>Checks the choice and, when submitted, considers the explanation.</p>
+              <details><summary>View the check</summary><pre class="stage-output" id="assessment-output"></pre></details>
+            </div>
+          </li>
+          <li class="stage-card" data-stage="response">
+            <div class="stage-marker"><span>3</span></div>
+            <div class="stage-content">
+              <div class="stage-title-row"><h3>Giving feedback or a hint</h3><span class="stage-state">Waiting</span></div>
+              <p>Celebrates sound reasoning or offers a next step.</p>
+              <details><summary>View tutor response</summary><pre class="stage-output" id="response-output"></pre></details>
+            </div>
+          </li>
+        </ol>
+
+        <section id="feedback-card" class="feedback-card" hidden>
+          <div id="outcome-badge" class="outcome-badge"></div>
+          <p id="feedback-text"></p>
+        </section>
+        <section id="hint-card" class="hint-card" hidden>
+          <div class="eyebrow">A GENTLE NUDGE</div>
+          <p id="hint-text"></p>
+        </section>
+
+        <p id="result-disclaimer" class="result-disclaimer">This is an experimental prototype. Model-generated observations and interpretations can be wrong and should not be treated as an assessment.</p>
+        <div id="error-message" class="error-message" role="alert" hidden></div>
+        <a id="result-file" class="result-file" hidden>Open saved result</a>
+      </aside>
+    </div>
+    <footer class="page-footer"><span>FIELDNOTES · SCIENCE HINT STUDIO</span><span>Built for exploration, not evaluation.</span></footer>
+  </main>
+</body>
+</html>

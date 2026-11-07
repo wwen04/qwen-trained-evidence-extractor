@@ -1,0 +1,6 @@
+Science question: {{question}}
+{{evidence_line}}The student has not answered yet and may not know where to begin.
+Give ONE supportive, answer-independent hint at level {{tier}}: {{tier_instruction}}.
+Do not assume the student has made a mistake. Do not ask them to provide an answer before helping.
+Only reference diagram details you can verify visually. Do not state the answer, option letter, or reveal the solution.
+Output only the hint.

@@ -1,0 +1,539 @@
+{
+  "dataset_name": "scienceqa",
+  "size": 100,
+  "seed": 42,
+  "tiers": [
+    1,
+    2,
+    3
+  ],
+  "method": "Reuse the exact 100 questions already judged in completed ScienceQA B; no new draw or filtering by results",
+  "source_configuration": {
+    "dataset_id": "derek-thomas/ScienceQA",
+    "dataset_revision": "f18b0a70359ebfb41f658fd564208d0355b013f4",
+    "subject": "natural science",
+    "grades": [
+      "grade7",
+      "grade8"
+    ]
+  },
+  "source_run_id": "20261103T084643_855407Z",
+  "source_record_map_sha256": "07d5d71a2f65a7a5dac127846ee9533d5e27777cac4de768bf2ca2948bbe48f0",
+  "original_population_questions": 613,
+  "original_available_questions": 603,
+  "excluded_calibration_item_ids": [
+    "train_001413",
+    "train_001653",
+    "train_003510",
+    "train_003699",
+    "train_003943",
+    "train_004539",
+    "train_006665",
+    "train_008739",
+    "train_012234",
+    "train_012520"
+  ],
+  "original_sampling_reproduced": true,
+  "items": [
+    {
+      "item_id": "train_000077",
+      "input_sha256": "9b668f066d6f76ef2fc8fa4c6e4044596c16f4ffeb00cbd334f828359c279146",
+      "image_sha256": "c42d83e99d15f67ff7914d7ecb356e8884727681da594f219247b3976d6aca7f"
+    },
+    {
+      "item_id": "train_000335",
+      "input_sha256": "c0b2a9ace56f7745f313f25e2a196cf75accf0b787cd3499a40c26dda2998f75",
+      "image_sha256": "91061f3ee73e0e38bea22521047eb4ea1dc06b39fd45dcf0497d5fc85bf918c9"
+    },
+    {
+      "item_id": "train_000382",
+      "input_sha256": "ef7dd222ab568ef212ac0f1116cb9bd985a4e166af268692908ae953211a0154",
+      "image_sha256": "a1a53a6f468ff0ea9ddeec073a4edded987ce88adab17ebb4c4b2883d5d604b8"
+    },
+    {
+      "item_id": "train_000410",
+      "input_sha256": "35a62f65bd80e91db177f3653f603df3776e6d219df6fd1640c8bc91b86f2e53",
+      "image_sha256": "7d9e7b8363dd794d8863b7a2d8c21f2a48a700668d9635b545cb8f1e091f1caf"
+    },
+    {
+      "item_id": "train_000425",
+      "input_sha256": "9defefffef37ab24db855daaf0e39909efcc3c53a318bebb86b80935600339e9",
+      "image_sha256": "4e3603d7d19e9259b1f6fc26f19463127e9107d254b3f9b19326c5167a677cc4"
+    },
+    {
+      "item_id": "train_000691",
+      "input_sha256": "d1465dcffd519086021b222ac77d2dffbc2b162b46f1eab6ce52cb1b71b184c9",
+      "image_sha256": "8a8c24d867e91d4a194c90feb4fe1b59236ef58eebd689dc7c1c07afb49db692"
+    },
+    {
+      "item_id": "train_000739",
+      "input_sha256": "1fc732a1f207ae42cc37edc155affc3bf6a47a8d2cd7727a8f8a69c4f5da6750",
+      "image_sha256": "e60e54f7bdeb278167d929928a8416c7c7827b45ac2f8e22a98da0c2469904cf"
+    },
+    {
+      "item_id": "train_000867",
+      "input_sha256": "113e277797f0aa5ea7eeb6fe2ca6f126290c1de334cb85bd5e3d7a9f323e9b76",
+      "image_sha256": "0763f1585b5b453e95155361b2a9a4e37552abe781bb2f156258b15ec32052c1"
+    },
+    {
+      "item_id": "train_001104",
+      "input_sha256": "731878141ec7fc7709b0d5a4f130040396fee4cdf827808852a10333b3802905",
+      "image_sha256": "9f08ec1b48f2d08b569d40219d8f86b93df2d9b016e75a0e45411dc3f1389205"
+    },
+    {
+      "item_id": "train_001174",
+      "input_sha256": "8933396ad97e6142dff9dc81612eddafc1f657c8334794e3a2782d9f9b7ee6b8",
+      "image_sha256": "34ebd04b39b6fe4ab9daf24101fea45fc435dba98bb3777dfd477abbca5fb2fb"
+    },
+    {
+      "item_id": "train_001189",
+      "input_sha256": "5ae58218388799f44d1a691bb675a4d4de608add3c06f523638859ad3957e704",
+      "image_sha256": "086d77cf1635b996c57ffcc929a0560414c35154df9f381c652408817e465d8b"
+    },
+    {
+      "item_id": "train_001263",
+      "input_sha256": "2dc7ff6d26947b11c52ae93e039417b06f12ab2316ecf4c98b1a9451cb7e2c6c",
+      "image_sha256": "0a09471d000c82464958e25da5a52b135d40b6226c0b469709917d62328d2810"
+    },
+    {
+      "item_id": "train_001439",
+      "input_sha256": "5076fc1fc3943ed6ebf8e586cb2566571b64f1ead20ac138f237c65729fb5ee3",
+      "image_sha256": "3b7cee640eca1e9716c4cba06e2aabfda653abdee6666bc3aef3941ca58ae5d6"
+    },
+    {
+      "item_id": "train_001446",
+      "input_sha256": "735207d1e2d491ea37d1d46d3abc58564b0785f987afb2bec6b0dfa4d81113a1",
+      "image_sha256": "f26a26fd6c5c42fbef5eb98e6204779cf37b7b540fd3107054b380740311e49e"
+    },
+    {
+      "item_id": "train_001549",
+      "input_sha256": "f03c9f024b1f4c98278f16f09e7e0eaa9ca2b6e7bfb9eebd197333df5f3ebd36",
+      "image_sha256": "3b228cd4ae8923b619a4068a543c3bffd14ebf1304a8a029983b80b4523608a2"
+    },
+    {
+      "item_id": "train_001585",
+      "input_sha256": "7d7be9c7412eaed736cc8fcfb065db4817d4038a31f50e7f2d2c766f45f900a4",
+      "image_sha256": "03090856939e1d59916965dfc6183791984addea33cff43ed53b47b09cb37d9b"
+    },
+    {
+      "item_id": "train_001626",
+      "input_sha256": "2d5304fcc65e18c092b05ab45530d4550ded5e43458f886b0d64a069572dfa4b",
+      "image_sha256": "04be5cf34e8e31be2e6b589fc5b43784a396612574fc0903f70af658cd7f1e11"
+    },
+    {
+      "item_id": "train_001695",
+      "input_sha256": "391616a9e801699df1c3a2dc9845e2ddb94982ea1dcd99ed766bebf895a0979a",
+      "image_sha256": "12306c825f8d4535730b4b9076b5bfffa60e5b61577f63eb50e9e975361e1b18"
+    },
+    {
+      "item_id": "train_001773",
+      "input_sha256": "4533bb65e2c23af1f5d709050b7bacc9f18e77d5dfda1ec694c8420ef869b280",
+      "image_sha256": "2416f82e7f9083d98288eb53f6b75059a9e2fab98dd4e5ee481fb9ffe32f39b1"
+    },
+    {
+      "item_id": "train_001781",
+      "input_sha256": "02473ec0e7036e81ed664f996fbc8600f3e7824d215290a58e9c0e7f226efbe6",
+      "image_sha256": "0614ab726d50dc016f4af9a84984132362ccab3a1b7745aff0de0bdc4ba51a9a"
+    },
+    {
+      "item_id": "train_001873",
+      "input_sha256": "1f6f265d01454911035b1a2c68a8ab501097c8c787e8ef34cc2a781117ff9b64",
+      "image_sha256": "88bc5c29a20d6314af9485c7bb3b54e4ba918e83bc9acb990474f312abe7aafc"
+    },
+    {
+      "item_id": "train_001898",
+      "input_sha256": "21349e08b013bf90284feb7bfb2f6aaa7bfad7cc1a3ef64ff09baef670d41ed7",
+      "image_sha256": "b6d038dcddeb54e63e097f4291912f5ddbdbcd6d264ff85181f84d04c1414e89"
+    },
+    {
+      "item_id": "train_002214",
+      "input_sha256": "480f8b39bb202e1d84bbe3c1bc8e07e985e68bf9ad024f5fa8efb3bec76ff924",
+      "image_sha256": "368070571cb8f3c2a019e4c26cc1c95f1b0b3321202fb991003a3e87181c233b"
+    },
+    {
+      "item_id": "train_002579",
+      "input_sha256": "1e329824feb9f5f162867574400dff13dd7df6edb5cf3f426fedefa9a8fdb088",
+      "image_sha256": "c4da78cb910f1c8eb6663e426ac1a439594e2e4efa609812f318d0a3c5dfc66b"
+    },
+    {
+      "item_id": "train_002630",
+      "input_sha256": "8b0e974c7ae85ece7ef18a1b2b7ff63f266c91ece16c0a88828c5c0800327fd7",
+      "image_sha256": "784d6fd7ad33283dc45d9b0f5b16d5f2676d1ce5263f9d2aca21245365535677"
+    },
+    {
+      "item_id": "train_002951",
+      "input_sha256": "db21652be424a894eb21e1e239e0e05f0f72a2ec0b6889a9741ccc98808b432c",
+      "image_sha256": "c42d83e99d15f67ff7914d7ecb356e8884727681da594f219247b3976d6aca7f"
+    },
+    {
+      "item_id": "train_003005",
+      "input_sha256": "4ac4b1361bf0f66f9db942c867ceb7a9840c1a30d9d0d66314d81aa420dddda0",
+      "image_sha256": "9db97cb8e87ec280f6de7d7ac551fa2ff1480e1922954e2a259c253aa616c604"
+    },
+    {
+      "item_id": "train_003073",
+      "input_sha256": "e51edd6a2c614cc3b24a91906e3719fd2ef0050e4d4454d69359c4f38288f798",
+      "image_sha256": "d9fd799b8bdab3cbb238120a4ba6f396922953758dc7d3b635f89d444b750052"
+    },
+    {
+      "item_id": "train_003076",
+      "input_sha256": "b50d15fbbc27c0b666c3a108c02aeeac8302bdc91941cadef9bd605359559431",
+      "image_sha256": "a1a53a6f468ff0ea9ddeec073a4edded987ce88adab17ebb4c4b2883d5d604b8"
+    },
+    {
+      "item_id": "train_003213",
+      "input_sha256": "513f31482a882cd4d86fdef6216196dd168176abad279c7033dea5e63f4b2887",
+      "image_sha256": "f938d9aa3008f09ea4bdd27305f98996fb4d10892502ef1343563d41af12f5dc"
+    },
+    {
+      "item_id": "train_003482",
+      "input_sha256": "b94d289c153ef7c74864f9ac3bcaacd5311bcf4f6989c0012fc5da9052b3a418",
+      "image_sha256": "daf115743cb749b56234ad4caab55d8884e7215efa322172d57ce344ad9f804b"
+    },
+    {
+      "item_id": "train_003703",
+      "input_sha256": "a5662c2c966c4e9a983855d3d2ae0c2d4cfbafc07948e37c66592fe53b353fa8",
+      "image_sha256": "604d72738430bb81dbb7413cd1b78a6cdd056306acc2f0e653066b0e10309035"
+    },
+    {
+      "item_id": "train_003916",
+      "input_sha256": "0e75cf8fe4e081499d77c6a04f56c1d2b271cffcead20e562317e41dc084dca9",
+      "image_sha256": "f35511462c7a3c382e0e925ac6ebc97c0e698339a75cefe4263fcd8be0647d76"
+    },
+    {
+      "item_id": "train_003930",
+      "input_sha256": "07aefc9698aa30e557c0cf99876d9befdbf13717c198f3637b1ffdf11e63fe8d",
+      "image_sha256": "6f8e00ed780ea263b38fc542df3e0903e15c59590e7f0cc73ba833a187adf0a7"
+    },
+    {
+      "item_id": "train_004134",
+      "input_sha256": "b208f5bc9229a40aa83d50b099f947382f31ce46ab22bdaa52ee01a85f345199",
+      "image_sha256": "932f95c00c9e44d22b845297995b6eead9e967dbc89bec1453b134b0e4726057"
+    },
+    {
+      "item_id": "train_004148",
+      "input_sha256": "4a655375b79375905d1c0eb9f338fc71d455d4ad3af90f280309a59e81c29e30",
+      "image_sha256": "c9868db4659d9649a784ce531a4f172b672baaf810c7f46fdf42083011b161e4"
+    },
+    {
+      "item_id": "train_004158",
+      "input_sha256": "64bdb51de979f840146dd1380eba68b15a142ceb3b0fd668c27f02e43e61f8dc",
+      "image_sha256": "5d01a4964297665d08d556f93308d4ca20380c6ae8dd7b4caa8ff5786acd077e"
+    },
+    {
+      "item_id": "train_004225",
+      "input_sha256": "4a41e8db763006d83aee7b1748f6ef8bb782d12fb53b5d4dd84e5ab4eda56469",
+      "image_sha256": "0d29c446c98ad729c6e5b127e96c4a0224d0a03140614ef841f445d4e8db1517"
+    },
+    {
+      "item_id": "train_004327",
+      "input_sha256": "b1139ce1fe438788b2d2f41a5adda69d2bb2fe430e8c1ba97d3a77a4f7ce6099",
+      "image_sha256": "523fbbc2e33c989ec1e91ad8af9c83aa43f89b0b70f332074538daac0bd6bdbe"
+    },
+    {
+      "item_id": "train_004328",
+      "input_sha256": "709cd3834d425c70df0d98e1e0c312f6ff8675ed0dde35d7d14f8cf7a88ac958",
+      "image_sha256": "532ac145ebde514b5327826842d4fa17f57756bde2ace8aba57bfdc3ead0c1bc"
+    },
+    {
+      "item_id": "train_004332",
+      "input_sha256": "ec860cb53ddd08420ad7cfd31ad941eaa7ecbf04ac2dd7492fc40b94dc44f0fc",
+      "image_sha256": "670e23099412fdd464294c92f55c19beaecfb7aa574f0aa3260eb4bc57219eda"
+    },
+    {
+      "item_id": "train_004386",
+      "input_sha256": "3a1e175c37e91f920ea6abf74a67f3a30031ffd2c762081639193c55fcaa3fa2",
+      "image_sha256": "46cd4d6485bebfb084dfcfb531781d6eae3b9368c5b875ae07672957bdd1b532"
+    },
+    {
+      "item_id": "train_004535",
+      "input_sha256": "04059418b1f05d6d5d85c4f8c9c1f60ab4e21a82c7252afbe5252c96232886be",
+      "image_sha256": "ec45e3ff74e12c5ae2e42419dad4f132ec43eb6162ddbed6f95cc4806604c5d7"
+    },
+    {
+      "item_id": "train_004556",
+      "input_sha256": "3cedf060682528a4b9b9046357f25a290c4407e1982ae013c2c391c6e9b11053",
+      "image_sha256": "c42d83e99d15f67ff7914d7ecb356e8884727681da594f219247b3976d6aca7f"
+    },
+    {
+      "item_id": "train_004615",
+      "input_sha256": "f03aa9a475351c85fb40e5fb1c1fe97841b06e28b1fbdd315a656c6dfb3a94f2",
+      "image_sha256": "4d44c671e59905827abbe1456dc69d4fc0927781da58955b5041f0695ae8f721"
+    },
+    {
+      "item_id": "train_004887",
+      "input_sha256": "ff17221f67c20a827a4b6a6eea5c2f961e9570f62495fe5665310bc9cdebdb3d",
+      "image_sha256": "604d72738430bb81dbb7413cd1b78a6cdd056306acc2f0e653066b0e10309035"
+    },
+    {
+      "item_id": "train_004977",
+      "input_sha256": "39c7d00ebcfec70372d716b84fd252e71cf6d79502e97d8761881ba5c5d09057",
+      "image_sha256": "cbebe95d943e89ab6ad61b804030104808bc9a2ca6796d1772a94d210468b169"
+    },
+    {
+      "item_id": "train_005208",
+      "input_sha256": "c45a2ff305ab439b11173d4d9334a8d9a74c3518a5b2363b03114996a481db7e",
+      "image_sha256": "bb220aab49dad95f7f883f7106b621ead76abe2ba143a1aa592789d70618cd15"
+    },
+    {
+      "item_id": "train_005457",
+      "input_sha256": "4abea938bd717e7ac16c82e131ff3e262d5a83f8a18f2ed3d096cbfafa8c1577",
+      "image_sha256": "0b7e458e15592822826ed3587f32af390c157fad62890149628137cb124939df"
+    },
+    {
+      "item_id": "train_005508",
+      "input_sha256": "fc62f9e8a22684373eb86fa0feda62bea7b3a25fe2211c670e4f4fd7d12f66e0",
+      "image_sha256": "54dfc01d28008c1064900944216475225fcfc230525ea18d3e8924fa9effabf0"
+    },
+    {
+      "item_id": "train_005523",
+      "input_sha256": "1788b6231584d98e6ca63db2bcf461b65ca0491b70da77ffcca7f417739ab31a",
+      "image_sha256": "2628702e2e4cfd9cde8b590bc2057e3d8c253ac1a89699fc0cc6ed3ba030663e"
+    },
+    {
+      "item_id": "train_005560",
+      "input_sha256": "60229a093fd434f51b59ed9380be58db212637d717b692bd920754e8a5f9843d",
+      "image_sha256": "4323c97966e255bf743378776899b3e83a363c36d5a5e2423004af0677b3ee0c"
+    },
+    {
+      "item_id": "train_005563",
+      "input_sha256": "a702d8c7488e6c66cfca12be6ec02759ffd9d4d233ad85c4871cff43e9c326f0",
+      "image_sha256": "42f34ba2fbd3301ecfdd0f6fb39d1c89de715a9a4de7d8939165d47e5e89d69e"
+    },
+    {
+      "item_id": "train_005583",
+      "input_sha256": "242fded0cc8b561e770b1a204efc1a842e89453fdef622a8456018fb179b1bb0",
+      "image_sha256": "a66304c2cd4f2ca5abf5dad7bbf35dfeb06d4ba62e5ebc0e11832de34f54a826"
+    },
+    {
+      "item_id": "train_005643",
+      "input_sha256": "2c38c5e8dcad960ec2aaba0a5d6c801a3cac712f850a972bdcb731e818f4173c",
+      "image_sha256": "828ff79d8b37454749ca02f7915ac954cf1d82476848ea4356d2b3f001634ae6"
+    },
+    {
+      "item_id": "train_005709",
+      "input_sha256": "27894dd02a6a1696c0d1f7252529158729ce7d1e67a8092e9768fe25b78d41a7",
+      "image_sha256": "bbca743fc38fa4e1bf36b6d12f36c735aac9f7277e7261dc9ad8fe202456ff4e"
+    },
+    {
+      "item_id": "train_005975",
+      "input_sha256": "686b95d996474b85bf7f210ae92ea5f7b4d2d96b83195be5bd8ae6c32006504f",
+      "image_sha256": "670e23099412fdd464294c92f55c19beaecfb7aa574f0aa3260eb4bc57219eda"
+    },
+    {
+      "item_id": "train_006113",
+      "input_sha256": "b6ceed7dcc76569a6e35e5c7706b435e91b781727873fda0dc356e1150f47f31",
+      "image_sha256": "79c65641c7bf24b7d117c19d720dfa3283f00e3c37bfa9c5354aa1295759686d"
+    },
+    {
+      "item_id": "train_006203",
+      "input_sha256": "f88b5285d85af3a16437f3707eec24318cfe0663fd3479c5a7742ed125bfda53",
+      "image_sha256": "3e4ff12a0f89de56e205d719a895a1f4e790bab8a8c45942fbf6e09be76b142c"
+    },
+    {
+      "item_id": "train_006751",
+      "input_sha256": "63d784046e3185bf71f157c1c761e164e29390ba0c55b847bee18330f767dff4",
+      "image_sha256": "54dfc01d28008c1064900944216475225fcfc230525ea18d3e8924fa9effabf0"
+    },
+    {
+      "item_id": "train_006781",
+      "input_sha256": "e9f3278d86eaa7e51a928d692704e950613f873646b1f44a40ca2def88a2b48d",
+      "image_sha256": "ec45e3ff74e12c5ae2e42419dad4f132ec43eb6162ddbed6f95cc4806604c5d7"
+    },
+    {
+      "item_id": "train_007007",
+      "input_sha256": "24fc6c6db70c51c98c15ceb2918ee5b3ad0298065979d0815fccb4e658dac1fc",
+      "image_sha256": "4886bcbb4aa575176add5e4d831c1e254256c7b643bd284b92e87ee08c436bc8"
+    },
+    {
+      "item_id": "train_007381",
+      "input_sha256": "4ffed4838275124c92d12071922136183f6abe104d38c435ed1951b690ba7360",
+      "image_sha256": "fdff5a5eee9b3dd7891a88aebf962ddd85c4bd2a2600b4f7df7563402cdc875f"
+    },
+    {
+      "item_id": "train_007423",
+      "input_sha256": "5684e828469d5a5e54a7a38208859da9ef7c15e701619c9085cca404619d3513",
+      "image_sha256": "160c03b41266bd6a993adc5b8087be4322795a241ca132c520aa7b399dc14e37"
+    },
+    {
+      "item_id": "train_007484",
+      "input_sha256": "687c482d0cfaf8678dc8b74348600e125a028efc11de326a8e426e5a930a2c8e",
+      "image_sha256": "aac4f464572e90309e2b9107fe7d0e170052c133b08999ef91328de34e13e785"
+    },
+    {
+      "item_id": "train_007684",
+      "input_sha256": "84003d7bc6912a67ef5d0515c07d7408c9b247acabae73cfd90b93d51700fb14",
+      "image_sha256": "49b655e65ab3bb46f2706a4b93f781e7fa40f47fc82745c9dd7cd255cce70970"
+    },
+    {
+      "item_id": "train_007752",
+      "input_sha256": "02075cace8cdcfabb0822956d55a5f662f2abfdce9ceace74e1d50e0c6dc27b1",
+      "image_sha256": "ecf380f5e9a4b0f314a4b1bf80aaa069aa973c6dbfa691de7d7401792855631a"
+    },
+    {
+      "item_id": "train_007781",
+      "input_sha256": "133068d1d2b4f11e91963c550434b6bc0fc5f6e9bc2e9963acf3cb03beedbc93",
+      "image_sha256": "313d1163c9e42899634fc043f3b6d8117eae3da53c1e2d3b87d2e953fe80a856"
+    },
+    {
+      "item_id": "train_007860",
+      "input_sha256": "6e4ba3b3340fc82b99d31e9d9a67d215568f48d17671d0b39d102f144169c93e",
+      "image_sha256": "1aa2545f0783b201387315ff0ac1cbe1d5f35578eb62c27873d6cd3f4b6784de"
+    },
+    {
+      "item_id": "train_007988",
+      "input_sha256": "6de06ee6a05dfe72b9e57237d0b08ebbcf80ceb1073afcc3175d1f022ca65e94",
+      "image_sha256": "f423550c6328d8b87a6b3cd3586a3aac51692014edbac385579bf38a60529502"
+    },
+    {
+      "item_id": "train_008188",
+      "input_sha256": "3a310583a7b8a19292f6023817d011bf3cd3ed906af6cb1a857509a0751c898d",
+      "image_sha256": "e460482c9621b8205fa84c74856717c3b6dc0c2769e04f7c4a0a98908af00843"
+    },
+    {
+      "item_id": "train_008189",
+      "input_sha256": "6bc63b23c2f4b98abb8bc8347ad1537f6b830de52555b011c0d3a3b02d4da706",
+      "image_sha256": "73877e16bb0bb7c0c0a511ccb22dda0cb4ce9e1a8e653520c7e9449f70775c28"
+    },
+    {
+      "item_id": "train_008222",
+      "input_sha256": "f0280d6467e08b20d9d78552a435525c92125432764e10faa000ab9a4c219917",
+      "image_sha256": "cb5a00e55956c9d0423c2cda7132c4995e344517c784ed0534f80ff94d6e7934"
+    },
+    {
+      "item_id": "train_008558",
+      "input_sha256": "d0657c89f19fd3183508a95aa4303be8a7a2698961e5b4e7f2d7f314af5c6cdf",
+      "image_sha256": "b7e26d986e0ccf07600da7208a5136441bb22735b8ab617473851b05db57b300"
+    },
+    {
+      "item_id": "train_008727",
+      "input_sha256": "dff9c12eba843447f976c1966d3341471b7502bdd5f59ad190e942e63c81ccf9",
+      "image_sha256": "e07fcd4b3124bed727031981bdb32c0c64647684cf443b1351ecd082b94097df"
+    },
+    {
+      "item_id": "train_008981",
+      "input_sha256": "830850bec054b9f5328c63f9d90eb16a1fe15fef9241f88005adafc2b82ee331",
+      "image_sha256": "34c0a1255bbc651e89015e548d06f31370a8446faa4a65b68168a358cd141a5e"
+    },
+    {
+      "item_id": "train_009007",
+      "input_sha256": "4f3a0b72fb88548f2dd39dc401e55f0bc7154316ed6d04d1ee8622e58954419d",
+      "image_sha256": "313d1163c9e42899634fc043f3b6d8117eae3da53c1e2d3b87d2e953fe80a856"
+    },
+    {
+      "item_id": "train_009098",
+      "input_sha256": "4a4ec33c8ba8267430cb5dc160d76a5fd093a91bec34b4d25a94ce21796a1a8e",
+      "image_sha256": "cb0ed6737c85220642b6ed6970c237b1db6f6f29ab925dc87533496fbaea825f"
+    },
+    {
+      "item_id": "train_009600",
+      "input_sha256": "574fe580d2995212f58d662e86f2a1e79070e31f094abd109082665edc7fbf01",
+      "image_sha256": "5cb73482aa0cab72a677f73d7aaff5d8bda0b6d479314cf456e876b5f126956d"
+    },
+    {
+      "item_id": "train_009710",
+      "input_sha256": "b9ebad2ec527a38ffbb90d653c7b4a01b2ece79803ab19a71e3758e91d454195",
+      "image_sha256": "2cf7ba59845d4102f72ee91cb8d28479b4876cc0769d8e8fa09f2ca8b9728e2c"
+    },
+    {
+      "item_id": "train_009774",
+      "input_sha256": "0bc53f5e62c0be08d52013cf8fda795d25ab4f3f70c822dea902eba746b5c245",
+      "image_sha256": "6f330017559d38fecfd4631b2e7114b354199d2b5bf586c7a8a275da30fec2f7"
+    },
+    {
+      "item_id": "train_009791",
+      "input_sha256": "674083fd522ae5c87c63c3bc2411cc45a8a390363320a097eb1c4dc9f0e7ca06",
+      "image_sha256": "f834b5a7fd9eb7accde98df4937803c3832d8044caf82fd45a354ce1ebdc7209"
+    },
+    {
+      "item_id": "train_009874",
+      "input_sha256": "6112395cc72e79b084b0853ab81facbe9c30fda592a8a1080cdeab7b9d402c70",
+      "image_sha256": "b1e6e3586a5a6ae9b4fb5e6caf52bfac10077c795afe2e6917c4bb6641a6b4bd"
+    },
+    {
+      "item_id": "train_010922",
+      "input_sha256": "03b9f6b2fecf780affd3d8ce40cfaf117efac860a877f4a4f6c4b41d0f2bc4eb",
+      "image_sha256": "fc9dbfe17a49e23dec9124d53c86c1b139d6a5048bc905a514f548fc1ca9f0e0"
+    },
+    {
+      "item_id": "train_010958",
+      "input_sha256": "396d08cecf0f40151c0d01cc9b38af4b9f02587bf1f9a55462d572c670da39c9",
+      "image_sha256": "38493954d20a233d45802b607ecab4eb056b28b283d27f8f0bed43e0ea73ca67"
+    },
+    {
+      "item_id": "train_011018",
+      "input_sha256": "f4a1de6618fc1944f726e689a043ab417ad8528a6105d05a898c4f012a91a039",
+      "image_sha256": "312dd41d3c514087a62a4f1ed093af048cb621de2f7684963c95128b094ee62a"
+    },
+    {
+      "item_id": "train_011763",
+      "input_sha256": "52f0b427ce68d729ba5228cf313286db0f97f7e282999cf5d32e086d458d0fa8",
+      "image_sha256": "aa832bf161624849910eceb40916d0c2cff3747c2920f0eff88c39759dcbf0a8"
+    },
+    {
+      "item_id": "train_011891",
+      "input_sha256": "aaee39d75dc84b48490c1011ff6e49647dd1dcc626abc1ea4ff554282f92efc3",
+      "image_sha256": "9db97cb8e87ec280f6de7d7ac551fa2ff1480e1922954e2a259c253aa616c604"
+    },
+    {
+      "item_id": "train_012072",
+      "input_sha256": "1cdd39291c7c9aa86189ee4db0da3562994faf8135f85bb1a6d4faf0f79036c4",
+      "image_sha256": "89ac08738e75d2823a3733cb20969a5cc0e89b6f06aff71c9435e68410a58744"
+    },
+    {
+      "item_id": "train_012202",
+      "input_sha256": "2cfbcfa376c9a978e0a1524af899bf76eeb7935ed739369e1e99b985b6bcfe89",
+      "image_sha256": "fb581381c6a7296d24b52cf7c95509d148f607b66173290fc9be8297c70b95da"
+    },
+    {
+      "item_id": "train_012289",
+      "input_sha256": "343ff02ec059f3804b7074c7126fa8a66f92615022f380821ddb7a2290564dc8",
+      "image_sha256": "014e773d4447bb9240b63cfa2047250b322a9a60c350876280aa9b05572cd1e7"
+    },
+    {
+      "item_id": "train_012311",
+      "input_sha256": "8d8e0f0931adeaf370f06a3f389b4a204dd94f0f52b76471a38eb6faef1e47b7",
+      "image_sha256": "bcbaf23dbd5216bb80c1d28dd58f71c75f381c8aab0b1eae099a4dc8a1301ca4"
+    },
+    {
+      "item_id": "train_012442",
+      "input_sha256": "4e38305ec1e6ce4ae7e748e49db6db22a6789b912c4c05adc04524e7862659fc",
+      "image_sha256": "b4d7d89b0af174f9a0fcd481ded7fdc194848dfb9e7bd05ebdd73db554c350e4"
+    },
+    {
+      "item_id": "train_012486",
+      "input_sha256": "513564b737ab882b4f6e38fd75410916b51824b7de8ef1e35c463abf13d7f629",
+      "image_sha256": "bbca743fc38fa4e1bf36b6d12f36c735aac9f7277e7261dc9ad8fe202456ff4e"
+    },
+    {
+      "item_id": "train_012531",
+      "input_sha256": "735877ccc0c6d3263f42abfa95b0fe7cefdbe4a07f246f44c9ef7f7eddf1b9f2",
+      "image_sha256": "1af0ea0a352d26b655424c6d2b101b9c6c50a094ac6731cdc691729ec309c22e"
+    },
+    {
+      "item_id": "train_012556",
+      "input_sha256": "8745fed11618169cdb2d8228cb1abafa1d27443aa985c2e444947b7f2c776bd4",
+      "image_sha256": "b3f0cce4aa78f19257527a75076dfd8f7f0935adf3d6e24eaf44f1d38e6e045d"
+    },
+    {
+      "item_id": "train_012598",
+      "input_sha256": "1ea1600894a26b45225b7332d9314f37f5735102b23e0af5216929dd22c3fff5",
+      "image_sha256": "a347beb5884b6d39e8992c09db95a130efc85e70a0ac220fcdcf3dd1b3acb23e"
+    },
+    {
+      "item_id": "train_012602",
+      "input_sha256": "1e65a237e6d3940060ba19a43e1288cbd05aabbd1456d770b1f5a5fffa046dc5",
+      "image_sha256": "71dfbafae233bc3c00f65260285ee874bf4e2003d5080335b6fbbe8c215960c3"
+    },
+    {
+      "item_id": "train_012620",
+      "input_sha256": "ff10004b98504311383856bb15b6019599481e63e14d9bd6d5316a3f64ec557b",
+      "image_sha256": "276cc7f4975e99b3409418a4f737a1c70713db2b057e03ebf57ef20bf0dce69a"
+    },
+    {
+      "item_id": "train_012689",
+      "input_sha256": "521555a2a97ed2c59b7a708517eb3fb11543fb94b6da38649d10aa9165ff8fe4",
+      "image_sha256": "08dffaf33b0ca81f4800ff784440099fece1e96bb8a252c3e3ecb49a2a30ed49"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "source": {
+    "dataset_id": "lmms-lab-encoder/ai2d",
+    "dataset_revision": "c83a9b9692933aff8349157c88a413df9d02c4e5",
+    "split": "test",
+    "data_files": [
+      "data/test-00000-of-00002.parquet",
+      "data/test-00001-of-00002.parquet"
+    ],
+    "expected_rows": 3088,
+    "selection": {
+      "size": 100,
+      "seed": 42,
+      "method": "random_image_groups_then_one_random_question_per_group"
+    }
+  },
+  "source_files_sha256": {
+    "README.md": "d70c9753da41fd009f6122011953bfcaa0bdbffcfb243c9d40a4bdfe919d4101",
+    "data/test-00000-of-00002.parquet": "450ecfa95b0c475ba214cd9a33b7ec5d1d782e7321a54fc652453d8776743702",
+    "data/test-00001-of-00002.parquet": "13f5813136e51902cc4048bf48c53104b29dbe7ac7d31b170c0e9c36bceed06b"
+  },
+  "source_count": 3088,
+  "valid_count": 3088,
+  "choice_count_distribution": {
+    "4": 3088
+  },
+  "id_convention": "ai2d_test_<zero-based row position across configured Parquet files, padded to six digits>; assigned before validation",
+  "formatting": "Preserve question, option text/order and image bytes; assign A-Z option IDs and map the zero-based answer index to its option ID",
+  "grade_filter": null,
+  "reference_explanations_available": false
+}

@@ -1,0 +1,71 @@
+{
+  "source": {
+    "dataset_id": "lmms-lab-encoder/ai2d",
+    "dataset_revision": "c83a9b9692933aff8349157c88a413df9d02c4e5",
+    "split": "test",
+    "data_files": [
+      "data/test-00000-of-00002.parquet",
+      "data/test-00001-of-00002.parquet"
+    ],
+    "expected_rows": 3088,
+    "selection": {
+      "size": 100,
+      "seed": 42,
+      "method": "random_image_groups_then_one_random_question_per_group"
+    }
+  },
+  "source_files_sha256": {
+    "README.md": "d70c9753da41fd009f6122011953bfcaa0bdbffcfb243c9d40a4bdfe919d4101",
+    "data/test-00000-of-00002.parquet": "450ecfa95b0c475ba214cd9a33b7ec5d1d782e7321a54fc652453d8776743702",
+    "data/test-00001-of-00002.parquet": "13f5813136e51902cc4048bf48c53104b29dbe7ac7d31b170c0e9c36bceed06b"
+  },
+  "source_count": 3088,
+  "valid_count": 3088,
+  "choice_count_distribution": {
+    "4": 3088
+  },
+  "id_convention": "ai2d_test_<zero-based row position across configured Parquet files, padded to six digits>; assigned before validation",
+  "formatting": "Preserve question, option text/order and image bytes; assign A-Z option IDs and map the zero-based answer index to its option ID",
+  "grade_filter": null,
+  "reference_explanations_available": false,
+  "status": "prepared_and_sample_frozen",
+  "exclusions": [],
+  "unique_image_bytes": 814,
+  "unique_decoded_images": 814,
+  "image_group_count": 814,
+  "questions_per_group_distribution": {
+    "1": 132,
+    "2": 199,
+    "3": 156,
+    "4": 132,
+    "5": 61,
+    "6": 38,
+    "7": 6,
+    "8": 5,
+    "9": 18,
+    "10": 18,
+    "11": 22,
+    "12": 23,
+    "20": 1,
+    "22": 2,
+    "23": 1
+  },
+  "selected_count": 100,
+  "selected_image_groups": 100,
+  "selection_sha256": "fe9754626854da1555699b2a7215e303af3abeef419052da3367222c9a90a213",
+  "visual_review_performed": false,
+  "artifact_files_sha256": {
+    "data/processed/ai2d/questions/test.jsonl": "b38fc5fde4f947e918ebc6f0794858bea442c396300b1ddd961ba0152f0840ec",
+    "data/processed/ai2d/references/test.jsonl": "141354845a8b2e4762cdfbbfc02bbb4ab7a496988fc89b6deee5211937ec1b56",
+    "data/final/ai2d/questions/test.jsonl": "c7a2c96dc1d3e0b36af779d55246b176d74f473609a431d02f500bf975a94a63",
+    "data/final/ai2d/references/test.jsonl": "cbbae35498a478f2eb8037f81bc8c857eb3582810aec4f47ea3b59047d5f4e67"
+  },
+  "limitations": [
+    "Source question-image pairings are preserved; no label-by-label inspection or image relabelling was performed.",
+    "No visual-necessity, curriculum, scientific-correctness or answer-key review was performed. Valid means structurally usable, not independently verified.",
+    "Image groups join matching source image filenames or identical decoded RGBA pixels. Near duplicates with different filenames and pixels may remain.",
+    "No cross-dataset overlap check was performed. AI2D and ScienceQA selections and results remain separate.",
+    "The source supplies no per-question grade, lecture or solution. Empty reference explanations mean unavailable.",
+    "This is a diagram-balanced sample of the source test split, not a uniform random sample of question rows. It is reserved for evaluation without student attempts."
+  ]
+}

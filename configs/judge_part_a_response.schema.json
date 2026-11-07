@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Part A pointwise hint judgment",
+  "description": "The exact seven-field response structure from judge_rubric.md Part A. Request IDs, errors and derived metrics belong in a separate saved envelope.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tier_compliance", "visual_grounding", "unsupported_visual_claims", "scientific_correctness", "steers_toward_wrong_answer", "answer_disclosure", "actionability"],
+  "properties": {
+    "tier_compliance": {"$ref": "#/$defs/binary_verdict"},
+    "visual_grounding": {"$ref": "#/$defs/binary_verdict"},
+    "unsupported_visual_claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unsupported_claims", "count"],
+      "properties": {
+        "unsupported_claims": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "scientific_correctness": {"$ref": "#/$defs/binary_verdict"},
+    "steers_toward_wrong_answer": {"$ref": "#/$defs/binary_verdict"},
+    "answer_disclosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason", "score"],
+      "properties": {
+        "reason": {"type": "string", "minLength": 1},
+        "score": {"type": "integer", "enum": [0, 1, 2]}
+      }
+    },
+    "actionability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason", "score"],
+      "properties": {
+        "reason": {"type": "string", "minLength": 1},
+        "score": {"type": "integer", "minimum": 1, "maximum": 5}
+      }
+    }
+  },
+  "$defs": {
+    "binary_verdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason", "verdict"],
+      "properties": {
+        "reason": {"type": "string", "minLength": 1},
+        "verdict": {"enum": ["yes", "no"]}
+      }
+    }
+  }
+}

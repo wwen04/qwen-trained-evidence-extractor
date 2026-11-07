@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Experiment B saved hint record",
+  "description": "One generation outcome for one question and requested tier. No gold references or judge ratings belong in this record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "hint_id", "run_id", "item_id", "split", "tier", "public_inputs", "prompt", "hint_text", "generation", "word_count"],
+  "properties": {
+    "schema_version": {"const": "b-hint-record-v1"},
+    "hint_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "item_id": {"type": "string", "pattern": "^(train|validation|test)_[0-9]{6}$"},
+    "split": {"enum": ["train", "validation", "test"]},
+    "tier": {"type": "integer", "enum": [1, 2, 3]},
+    "public_inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "context", "choices", "image_path", "image_sha256", "input_sha256"],
+      "properties": {
+        "question": {"type": "string", "minLength": 1},
+        "context": {"type": "string"},
+        "choices": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "text"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^[A-Z]$"},
+              "text": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "image_path": {"type": "string", "pattern": "^data/final/scienceqa/images/[^/\\\\]+$"},
+        "image_sha256": {"$ref": "#/$defs/sha256"},
+        "input_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "rendered_text", "sha256"],
+      "properties": {
+        "version": {"type": "string", "minLength": 1},
+        "rendered_text": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "hint_text": {"type": ["string", "null"]},
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "seconds", "error", "input_tokens", "output_tokens", "finish_reason"],
+      "properties": {
+        "status": {"enum": ["ok", "empty_output", "generation_error"]},
+        "seconds": {"type": "number", "minimum": 0},
+        "error": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type", "message"],
+              "properties": {
+                "type": {"type": "string", "minLength": 1},
+                "message": {"type": "string"}
+              }
+            }
+          ]
+        },
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "finish_reason": {"type": ["string", "null"]}
+      }
+    },
+    "word_count": {"type": ["integer", "null"], "minimum": 0}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"generation": {"properties": {"status": {"const": "ok"}}}}},
+      "then": {
+        "properties": {
+          "hint_text": {"type": "string", "pattern": "\\S"},
+          "word_count": {"type": "integer", "minimum": 1},
+          "generation": {"properties": {"error": {"type": "null"}}}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"generation": {"properties": {"status": {"const": "empty_output"}}}}},
+      "then": {
+        "properties": {
+          "hint_text": {"type": "string", "pattern": "^\\s*$"},
+          "word_count": {"const": 0},
+          "generation": {"properties": {"error": {"type": "null"}}}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"generation": {"properties": {"status": {"const": "generation_error"}}}}},
+      "then": {
+        "properties": {
+          "hint_text": {"type": "null"},
+          "word_count": {"type": "null"},
+          "generation": {"properties": {"error": {"type": "object"}}}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

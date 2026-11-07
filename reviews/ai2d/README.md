@@ -1,0 +1,17 @@
+# AI2D selection policy
+
+AI2D uses the supplied Hugging Face question-image pairs. This preparation does **not** perform ScienceQA's LLM visual-necessity review, manual label matching, answer-key adjudication or image relabelling. The user requested basic validation and answer-option formatting only. No per-item visual-need annotations are claimed or fabricated.
+
+`prepare_ai2d.py` validates the source questions, 2-26 nonempty ordered options, zero-based answer positions and readable image bytes. The current pinned source has four options in every row; four is not imposed by the common record format. Choice text, capitalization, ordering and image bytes are preserved. A-D identify option positions; a letter inside option text still refers to a diagram label. For example, source options `["c", "D", "b", "a"]` with answer `"1"` become A: c, B: D, C: b, D: a, with correct option B. No labels are added to images.
+
+To avoid repeatedly sampling the same diagram, questions are grouped transitively when they share a source image filename or identical decoded RGBA pixels. The source image filename inside the Parquet image object is retained in metadata. This can group differently rendered versions of the same original diagram; unrelated near duplicates with different names and pixels are not detected.
+
+The frozen selection uniformly samples 100 image groups without replacement using seed 42, then uniformly selects one question from each group. Membership is saved in `manifests/ai2d/test_final_ids.json`; full source and selection fingerprints are in `manifests/ai2d/test_selection.json`. The final exports contain this sample, not every structurally valid question. The sample is diagram balanced, not a uniform random sample of question rows.
+
+All 3,088 source rows belong to the source **test** split, which is preserved. Source row positions define `ai2d_test_000000` IDs before validation. Questions and answer references are separate. Empty lecture/solution strings and `reference_explanation_available: false` explicitly record missing explanations, rather than generated substitutes. There is no grade filter or inferred grade label.
+
+Run `python prepare_ai2d.py` to download the pinned source and rebuild. Use `python prepare_ai2d.py --offline` after download. Existing frozen configuration, source hashes and selected record/image fingerprints must match; an incompatible run fails before replacing final question/reference exports or selection files. Images left over from earlier preparation attempts do not define membership.
+
+The preparation report is `reports/ai2d/preparation.md`, with machine-readable metadata and integrity reports beside it. Data and source downloads remain under ignored `data/`; commit the script, config, small manifests, reports and this policy. AI2D remains separate from ScienceQA, reserved for no-attempt evaluation. Preparation itself performs no experiments or UI integration. The separate batch workflow in `experiments/README.md` supports A/B/D generation and uses the frozen 30-question judging subset in `manifests/ai2d/test_judge_selection.json`. No judge is called by these scripts.
+
+Source: [lmms-lab-encoder/ai2d](https://huggingface.co/datasets/lmms-lab-encoder/ai2d), revision `c83a9b9692933aff8349157c88a413df9d02c4e5`. The [AI2D registry entry](https://registry.opendata.aws/allenai-diagrams/) lists CC BY-SA. Retain the upstream attribution and terms when sharing derived dataset content.

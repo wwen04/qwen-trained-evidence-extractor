@@ -1,0 +1,134 @@
+{
+  "dataset_name": "ai2d",
+  "size": 30,
+  "seed": 42,
+  "tiers": [
+    1,
+    2,
+    3
+  ],
+  "method": "Random questions from the frozen evaluation sample; independent of generation/accuracy/quality",
+  "parent_selection_sha256": "68438a0eb6dfa5487fa4b78668be76bd3885f998b57f2daa35e870c726b9cb42",
+  "items": [
+    {
+      "item_id": "ai2d_test_000004",
+      "input_sha256": "0896c517e26074975c80ef79ede5ef8ce58ab22cafef3f72094d32d56b408cba"
+    },
+    {
+      "item_id": "ai2d_test_000065",
+      "input_sha256": "cf7491360b953c2442a06233d0052c9bf2642049d26302d75c581d8d8cd6a818"
+    },
+    {
+      "item_id": "ai2d_test_000091",
+      "input_sha256": "e71ad9cfa2bbbb062fa44ed3dfbb17905e25a1d5c6fe7a9542adb9f7a836f34d"
+    },
+    {
+      "item_id": "ai2d_test_000498",
+      "input_sha256": "5942f61adef19f8104d316890e0a29464650a1b944c3145f15fadb92113fb499"
+    },
+    {
+      "item_id": "ai2d_test_000511",
+      "input_sha256": "aa9ea40c8c243bf068bb13b9258047850bdae6cf2c0fa5e7caa938c2dd5ca144"
+    },
+    {
+      "item_id": "ai2d_test_000522",
+      "input_sha256": "d25eac7f7917fe133615ef27a6bc76c96d31aa02f9810d4ca7cf39a35f28e9df"
+    },
+    {
+      "item_id": "ai2d_test_000602",
+      "input_sha256": "348fed66973f4b0e714ef00da40f1232629dfc047cfde2519bf054587c565966"
+    },
+    {
+      "item_id": "ai2d_test_000830",
+      "input_sha256": "a3de48b9da740fe01c698d425215de1dbc1eb822ed33022ce4c3678dd956f9ac"
+    },
+    {
+      "item_id": "ai2d_test_000903",
+      "input_sha256": "30fd7aa3bd63f13a06b84a5537a849de99e5c9e2e078c8de6990cce30e10ccee"
+    },
+    {
+      "item_id": "ai2d_test_000911",
+      "input_sha256": "a99ad5d944d3e4460d65f2442f37256840744420d8effc8097a390cf67eda2c0"
+    },
+    {
+      "item_id": "ai2d_test_000949",
+      "input_sha256": "016cb96c1e4e14c0a8397bfe8b5018606c0864ebfe799b22a50020566f46856f"
+    },
+    {
+      "item_id": "ai2d_test_000980",
+      "input_sha256": "c02e62d29900f05d94aea82dda866c3cf44686cd4f87d6d530fe3fdde63ddb3a"
+    },
+    {
+      "item_id": "ai2d_test_001076",
+      "input_sha256": "0865631870e5571d2995c7a7173d68bd8375b778a066571647293272df1e5800"
+    },
+    {
+      "item_id": "ai2d_test_001615",
+      "input_sha256": "73683cdfb57da455e22d072d5e60b723c3f5a3276bb0b4ea48b0bdc2ce2cbf11"
+    },
+    {
+      "item_id": "ai2d_test_001690",
+      "input_sha256": "c62d5ee69f2539684a1e8d5e829cf9f6fd3781a0fc5f98b6487f6c01bddd2cd1"
+    },
+    {
+      "item_id": "ai2d_test_001755",
+      "input_sha256": "c36276141703d10ac62646836869f294df44671cd89f7223df2e8711d0ff5a6f"
+    },
+    {
+      "item_id": "ai2d_test_002117",
+      "input_sha256": "d4101889a7574c557936f933475899ccbe996694dfb1b15da4ca251f5405e649"
+    },
+    {
+      "item_id": "ai2d_test_002273",
+      "input_sha256": "cdf0d21dac2fccbd92c967e936aa76700886da2a1eb7343fe9780da15b801411"
+    },
+    {
+      "item_id": "ai2d_test_002299",
+      "input_sha256": "3220fd1306154938a7dc4aaa349d9efeee39d443170540630505ea1832673e09"
+    },
+    {
+      "item_id": "ai2d_test_002355",
+      "input_sha256": "3abee76e87db565ad700d1e67a1ecee3f25447df03e8e6c21bc7ee220ce38f5f"
+    },
+    {
+      "item_id": "ai2d_test_002471",
+      "input_sha256": "910ff936632af8728ad8fdf57f8223c79789fc3aa2f24eef1279127f03d70660"
+    },
+    {
+      "item_id": "ai2d_test_002564",
+      "input_sha256": "244e3e9e141f8a07b99b1debb810706c77fa515c04da92a61fc23b80ee7fcdf2"
+    },
+    {
+      "item_id": "ai2d_test_002644",
+      "input_sha256": "7a608732671552319093207f0385944d7ddb067b280f95465adf1447a0703595"
+    },
+    {
+      "item_id": "ai2d_test_002701",
+      "input_sha256": "17e9322f8ce9a3b7e8f280a80cf4bee71011b58eea9bc57dbefca3f42117ec74"
+    },
+    {
+      "item_id": "ai2d_test_002775",
+      "input_sha256": "a720f2f3c9067cea7cbd26c1dcba55dfee91eff1ea432894b484feff14b5783c"
+    },
+    {
+      "item_id": "ai2d_test_002784",
+      "input_sha256": "f3f1300dd8e2743ae0d280814e8a7d8c6dd1fe17857e64aaf0ab5d882836d1a4"
+    },
+    {
+      "item_id": "ai2d_test_002862",
+      "input_sha256": "bb48883a9aae5619a0bdf4758e3550adadb0da6e543c9d9927c0b1db4ac7a930"
+    },
+    {
+      "item_id": "ai2d_test_002908",
+      "input_sha256": "661e7c6ef07b22ab0a84c4994ca851d140a683630a0fb42e400f3e7fd618a8cc"
+    },
+    {
+      "item_id": "ai2d_test_002978",
+      "input_sha256": "1f450c318d305a0490f190818e97ec589ad2c5e395e4fc4596e6617141462672"
+    },
+    {
+      "item_id": "ai2d_test_002997",
+      "input_sha256": "60f24e8862698b7f4e7db687cb7e6a56634eb7cee3d56f68b89f1ac6613ff91d"
+    }
+  ]
+}

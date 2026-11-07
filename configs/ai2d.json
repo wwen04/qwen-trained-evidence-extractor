@@ -1,0 +1,15 @@
+{
+  "dataset_id": "lmms-lab-encoder/ai2d",
+  "dataset_revision": "c83a9b9692933aff8349157c88a413df9d02c4e5",
+  "split": "test",
+  "data_files": [
+    "data/test-00000-of-00002.parquet",
+    "data/test-00001-of-00002.parquet"
+  ],
+  "expected_rows": 3088,
+  "selection": {
+    "size": 100,
+    "seed": 42,
+    "method": "random_image_groups_then_one_random_question_per_group"
+  }
+}

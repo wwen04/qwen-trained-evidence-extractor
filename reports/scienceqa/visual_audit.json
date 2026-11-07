@@ -1,0 +1,4088 @@
+{
+  "status": "assisted_audit_complete",
+  "reviewed_date": "2026-10-29",
+  "reviewer": "Codex assisted review",
+  "source": {
+    "dataset_id": "derek-thomas/ScienceQA",
+    "dataset_revision": "f18b0a70359ebfb41f658fd564208d0355b013f4",
+    "subject": "natural science",
+    "grades": [
+      "grade7",
+      "grade8"
+    ]
+  },
+  "selection_rule": "Keep required only; exclude helpful_optional, incidental and unclear.",
+  "reviewed_count": 2075,
+  "category_counts": {
+    "required": 1005,
+    "helpful_optional": 347,
+    "incidental": 705,
+    "unclear": 18
+  },
+  "by_split": {
+    "train": {
+      "incidental": 434,
+      "required": 613,
+      "helpful_optional": 214,
+      "unclear": 11
+    },
+    "validation": {
+      "incidental": 134,
+      "required": 219,
+      "helpful_optional": 64,
+      "unclear": 4
+    },
+    "test": {
+      "incidental": 137,
+      "required": 173,
+      "helpful_optional": 69,
+      "unclear": 3
+    }
+  },
+  "final_counts": {
+    "train": 613,
+    "validation": 219,
+    "test": 173
+  },
+  "final_by_skill": {
+    "Analyze data to compare properties of planets": 61,
+    "Analyze models of the Earth-Sun-Moon system": 1,
+    "Compare ages of fossils in a rock sequence": 36,
+    "Compare concentrations of solutions": 196,
+    "Compare magnitudes of magnetic forces": 200,
+    "Compare thermal energy transfers": 52,
+    "Diffusion across membranes": 5,
+    "Evaluate claims about natural resource use: fossil fuels": 1,
+    "Identify and compare air masses": 27,
+    "Identify chemical formulas for ball-and-stick models": 13,
+    "Identify how particle motion affects temperature and pressure": 177,
+    "Interpret food webs I": 16,
+    "Interpret food webs II": 33,
+    "Use Punnett squares to calculate probabilities of offspring types": 97,
+    "Use Punnett squares to calculate ratios of offspring types": 90
+  },
+  "final_by_grade": {
+    "grade7": 404,
+    "grade8": 601
+  },
+  "annotations_sha256": "ef7dfdc8ff59352cf9d719f1f453b0a17587b97416b43786ae81ee738b231b9e",
+  "source_files_sha256": {
+    "configs/scienceqa.json": "5db980e48cb048077ab2fb1fa13ef45e6e746a68ad477a072aded36794eadb21",
+    "reports/scienceqa/integrity_audit.json": "9519873238d391647246bfc4ecb53d3a4d09a6dcadc1d334e1da9b0aa2f97754",
+    "data/processed/scienceqa/questions/train.jsonl": "6f9b6ef79724e07da5e041229eeb85cdf860e32c0cea584e42a92e03f1e18bb5",
+    "data/processed/scienceqa/questions/validation.jsonl": "8f3c5c4b48bbb6207eb93391741eabf23ffea89a6432bca01b9398f69d64c4eb",
+    "data/processed/scienceqa/questions/test.jsonl": "5ab6ac8c154d2878838748c570bf38e9144bd34ce2b36bda2fa6a384df38ec72",
+    "data/processed/scienceqa/references/train.jsonl": "34d18a7ec46ab06a7a162310501c4dc5967fb6000bdfb464eb52abba217c232e",
+    "data/processed/scienceqa/references/validation.jsonl": "b36561afc94cbb30a0b2e89e8270f8f22b49ad85ba814edf348559d5b4c67b77",
+    "data/processed/scienceqa/references/test.jsonl": "412d5e2318178099369a42d4142291d7b07c07493ea07b72b3552c98d3188f23",
+    "manifests/scienceqa/train_candidate_ids.json": "4b60d08e18ec6fe1e4a3b64ffe4c46e1bbfb813305fd4f6f22d3a58f4c8965b0",
+    "manifests/scienceqa/train_valid_ids.json": "4b60d08e18ec6fe1e4a3b64ffe4c46e1bbfb813305fd4f6f22d3a58f4c8965b0",
+    "manifests/scienceqa/validation_candidate_ids.json": "10b9ae46787fbfe864a307194360216dc8ac67e149ccdc4e79cb56ee973f09c6",
+    "manifests/scienceqa/validation_valid_ids.json": "10b9ae46787fbfe864a307194360216dc8ac67e149ccdc4e79cb56ee973f09c6",
+    "manifests/scienceqa/test_candidate_ids.json": "ff0e213a0bcac3db343964473134f6824be4c4b6f331c088d968c6336ac5acc5",
+    "manifests/scienceqa/test_valid_ids.json": "ff0e213a0bcac3db343964473134f6824be4c4b6f331c088d968c6336ac5acc5"
+  },
+  "duplicate_policy": "Official splits preserved; no automatic removal of shared images or repeated public inputs.",
+  "limitations": [
+    "This is a single AI-assisted curation pass, not independently adjudicated human ground truth. The labels are eligibility judgements, not measurements of Qwen accuracy or hint quality.",
+    "Required means required for the intended evidence-based task, not impossible for any model to guess or recall. No answerable-without-image experiment has been conducted.",
+    "A conservative policy excludes named-substance classifications and general life-cycle recall even when their diagrams support a useful explanation. Numerical planet comparisons remain eligible; basic named-planet ordering/composition claims are excluded.",
+    "Thermal-transfer items with explicit cooling or strong everyday heating/cooling cues are optional; pizza-delivery cases with a strong but unstated cooling assumption are unclear.",
+    "Some food-web choices allow role/diet-based elimination. Obvious producer/fungus cases are optional; ambiguous shortcut cases are unclear.",
+    "Selection is restricted to the existing natural-science Grade 7-8 candidates. It does not implement the all-grade scope of the proposal.",
+    "Shared diagrams and repeated questions across official splits are reported rather than removed. This visual-need audit does not resolve independence of train/test examples or near duplicates."
+  ],
+  "cross_split_identical_pixels": [
+    [
+      {
+        "item_id": "test_000009",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002088",
+        "split": "test"
+      },
+      {
+        "item_id": "train_005049",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007637",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001733",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003744",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000050",
+        "split": "test"
+      },
+      {
+        "item_id": "train_002379",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005846",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006907",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001854",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000128",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002326",
+        "split": "test"
+      },
+      {
+        "item_id": "train_008275",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002568",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000171",
+        "split": "test"
+      },
+      {
+        "item_id": "test_000841",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001026",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001607",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001889",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002142",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001575",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001898",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002069",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002512",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007500",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010170",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010720",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011050",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012071",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001028",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001073",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002477",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_004228",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002681",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001781",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008847",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010886",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000008",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000347",
+        "split": "test"
+      },
+      {
+        "item_id": "train_005129",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001182",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001398",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002527",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000365",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000580",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003005",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005150",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005743",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005894",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006505",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006576",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007034",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007737",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008668",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010410",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011891",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000555",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001487",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002044",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002381",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003884",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_008115",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011580",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011788",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011961",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012475",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001255",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000469",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002012",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001748",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006603",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010064",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002180",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003289",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000514",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001955",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002056",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002090",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003395",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007761",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000594",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001341",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003003",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000315",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002001",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003703",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004887",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006251",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011139",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011769",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012092",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001602",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000612",
+        "split": "test"
+      },
+      {
+        "item_id": "train_002673",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004139",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007000",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000712",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003412",
+        "split": "test"
+      },
+      {
+        "item_id": "train_005680",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007404",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010488",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011218",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011345",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000585",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001128",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000923",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001073",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002740",
+        "split": "test"
+      },
+      {
+        "item_id": "train_011825",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000930",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003240",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001568",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004636",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005208",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007380",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008554",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008910",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012244",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000100",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001058",
+        "split": "test"
+      },
+      {
+        "item_id": "train_012520",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001239",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001998",
+        "split": "test"
+      },
+      {
+        "item_id": "train_008188",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001241",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003070",
+        "split": "test"
+      },
+      {
+        "item_id": "train_012579",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002845",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001388",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001197",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004015",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005060",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006665",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000621",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001497",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002829",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002766",
+        "split": "test"
+      },
+      {
+        "item_id": "train_008529",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001805",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000765",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001413",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001446",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006990",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010800",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003521",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002208",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003510",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008981",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002243",
+        "split": "test"
+      },
+      {
+        "item_id": "train_002324",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007491",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011045",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_004022",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002425",
+        "split": "test"
+      },
+      {
+        "item_id": "train_002682",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011069",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "train_002772",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005270",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007781",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009007",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009560",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002352",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002771",
+        "split": "test"
+      },
+      {
+        "item_id": "train_008499",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "train_008339",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003268",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002818",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000021",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002929",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000032",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005533",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000360",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002971",
+        "split": "test"
+      },
+      {
+        "item_id": "train_007713",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000085",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003195",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003230",
+        "split": "test"
+      },
+      {
+        "item_id": "test_004014",
+        "split": "test"
+      },
+      {
+        "item_id": "train_010831",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003321",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000135",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001069",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002200",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003361",
+        "split": "test"
+      },
+      {
+        "item_id": "train_002408",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001177",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001817",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003429",
+        "split": "test"
+      },
+      {
+        "item_id": "train_002659",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001305",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002001",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003512",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000739",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005874",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003513",
+        "split": "test"
+      },
+      {
+        "item_id": "train_006685",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003598",
+        "split": "test"
+      },
+      {
+        "item_id": "train_002163",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004535",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006781",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003735",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000382",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003076",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007458",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000384",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003429",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_004028",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000158",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_004105",
+        "split": "test"
+      },
+      {
+        "item_id": "train_005607",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006291",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012239",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003643",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000124",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001964",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009042",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001338",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000277",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006457",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012624",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001237",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000566",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002484",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001021",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000867",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007065",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002310",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001301",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000332",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_000766",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_000956",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001457",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009343",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011013",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012704",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003138",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001809",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004977",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001729",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001817",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005822",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007947",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008766",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009049",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012444",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012620",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003458",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_002101",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004539",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000206",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001133",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_002480",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002523",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_004106",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_002537",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008058",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002238",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_002625",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005508",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006751",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_004004",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_002954",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009621",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003518",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_003172",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003682",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009774",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000391",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_005523",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002998",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_007389",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000207",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_008475",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010297",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001423",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_008803",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003828",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_009600",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000029",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003852",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_010032",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000659",
+        "split": "validation"
+      }
+    ]
+  ],
+  "cross_split_identical_problem_text": [
+    [
+      {
+        "item_id": "test_000013",
+        "split": "test"
+      },
+      {
+        "item_id": "train_004148",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005841",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000198",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003482",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007039",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009716",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011262",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011643",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011830",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000532",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003264",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_004212",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000210",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002575",
+        "split": "test"
+      },
+      {
+        "item_id": "test_004178",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000136",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000164",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000825",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001513",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002630",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003105",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003141",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003643",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004126",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004345",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004826",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005234",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005604",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007007",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008445",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008838",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010193",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011335",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012514",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000309",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_000479",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_000904",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001957",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002741",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003939",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000211",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001211",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003184",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003793",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000388",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002610",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003986",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001563",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001845",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003762",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000344",
+        "split": "test"
+      },
+      {
+        "item_id": "test_000544",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003994",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009889",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011475",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001979",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000362",
+        "split": "test"
+      },
+      {
+        "item_id": "test_000581",
+        "split": "test"
+      },
+      {
+        "item_id": "test_004069",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000297",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000793",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008693",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009269",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012356",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000443",
+        "split": "test"
+      },
+      {
+        "item_id": "train_004386",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004745",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005094",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005626",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011305",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011381",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000514",
+        "split": "test"
+      },
+      {
+        "item_id": "train_010800",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000574",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002630",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003782",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000910",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003699",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007169",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000592",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001487",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001727",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002255",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002768",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000007",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000934",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000955",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001511",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002258",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002940",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003667",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004231",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004649",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005036",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005563",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006642",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006864",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008222",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009106",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009574",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011911",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012602",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000395",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001705",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002462",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002563",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002777",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002795",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003182",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003593",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003664",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000666",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000485",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001842",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002891",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007988",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008777",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010989",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011763",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002667",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003056",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000702",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001810",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002438",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003853",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000453",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000795",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001411",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001795",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002074",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003590",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003943",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005583",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007347",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008785",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009429",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010017",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010969",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011216",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011259",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011519",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012531",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000234",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_000870",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_000951",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001780",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002361",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002491",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002622",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003203",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003444",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003567",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003986",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000704",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002054",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000899",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001773",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008818",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011507",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012712",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000735",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000057",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001626",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004426",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005207",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007777",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009154",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000151",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000758",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002591",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003655",
+        "split": "test"
+      },
+      {
+        "item_id": "train_008558",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012272",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001607",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002149",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003311",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003665",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000768",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003162",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000166",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007898",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008290",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009694",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001294",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002264",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002362",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000856",
+        "split": "test"
+      },
+      {
+        "item_id": "test_004183",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001648",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002014",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005582",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008231",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009919",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000879",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002361",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000429",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004662",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009098",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000146",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002470",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000923",
+        "split": "test"
+      },
+      {
+        "item_id": "validation_001817",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000950",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003797",
+        "split": "test"
+      },
+      {
+        "item_id": "train_012407",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_000963",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001573",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000664",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007409",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009000",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009006",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003568",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001007",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002496",
+        "split": "test"
+      },
+      {
+        "item_id": "train_002880",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004615",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001073",
+        "split": "test"
+      },
+      {
+        "item_id": "train_004539",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001180",
+        "split": "test"
+      },
+      {
+        "item_id": "train_004870",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007845",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001286",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001348",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002272",
+        "split": "test"
+      },
+      {
+        "item_id": "test_004109",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000219",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000513",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000569",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001873",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001954",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002579",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002629",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003265",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003653",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004098",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005230",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005791",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006225",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007194",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007732",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009485",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009856",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010265",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012489",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000403",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_000702",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002657",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_004225",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001388",
+        "split": "test"
+      },
+      {
+        "item_id": "train_009007",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011788",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001413",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002364",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003723",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006182",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009977",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001533",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002420",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000751",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003452",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004053",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005329",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005643",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010602",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010617",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011500",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001590",
+        "split": "test"
+      },
+      {
+        "item_id": "train_012043",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002184",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001595",
+        "split": "test"
+      },
+      {
+        "item_id": "test_001820",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003044",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003049",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003145",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003356",
+        "split": "test"
+      },
+      {
+        "item_id": "test_004055",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001782",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003073",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003136",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003295",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003409",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005840",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005945",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006490",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007684",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008727",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008821",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010312",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011757",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012598",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012707",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000831",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_000960",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001158",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001664",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002188",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002637",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003045",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003276",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003669",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_004114",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_004123",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001663",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003330",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000777",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000889",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001380",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003122",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005251",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006611",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006952",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007381",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007752",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008463",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008870",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009791",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010000",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011704",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012026",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000714",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_000819",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001872",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002373",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002972",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003064",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003615",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_004175",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001729",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003660",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000010",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000321",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002038",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001743",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002906",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000138",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001972",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001805",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003076",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000008",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_000621",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001813",
+        "split": "test"
+      },
+      {
+        "item_id": "train_010147",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001838",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002211",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000095",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000977",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005619",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011326",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011826",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001094",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003151",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_001955",
+        "split": "test"
+      },
+      {
+        "item_id": "train_005270",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002030",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003239",
+        "split": "test"
+      },
+      {
+        "item_id": "validation_000652",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002056",
+        "split": "test"
+      },
+      {
+        "item_id": "train_006990",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002090",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001413",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009560",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002091",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002432",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000797",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005751",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006113",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006231",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010836",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011266",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001935",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002092",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000392",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000661",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001791",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009017",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002101",
+        "split": "test"
+      },
+      {
+        "item_id": "train_008101",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009710",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011962",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000844",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002319",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000684",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003915",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004790",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006604",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008189",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008519",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009496",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010469",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011035",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002536",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003848",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002340",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003042",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003871",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004134",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008739",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003508",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002479",
+        "split": "test"
+      },
+      {
+        "item_id": "test_002722",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003306",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003493",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001680",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009761",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001907",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002535",
+        "split": "test"
+      },
+      {
+        "item_id": "train_006853",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002589",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000416",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010390",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010941",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001545",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002624",
+        "split": "test"
+      },
+      {
+        "item_id": "train_004704",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009166",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002681",
+        "split": "test"
+      },
+      {
+        "item_id": "train_006665",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000384",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002688",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003143",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001943",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010958",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011644",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002711",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000103",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001335",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001476",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003090",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003213",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002730",
+        "split": "test"
+      },
+      {
+        "item_id": "train_004609",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003832",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_004193",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002766",
+        "split": "test"
+      },
+      {
+        "item_id": "train_010556",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002998",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002822",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003121",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003716",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005296",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009160",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011741",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003951",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002917",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003194",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004973",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000106",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001112",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_002992",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003538",
+        "split": "test"
+      },
+      {
+        "item_id": "train_004160",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004413",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012165",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001730",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_004130",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003034",
+        "split": "test"
+      },
+      {
+        "item_id": "train_007624",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003195",
+        "split": "test"
+      },
+      {
+        "item_id": "train_007000",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003444",
+        "split": "test"
+      },
+      {
+        "item_id": "train_000750",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007423",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009037",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010340",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012041",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003460",
+        "split": "test"
+      },
+      {
+        "item_id": "train_011668",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003564",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003624",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004158",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005560",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009192",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012689",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003714",
+        "split": "test"
+      },
+      {
+        "item_id": "test_003968",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003253",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006660",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009344",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010843",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012072",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003239",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003913",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003735",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001781",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007781",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001130",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_003882",
+        "split": "test"
+      },
+      {
+        "item_id": "train_001887",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008940",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003895",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "test_004016",
+        "split": "test"
+      },
+      {
+        "item_id": "train_003599",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003930",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008829",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011018",
+        "split": "train"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000134",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000308",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002482",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000296",
+        "split": "train"
+      },
+      {
+        "item_id": "train_000849",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009333",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010878",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011087",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012146",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002161",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000312",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004494",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005696",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000112",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000357",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001168",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_004001",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000410",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007882",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_004027",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000425",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002695",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008783",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_004185",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000606",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003066",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007005",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011125",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012289",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000888",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000724",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003698",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000765",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008115",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003429",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_000983",
+        "split": "train"
+      },
+      {
+        "item_id": "train_001104",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002214",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011337",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012219",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003029",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001131",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005277",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008743",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002365",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002497",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003587",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001189",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003000",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003114",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001484",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004283",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008775",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009770",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010423",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002113",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001508",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002482",
+        "split": "train"
+      },
+      {
+        "item_id": "train_002664",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007330",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002453",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001549",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003416",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004739",
+        "split": "train"
+      },
+      {
+        "item_id": "train_005457",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009470",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010325",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011767",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000357",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002320",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001566",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004328",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006258",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008277",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009341",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009874",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012234",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012430",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003047",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001583",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003492",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007141",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009630",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010154",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002727",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003854",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001691",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004493",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012524",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002814",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_001800",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012202",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_000622",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_002236",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003356",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006355",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_003142",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_002772",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004015",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007458",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012475",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002746",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_002825",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012311",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002299",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002624",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003077",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_002895",
+        "split": "train"
+      },
+      {
+        "item_id": "train_003963",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006075",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011714",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_004053",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_004017",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004204",
+        "split": "train"
+      },
+      {
+        "item_id": "train_004225",
+        "split": "train"
+      },
+      {
+        "item_id": "train_010922",
+        "split": "train"
+      },
+      {
+        "item_id": "train_011787",
+        "split": "train"
+      },
+      {
+        "item_id": "train_012013",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002919",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_002935",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_004581",
+        "split": "train"
+      },
+      {
+        "item_id": "train_007526",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001084",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_005523",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_002238",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_006368",
+        "split": "train"
+      },
+      {
+        "item_id": "train_006463",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008031",
+        "split": "train"
+      },
+      {
+        "item_id": "train_008866",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_004134",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_008058",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009800",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_004149",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_008847",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001255",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_001497",
+        "split": "validation"
+      }
+    ],
+    [
+      {
+        "item_id": "train_009016",
+        "split": "train"
+      },
+      {
+        "item_id": "train_009636",
+        "split": "train"
+      },
+      {
+        "item_id": "validation_001472",
+        "split": "validation"
+      },
+      {
+        "item_id": "validation_003396",
+        "split": "validation"
+      }
+    ]
+  ],
+  "cross_split_identical_public_input": []
+}

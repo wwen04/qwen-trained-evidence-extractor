@@ -1,0 +1,36 @@
+{
+  "source": {
+    "dataset_id": "derek-thomas/ScienceQA",
+    "dataset_revision": "f18b0a70359ebfb41f658fd564208d0355b013f4",
+    "subject": "natural science",
+    "grades": [
+      "grade7",
+      "grade8"
+    ]
+  },
+  "id_convention": "<split>_<zero-based source row index, padded to six digits>; assigned before filtering",
+  "filter_counts": {
+    "train": {
+      "total": 12726,
+      "candidate": 1272,
+      "no_image": 6508,
+      "other_grade": 2564,
+      "other_subject": 2382
+    },
+    "validation": {
+      "total": 4241,
+      "candidate": 421,
+      "no_image": 2144,
+      "other_grade": 866,
+      "other_subject": 810
+    },
+    "test": {
+      "total": 4241,
+      "candidate": 382,
+      "no_image": 2224,
+      "other_grade": 827,
+      "other_subject": 808
+    }
+  },
+  "selection_status": "Candidates only; visual review and final sampling pending."
+}

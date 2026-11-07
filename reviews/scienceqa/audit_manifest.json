@@ -1,0 +1,45 @@
+{
+  "reviewed_date": "2026-10-29",
+  "reviewer": "Codex assisted review",
+  "source": {
+    "dataset_id": "derek-thomas/ScienceQA",
+    "dataset_revision": "f18b0a70359ebfb41f658fd564208d0355b013f4",
+    "subject": "natural science",
+    "grades": [
+      "grade7",
+      "grade8"
+    ]
+  },
+  "source_files_sha256": {
+    "configs/scienceqa.json": "5db980e48cb048077ab2fb1fa13ef45e6e746a68ad477a072aded36794eadb21",
+    "reports/scienceqa/integrity_audit.json": "9519873238d391647246bfc4ecb53d3a4d09a6dcadc1d334e1da9b0aa2f97754",
+    "data/processed/scienceqa/questions/train.jsonl": "6f9b6ef79724e07da5e041229eeb85cdf860e32c0cea584e42a92e03f1e18bb5",
+    "data/processed/scienceqa/questions/validation.jsonl": "8f3c5c4b48bbb6207eb93391741eabf23ffea89a6432bca01b9398f69d64c4eb",
+    "data/processed/scienceqa/questions/test.jsonl": "5ab6ac8c154d2878838748c570bf38e9144bd34ce2b36bda2fa6a384df38ec72",
+    "data/processed/scienceqa/references/train.jsonl": "34d18a7ec46ab06a7a162310501c4dc5967fb6000bdfb464eb52abba217c232e",
+    "data/processed/scienceqa/references/validation.jsonl": "b36561afc94cbb30a0b2e89e8270f8f22b49ad85ba814edf348559d5b4c67b77",
+    "data/processed/scienceqa/references/test.jsonl": "412d5e2318178099369a42d4142291d7b07c07493ea07b72b3552c98d3188f23",
+    "manifests/scienceqa/train_candidate_ids.json": "4b60d08e18ec6fe1e4a3b64ffe4c46e1bbfb813305fd4f6f22d3a58f4c8965b0",
+    "manifests/scienceqa/train_valid_ids.json": "4b60d08e18ec6fe1e4a3b64ffe4c46e1bbfb813305fd4f6f22d3a58f4c8965b0",
+    "manifests/scienceqa/validation_candidate_ids.json": "10b9ae46787fbfe864a307194360216dc8ac67e149ccdc4e79cb56ee973f09c6",
+    "manifests/scienceqa/validation_valid_ids.json": "10b9ae46787fbfe864a307194360216dc8ac67e149ccdc4e79cb56ee973f09c6",
+    "manifests/scienceqa/test_candidate_ids.json": "ff0e213a0bcac3db343964473134f6824be4c4b6f331c088d968c6336ac5acc5",
+    "manifests/scienceqa/test_valid_ids.json": "ff0e213a0bcac3db343964473134f6824be4c4b6f331c088d968c6336ac5acc5"
+  },
+  "method": "Assessed the prepared question, supplied context, ordered choices and corresponding image for visual necessity. Image contact sheets were grouped by skill for presentation; identical image bytes were shown once and linked back to their rows. Repeated passages were compared for differences, including option sets, so names and option-order changes did not require repeated image viewing. Complex food webs were also opened at original size. Decisions are saved per item ID with row and image fingerprints; recurring patterns share rationale wording. No Qwen outputs, QA success rates, answer keys, lectures or solutions were used to choose rows. The inspection tool separately reveals references for the user.",
+  "rubric": {
+    "required": "An image-specific value, configuration, object identity or relation is missing from the text and is necessary for a justified answer to the intended task.",
+    "helpful_optional": "The image supports the task, but the passage, a named identity plus ordinary science knowledge, or clear contextual cues provide an adequate text-only route.",
+    "incidental": "The image is illustrative and provides no necessary evidence for the requested textual reasoning.",
+    "unclear": "Both visual interpretation and a plausible text-only shortcut exist, or necessity cannot be established confidently; exclude from the strict selection."
+  },
+  "limitations": [
+    "This is a single AI-assisted curation pass, not independently adjudicated human ground truth. The labels are eligibility judgements, not measurements of Qwen accuracy or hint quality.",
+    "Required means required for the intended evidence-based task, not impossible for any model to guess or recall. No answerable-without-image experiment has been conducted.",
+    "A conservative policy excludes named-substance classifications and general life-cycle recall even when their diagrams support a useful explanation. Numerical planet comparisons remain eligible; basic named-planet ordering/composition claims are excluded.",
+    "Thermal-transfer items with explicit cooling or strong everyday heating/cooling cues are optional; pizza-delivery cases with a strong but unstated cooling assumption are unclear.",
+    "Some food-web choices allow role/diet-based elimination. Obvious producer/fungus cases are optional; ambiguous shortcut cases are unclear.",
+    "Selection is restricted to the existing natural-science Grade 7-8 candidates. It does not implement the all-grade scope of the proposal.",
+    "Shared diagrams and repeated questions across official splits are reported rather than removed. This visual-need audit does not resolve independence of train/test examples or near duplicates."
+  ]
+}
