@@ -23,6 +23,7 @@ const feedbackCard = document.querySelector("#feedback-card");
 const feedbackText = document.querySelector("#feedback-text");
 const outcomeBadge = document.querySelector("#outcome-badge");
 const resultFile = document.querySelector("#result-file");
+const comparisonDataset = document.querySelector("#comparison-dataset");
 const comparisonSplit = document.querySelector("#comparison-split");
 const comparisonButton = document.querySelector("#comparison-button");
 const comparisonAvailability = document.querySelector("#comparison-availability");
@@ -40,6 +41,7 @@ let selectedQuestion = null;
 let busy = false;
 let comparisonBusy = false;
 let comparisonAvailable = false;
+let comparisonDatasets = {};
 let inspectionUrl = null;
 
 function showMessage(element, message) {
@@ -65,9 +67,33 @@ function updateRunButton() {
   checkButton.querySelector("span:first-child").textContent =
     unavailable ? "Please wait…" : "Check my answer";
   comparisonButton.disabled = unavailable || !comparisonAvailable;
+  comparisonDataset.disabled = unavailable;
   comparisonSplit.disabled = unavailable;
   comparisonButton.querySelector("span:first-child").textContent =
     comparisonBusy ? "Comparing all modes…" : "Compare all modes";
+}
+
+function clearComparisonResult() {
+  comparisonError.hidden = true;
+  comparisonResult.hidden = true;
+  comparisonFile.hidden = true;
+  comparisonDisplay.hidden = true;
+  comparisonPredictions.hidden = true;
+}
+
+function updateComparisonSplits() {
+  const isAi2d = comparisonDataset.value === "ai2d";
+  const options = isAi2d
+    ? [["test", "Test · 100-question cross-dataset sample"]]
+    : [["validation", "Validation · mode exploration"], ["test", "Test · held-out split"]];
+  comparisonSplit.replaceChildren(...options.map(([value, label]) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    return option;
+  }));
+  comparisonSplit.value = isAi2d ? "test" : "validation";
+  clearComparisonResult();
 }
 
 function clearResult() {
@@ -308,20 +334,25 @@ function renderComparison(job) {
   const result = job.result;
   const identityAccuracy = result.results.identity.accuracy;
   const best = result.results[result.best_mode];
+  const variant = result.trained_checkpoint.selector_config.variant;
   document.querySelector("#comparison-verdict").textContent =
     `Best on ${result.split}: ${result.best_mode} (${formatAccuracy(best.accuracy)})`;
   document.querySelector("#comparison-count").textContent =
-    `${result.questions} ${result.split} questions · trained ${result.trained_checkpoint.selector_config.layers}-layer selector, ` +
-    `rho=${result.rho}, seed=${result.trained_checkpoint.seed}`;
+    `${result.questions} ${result.dataset.toUpperCase()} ${result.split} questions · trained ` +
+    `${result.trained_checkpoint.selector_config.layers}-layer ${variant} selector, ` +
+    `${variant === "free_transform" ? "no token budget" : `rho=${result.rho}`}, ` +
+    `seed=${result.trained_checkpoint.seed}`;
   const checkpointValidation = result.trained_checkpoint.best_validation;
   document.querySelector("#comparison-checkpoint").textContent = checkpointValidation
-    ? `Best checkpoint validation accuracy: ${formatAccuracy(checkpointValidation.accuracy)} ` +
+    ? `Best ScienceQA validation accuracy: ${formatAccuracy(checkpointValidation.accuracy)} ` +
       `(${checkpointValidation.questions} questions).`
     : "Checkpoint validation metrics are unavailable.";
 
   const labels = {
     identity: "Original features; unchanged baseline",
-    soft: `Learned continuous feature blending (training target rho=${result.rho})`,
+    soft: variant === "free_transform"
+      ? "Learned feature transformation (no token budget)"
+      : `Learned continuous feature blending (training target rho=${result.rho})`,
     hard: `Keep top-scoring ceil(N × ${result.rho}) features`,
     random: `Keep seeded random ceil(N × ${result.rho}) features`,
     remove: `Replace top-scoring ceil(N × ${result.rho}) features with null`,
@@ -439,7 +470,10 @@ async function runComparison() {
     const data = await getJson("/api/comparisons", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ split: comparisonSplit.value }),
+      body: JSON.stringify({
+        dataset: comparisonDataset.value,
+        split: comparisonSplit.value,
+      }),
     });
     await pollComparison(data.job_id);
   } catch (error) {
@@ -487,6 +521,13 @@ async function initialize() {
     const status = await getJson("/api/status");
     document.querySelector("#model-status").textContent = status.selector?.label || "Local research prototype";
     comparisonAvailable = Boolean(status.comparison_available);
+    comparisonDatasets = status.comparison_datasets || {};
+    for (const option of comparisonDataset.options) {
+      if (option.value === "ai2d" && !comparisonDatasets.ai2d) {
+        option.disabled = true;
+        option.textContent = "AI2D · run prepare_ai2d.py first";
+      }
+    }
     if (!comparisonAvailable) {
       showMessage(
         comparisonAvailability,
@@ -494,6 +535,7 @@ async function initialize() {
       );
     }
     updateRunButton();
+    updateComparisonSplits();
     for (const option of [...splitSelect.options]) {
       if (!(option.value in status.counts)) option.remove();
     }
@@ -523,5 +565,7 @@ inspectionButton.addEventListener("click", toggleInspection);
 hintButton.addEventListener("click", () => runTutor("hint"));
 checkButton.addEventListener("click", () => runTutor("check"));
 comparisonButton.addEventListener("click", runComparison);
+comparisonDataset.addEventListener("change", updateComparisonSplits);
+comparisonSplit.addEventListener("change", clearComparisonResult);
 comparisonDisplay.addEventListener("click", toggleComparisonPredictions);
 initialize();

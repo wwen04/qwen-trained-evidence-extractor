@@ -104,7 +104,7 @@ h1 em { color: var(--green); font-family: Georgia, serif; font-weight: 600; }
 .comparison-heading h2 { margin: 7px 0 0; font-size: 19px; letter-spacing: -.5px; }
 .comparison-copy { max-width: 860px; margin: 11px 0 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
 .comparison-actions { display: flex; align-items: end; gap: 12px; margin-top: 16px; }
-.comparison-actions .field { width: min(230px, 45%); }
+.comparison-actions .field { width: min(210px, 32%); }
 .comparison-actions .primary-button { min-width: 240px; }
 .comparison-progress { display: flex; align-items: center; gap: 10px; margin-top: 14px; color: var(--muted); font-size: 10px; }
 .comparison-progress progress { width: min(320px, 55%); height: 9px; accent-color: var(--green); }

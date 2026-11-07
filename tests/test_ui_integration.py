@@ -27,7 +27,7 @@ class FakeComparisonRuntime:
     metadata = {
         "target_rho": 0.3,
         "weights_sha256": "fixture-checkpoint-hash",
-        "selector_config": {"layers": 1},
+        "selector_config": {"layers": 1, "variant": "visual"},
         "train_config": {"seed": 42},
         "validation": {"questions": 179, "accuracy": 0.65},
     }
@@ -52,6 +52,12 @@ class FakeComparisonRuntime:
 
 
 class UIServerTests(unittest.TestCase):
+    def test_ai2d_comparison_rejects_non_test_splits(self):
+        with tempfile.TemporaryDirectory() as folder:
+            app = TutorWebApp(root=Path(folder), splits=("validation", "test"))
+            with self.assertRaisesRegex(ValueError, "AI2D is available only as a test split"):
+                app.start_comparison({"dataset": "ai2d", "split": "validation"})
+
     def test_identity_status_hint_job_and_download(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
@@ -78,9 +84,11 @@ class UIServerTests(unittest.TestCase):
                 status = json.loads(get('/api/status'))
                 self.assertEqual(status['selector']['mode'],'identity')
                 self.assertFalse(status['comparison_available'])
+                self.assertFalse(status['comparison_datasets']['ai2d'])
                 self.assertIn(b'id="model-status"',get('/'))
                 self.assertIn(b'status.selector',get('/assets/app.js'))
                 self.assertIn(b'id="comparison-button"',get('/'))
+                self.assertIn(b'id="comparison-dataset"',get('/'))
                 self.assertIn(b'comparisonAvailable',get('/assets/app.js'))
                 payload = {"mode":"hint","split":"validation","item_id":item['item_id'],"hint_level":2}
                 req = Request(base+'/api/jobs',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
@@ -105,6 +113,12 @@ class UIServerTests(unittest.TestCase):
     def test_all_mode_comparison_reports_metrics_and_saves_predictions(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
+            (root / "data/final/ai2d/questions").mkdir(parents=True)
+            (root / "data/final/ai2d/references").mkdir()
+            (root / "manifests/ai2d").mkdir(parents=True)
+            (root / "data/final/ai2d/questions/test.jsonl").write_text("")
+            (root / "data/final/ai2d/references/test.jsonl").write_text("")
+            (root / "manifests/ai2d/test_final_ids.json").write_text("[]")
             image_path = root / "diagram.png"
             Image.new("RGB", (4, 4), "white").save(image_path)
             items = [
@@ -131,14 +145,15 @@ class UIServerTests(unittest.TestCase):
                 with urlopen(base + path, timeout=5) as response:
                     return json.loads(response.read())
 
-            with patch("project_data.load_questions", return_value=items), \
+            with patch("project_data.load_questions", return_value=items) as load_items, \
                     patch("project_data.load_references", return_value=references):
                 try:
                     status = get("/api/status")
                     self.assertTrue(status["comparison_available"])
+                    self.assertTrue(status["comparison_datasets"]["ai2d"])
                     request = Request(
                         base + "/api/comparisons",
-                        data=json.dumps({"split": "test"}).encode(),
+                        data=json.dumps({"dataset": "ai2d", "split": "test"}).encode(),
                         headers={"Content-Type": "application/json"},
                         method="POST",
                     )
@@ -153,6 +168,8 @@ class UIServerTests(unittest.TestCase):
                         time.sleep(0.02)
                     self.assertEqual(job["status"], "complete", job)
                     report = job["result"]
+                    self.assertEqual(report["dataset"], "ai2d")
+                    self.assertEqual(load_items.call_args.args[:2], ("ai2d", "test"))
                     self.assertEqual(
                         report["modes"],
                         ["identity", "soft", "hard", "random", "remove",
@@ -170,5 +187,36 @@ class UIServerTests(unittest.TestCase):
                     server.shutdown()
                     server.server_close()
                     thread.join(timeout=3)
+
+    def test_free_transform_comparison_uses_only_supported_modes(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / "data/final/ai2d/questions").mkdir(parents=True)
+            (root / "data/final/ai2d/references").mkdir()
+            (root / "manifests/ai2d").mkdir(parents=True)
+            image_path = root / "diagram.png"
+            Image.new("RGB", (4, 4), "white").save(image_path)
+            items = [{
+                "item_id": "test_000001",
+                "question": "Which direction?",
+                "context": "",
+                "choices": [{"id": "A", "text": "Left"}, {"id": "B", "text": "Right"}],
+                "image_path": str(image_path),
+            }]
+            references = {"test_000001": {"gold_option_id": "A"}}
+            app = TutorWebApp(root=root, splits=("test",))
+            app.tutor = SimpleNamespace(runtime=FakeComparisonRuntime())
+            app.comparison_jobs["fixture-job"] = {"status": "running"}
+
+            with patch.dict(FakeComparisonRuntime.metadata["selector_config"], {
+                "variant": "free_transform",
+            }), patch("project_data.load_questions", return_value=items), \
+                    patch("project_data.load_references", return_value=references):
+                report, _ = app.compare_selector("ai2d", "test", "fixture-job")
+
+            self.assertEqual(report["modes"], ["identity", "soft", "no_image"])
+            self.assertEqual(set(report["predictions"]), {"identity", "soft", "no_image"})
+            self.assertIsNone(report["rho"])
+            self.assertIn("without a token budget", report["note"])
 
 if __name__=='__main__': unittest.main()

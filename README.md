@@ -2,7 +2,7 @@
 
 Standalone implementation of a question-conditioned visual gate after Qwen2.5-VL's existing vision encoder and merger. The Qwen backbone is frozen. The selector learns from ScienceQA's existing answer labels; hint quality is evaluated separately.
 
-The one-layer selector has been trained with multiple settings. The current best validation checkpoint is `outputs/training/selector-1layer-rho05-seed43/best` (65.9% accuracy on 179 ScienceQA validation questions). The browser tutor preserves the exact identity path unless a checkpoint is explicitly configured. The CLI and UI run independently; an optional Colab training/evaluation notebook is available under `notebook/`.
+The latest four-family ScienceQA retraining selected `outputs/training/scienceqa-free-transform-seed42/best` as the best checkpoint by validation accuracy (79.9% on 219 ScienceQA validation questions). The other runs scored 58.9% (one-layer visual), 56.2% (two-layer visual), and 55.3% (text-only). AI2D is reserved for exploratory, test-only comparison and is not used for checkpoint selection. The browser tutor preserves the exact identity path unless a checkpoint is explicitly configured. The CLI and UI run independently; an optional Colab training/evaluation notebook is available under `notebook/`.
 
 ## What is here
 
@@ -76,7 +76,7 @@ python ui_server.py --selector-checkpoint outputs/training/selector-1layer-rho05
 
 The same UI loads the frozen Qwen backbone plus the trained selector's separate weights. It displays **Trained visual selector**. The backbone weights are not overwritten by selector training. You can instead set `selector_checkpoint` in `configs/runtime.json`, leaving `gate_mode` as `auto`. Restart the server after changing checkpoints; there is no silent hot reload during a request. Missing, corrupt or incompatible checkpoints fail visibly.
 
-With a trained checkpoint configured, the page offers **Compare all modes** on the same questions: identity, soft, hard, random, remove, remove-random, null and no-image. It displays accuracy, image-group bootstrap intervals, change and paired wins/losses versus identity. **Display all mode predictions** opens the per-question table. Validation is the default for mode exploration; reserve test for final reporting. The best observed checkpoint so far is the one-layer `rho=0.5`, seed 43 run at 65.9% validation accuracy; selecting among these modes on validation is exploratory and may overfit. Paired p-values are exploratory and not adjusted for multiple mode comparisons. Results and per-question predictions are saved under `outputs/comparisons/`.
+With a trained checkpoint configured, the page offers **Compare all modes** and lets you choose ScienceQA or AI2D. ScienceQA offers validation and test; AI2D is test-only. It displays accuracy, image-group bootstrap intervals, change and paired wins/losses versus identity, with per-question predictions. Free-transform checkpoints support identity, soft and no-image only. AI2D has one frozen 100-question sample: comparing methods on it is exploratory, not a separate final test. Paired p-values are not adjusted for multiple mode comparisons. Reports are saved under `outputs/comparisons/`.
 
 For hard gates, add `--gate-mode hard`. For a bypass comparison with the same checkpoint/preprocessing, use `--gate-mode identity`.
 
@@ -130,6 +130,17 @@ To continue an interrupted run, use the **same configuration and CLI overrides**
 `best/` and `last/` contain `selector.safetensors` plus `metadata.json`. `last/optimizer.pt` is only for resuming your own run. The metadata records architecture, resolved backbone revision when available, preprocessing, training configuration, split fingerprint, update count and validation results. When using local backbone paths, keep the exact same original weights; structural compatibility alone cannot prove identical local weights.
 
 Supplied control configs are `configs/train_text_only.json` and `configs/train_free_transform.json`; pass either with `--config`. They have distinct output directories. Free-transform requires `budget_weight=0` and `straight_through_fraction=0`. Use `--no-option-shuffle` for the B5 control. Null types are `learned`, `mean` and `zero`. `straight_through_fraction=0.2` optionally enables hard-forward/soft-backward top-k during the final 20% of updates. B6 LoRA/merger fine-tuning is not implemented.
+
+The supplied ScienceQA training families are the two-layer visual selector, one-layer visual selector, text-only selector, and free-transform control. Train each with its own output directory; checkpoint selection is on ScienceQA validation only. The AI2D comparison in the UI is cross-dataset evaluation on its frozen 100-question test-only sample. Comparing methods on that sample is exploratory and does not provide a second, independent final test.
+
+To reproduce the four-family comparison with seed 42:
+
+```powershell
+python train_selector.py --config configs/train_selector.json --train --output-dir outputs/training/scienceqa-visual-2layer-seed42
+python train_selector.py --config configs/train_selector_1layer.json --train --output-dir outputs/training/scienceqa-visual-1layer-seed42
+python train_selector.py --config configs/train_text_only.json --train --output-dir outputs/training/scienceqa-text-only-seed42
+python train_selector.py --config configs/train_free_transform.json --train --output-dir outputs/training/scienceqa-free-transform-seed42
+```
 
 ## QA evaluation and feature faithfulness
 

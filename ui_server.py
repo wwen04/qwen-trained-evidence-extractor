@@ -36,6 +36,12 @@ STAGES = {
 COMPARISON_MODES = (
     "identity", "soft", "hard", "random", "remove", "remove_random", "null", "no_image",
 )
+COMPARISON_MODES_BY_VARIANT = {
+    "visual": COMPARISON_MODES,
+    "text_only": COMPARISON_MODES,
+    "free_transform": ("identity", "soft", "no_image"),
+}
+COMPARISON_DATASETS = {"scienceqa", "ai2d"}
 
 
 def validate_origin(value):
@@ -242,10 +248,25 @@ class TutorWebApp:
         return job_id
 
     def start_comparison(self, payload):
+        dataset = payload.get("dataset", "scienceqa")
         split = payload.get("split", "test")
+        if dataset not in COMPARISON_DATASETS:
+            raise ValueError("Choose ScienceQA or AI2D for comparison.")
+        if dataset == "ai2d" and split != "test":
+            raise ValueError("AI2D is available only as a test split.")
         if split not in ("validation", "test"):
             raise ValueError("Choose the validation or test split for comparison.")
-        self.check_split(split)
+        if dataset == "scienceqa":
+            self.check_split(split)
+        required = (
+            self.root / "data/final" / dataset / "questions" / f"{split}.jsonl",
+            self.root / "data/final" / dataset / "references" / f"{split}.jsonl",
+            self.root / "manifests" / dataset / f"{split}_final_ids.json",
+        )
+        if any(not path.is_file() for path in required):
+            if dataset == "ai2d":
+                raise FileNotFoundError("AI2D data is not prepared; run prepare_ai2d.py first.")
+            raise FileNotFoundError(f"ScienceQA {split} comparison data is not prepared.")
         if not self.runtime_config.get("selector_checkpoint"):
             raise ValueError(
                 "Start the UI with --selector-checkpoint pointing to the trained selector."
@@ -254,6 +275,7 @@ class TutorWebApp:
         job_id = uuid.uuid4().hex
         job = {
             "job_id": job_id,
+            "dataset": dataset,
             "split": split,
             "status": "running",
             "progress": 0,
@@ -269,7 +291,7 @@ class TutorWebApp:
             self.comparison_jobs[job_id] = job
         worker = threading.Thread(
             target=self.run_comparison,
-            args=(job_id, split),
+            args=(job_id, dataset, split),
             daemon=True,
         )
         worker.start()
@@ -284,7 +306,7 @@ class TutorWebApp:
         with self.comparison_jobs_lock:
             self.comparison_jobs[job_id].update(updates)
 
-    def compare_selector(self, split, job_id):
+    def compare_selector(self, dataset, split, job_id):
         import torch
 
         from evaluate_selector import comparison_fingerprint, paired_comparison, summarize
@@ -295,17 +317,22 @@ class TutorWebApp:
         runtime = self.get_tutor().runtime
         if runtime.metadata is None:
             raise ValueError("The configured UI runtime did not load a trained selector checkpoint.")
-        items = load_questions("scienceqa", split, root=self.root)
-        references = load_references("scienceqa", split, root=self.root)
+        items = load_questions(dataset, split, root=self.root)
+        references = load_references(dataset, split, root=self.root)
         if not items:
-            raise ValueError(f"No ScienceQA {split} questions are available for comparison.")
+            raise ValueError(f"No {dataset.upper()} {split} questions are available for comparison.")
         if any(item["item_id"] not in references for item in items):
             raise ValueError("The answer references do not cover every comparison question.")
 
         provenance = runtime.provenance()
         comparison_sha256 = comparison_fingerprint(provenance)
-        rho = runtime.metadata["target_rho"]
-        mode_rows = {mode: [] for mode in COMPARISON_MODES}
+        variant = runtime.metadata["selector_config"]["variant"]
+        target_rho = runtime.metadata["target_rho"]
+        rho = target_rho if variant != "free_transform" else None
+        modes = COMPARISON_MODES_BY_VARIANT.get(variant)
+        if modes is None:
+            raise ValueError(f"Unsupported selector variant for comparison: {variant}")
+        mode_rows = {mode: [] for mode in modes}
         self.update_comparison(job_id, total=len(items))
         for index, item in enumerate(items, start=1):
             gold = references[item["item_id"]]["gold_option_id"]
@@ -319,9 +346,9 @@ class TutorWebApp:
             }
             seed = stable_seed(42, item["item_id"])
             with torch.no_grad():
-                for mode in COMPARISON_MODES:
+                for mode in modes:
                     logits, gates = runtime.answer_forward(
-                        item, mode=mode, rho=rho, seed=seed,
+                        item, mode=mode, rho=target_rho, seed=seed,
                     )
                     restricted = logits[:, runtime.letter_ids[:len(item["choices"])]].float()
                     if not torch.isfinite(restricted).all():
@@ -329,7 +356,7 @@ class TutorWebApp:
                     predicted = chr(65 + restricted.argmax(-1).item())
                     mode_rows[mode].append({
                         **common,
-                        "condition": f"{mode}:{rho}",
+                        "condition": f"{mode}:{rho}" if rho is not None else mode,
                         "predicted": predicted,
                         "correct": predicted == gold,
                         "status": "ok",
@@ -348,21 +375,21 @@ class TutorWebApp:
             metrics = summarize(rows)
             metrics["paired_vs_identity"] = paired_comparison(rows, identity_rows)
             results[mode] = metrics
-        best_mode = max(COMPARISON_MODES, key=lambda mode: results[mode]["accuracy"])
+        best_mode = max(modes, key=lambda mode: results[mode]["accuracy"])
         report = {
-            "dataset": "scienceqa",
+            "dataset": dataset,
             "split": split,
             "questions": len(items),
             "rho": rho,
             "random_seed": 42,
-            "modes": list(COMPARISON_MODES),
+            "modes": list(modes),
             "results": results,
             "best_mode": best_mode,
             "trained_checkpoint": {
                 "path": runtime.config["selector_checkpoint"],
                 "weights_sha256": runtime.metadata["weights_sha256"],
                 "selector_config": runtime.metadata["selector_config"],
-                "target_rho": rho,
+                "target_rho": target_rho,
                 "seed": runtime.metadata["train_config"].get("seed"),
                 "best_validation": runtime.metadata.get("validation"),
             },
@@ -371,15 +398,24 @@ class TutorWebApp:
             "predictions": mode_rows,
             "note": (
                 "All modes use the same frozen Qwen, questions, images, options, preprocessing "
-                "and answer scoring. Identity is the unchanged-feature baseline. Soft uses "
-                "learned continuous gates; hard keeps the top rho fraction; random keeps a "
-                "seeded random rho fraction; remove replaces the selector's top rho fraction; "
-                "remove_random replaces a seeded random rho fraction; null replaces all image "
-                "features; no_image omits the image. Validation was used for checkpoint/model "
-                "selection, so compare modes here for exploration only; use the held-out test "
-                "once for final reporting. Paired p-values are exploratory and are not adjusted "
-                "for the seven mode comparisons. Accuracy does not measure hint quality or prove "
-                "visual faithfulness."
+                "and answer scoring. Identity is the unchanged-feature baseline. "
+                + (
+                    "Soft applies a learned feature transform without a token budget; no_image "
+                    "omits the image. "
+                    if variant == "free_transform" else
+                    "Soft uses learned continuous gates; hard keeps the top rho fraction; random "
+                    "keeps a seeded random rho fraction; remove replaces the selector's top rho "
+                    "fraction; remove_random replaces a seeded random rho fraction; null replaces "
+                    "all image features; no_image omits the image. "
+                )
+                + (
+                    "AI2D is a 100-question test-only sample; comparing modes here is exploratory, "
+                    "not an independent final test. "
+                    if dataset == "ai2d" else
+                    "Validation is for mode exploration; reserve test for final reporting. "
+                )
+                + "Paired p-values are exploratory and are not adjusted for multiple mode "
+                "comparisons. Accuracy does not measure hint quality or prove visual faithfulness."
             ),
         }
         output_dir = self.root / "outputs/comparisons"
@@ -391,10 +427,10 @@ class TutorWebApp:
         )
         return report, output_file
 
-    def run_comparison(self, job_id, split):
+    def run_comparison(self, job_id, dataset, split):
         try:
             with self.inference_lock:
-                report, output_file = self.compare_selector(split, job_id)
+                report, output_file = self.compare_selector(dataset, split, job_id)
             self.update_comparison(
                 job_id,
                 status="complete",
@@ -478,10 +514,21 @@ class TutorWebApp:
                 counts[split] = len(self.list_questions(split))
             except FileNotFoundError:
                 counts[split] = 0
+        comparison_datasets = {}
+        for dataset, splits in (("scienceqa", ("validation", "test")), ("ai2d", ("test",))):
+            comparison_datasets[dataset] = all(
+                (self.root / "data/final" / dataset / folder / f"{split}.jsonl").is_file()
+                for split in splits
+                for folder in ("questions", "references")
+            ) and all(
+                (self.root / "manifests" / dataset / f"{split}_final_ids.json").is_file()
+                for split in splits
+            )
         return {"prepared": any(counts.values()), "counts": counts,
                 "pid": os.getpid(), "instance_id": self.instance_id,
                 "model_loaded": self.tutor is not None,
                 "comparison_available": bool(self.runtime_config.get("selector_checkpoint")),
+                "comparison_datasets": comparison_datasets,
                 "selector": runtime_status(self.runtime_config)}
 
     def handler(self):

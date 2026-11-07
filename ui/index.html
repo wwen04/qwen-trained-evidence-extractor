@@ -53,13 +53,20 @@
         <span class="status-badge">Same questions · same frozen Qwen</span>
       </div>
       <p class="comparison-copy">
-        Compare every supported feature mode on the same ScienceQA questions. Validation is the
-        default for exploring modes; avoid tuning on test, which is held out for final reporting.
-        Paired p-values are exploratory and are not adjusted for multiple mode comparisons. This
-        measures multiple-choice accuracy, not hint quality or visual faithfulness.
+        Compare supported feature modes on the same questions. AI2D has one 100-question test-only
+        sample; comparing modes there is exploratory, not a separate final test. Paired p-values
+        are not adjusted for multiple mode comparisons. This measures answer accuracy, not hint
+        quality or visual faithfulness.
       </p>
       <div id="comparison-availability" class="notice" role="status" hidden></div>
       <div class="comparison-actions">
+        <label class="field" for="comparison-dataset">
+          <span>Evaluation dataset</span>
+          <select id="comparison-dataset">
+            <option value="scienceqa">ScienceQA</option>
+            <option value="ai2d">AI2D · test-only sample</option>
+          </select>
+        </label>
         <label class="field" for="comparison-split">
           <span>Evaluation split</span>
           <select id="comparison-split">
@@ -102,7 +109,7 @@
           <button id="comparison-display" class="text-button" type="button" aria-expanded="false" hidden>
             Display all mode predictions
           </button>
-          <a id="comparison-file" class="result-file" hidden>Download paired predictions</a>
+          <a id="comparison-file" class="result-file" hidden>Download comparison report</a>
         </div>
         <section id="comparison-predictions" class="comparison-predictions" aria-label="Per-question paired predictions" hidden>
           <div class="predictions-heading">
