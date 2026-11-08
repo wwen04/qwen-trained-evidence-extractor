@@ -1,7 +1,11 @@
 .venv/
 __pycache__/
 *.py[cod]
-data/
+data/*
+!data/final/
+data/final/*
+!data/final/scienceqa/
+!data/final/ai2d/
 models/
 outputs/
 .env
@@ -10,4 +14,12 @@ outputs/
 /notebook/
 
 # Local documentation
-/docs/
+/docs/*
+!/docs/judge_rubric.md
+
+# Local archives and returned judgments
+/new folder/
+/*.zip
+/* (1).json
+/* (1).csv
+/* (1).txt

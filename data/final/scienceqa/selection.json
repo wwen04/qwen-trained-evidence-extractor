@@ -1,0 +1,18 @@
+{
+  "source": {
+    "dataset_id": "derek-thomas/ScienceQA",
+    "dataset_revision": "f18b0a70359ebfb41f658fd564208d0355b013f4",
+    "subject": "natural science",
+    "grades": [
+      "grade7",
+      "grade8"
+    ]
+  },
+  "selection_rule": "Keep required only; exclude helpful_optional, incidental and unclear.",
+  "annotations_sha256": "ef7dfdc8ff59352cf9d719f1f453b0a17587b97416b43786ae81ee738b231b9e",
+  "final_counts": {
+    "train": 613,
+    "validation": 219,
+    "test": 173
+  }
+}

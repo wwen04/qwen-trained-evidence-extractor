@@ -100,9 +100,24 @@ h1 em { color: var(--green); font-family: Georgia, serif; font-weight: 600; }
 .workflow-arrow { color: #9da99c; font-size: 17px; }
 
 .comparison-panel { margin-bottom: 22px; padding: 23px 26px; }
+.research-results { margin-bottom: 22px; padding: 23px 26px; }
 .comparison-heading, .comparison-result-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
 .comparison-heading h2 { margin: 7px 0 0; font-size: 19px; letter-spacing: -.5px; }
 .comparison-copy { max-width: 860px; margin: 11px 0 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+.research-table-wrap { max-width: 100%; overflow: auto; margin-top: 13px; border: 1px solid var(--line); border-radius: 8px; }
+.research-table { width: 100%; border-collapse: collapse; font-size: 10px; text-align: left; }
+.research-table th, .research-table td { min-width: 100px; padding: 10px; border-bottom: 1px solid #edf0ea; vertical-align: top; line-height: 1.55; }
+.research-table thead th { position: sticky; top: 0; z-index: 1; background: #f5f7f3; color: var(--muted); font-weight: 600; }
+.research-table tbody tr:last-child th, .research-table tbody tr:last-child td { border-bottom: 0; }
+.research-table tbody th { min-width: 145px; color: var(--green); font-weight: 600; }
+.research-table tbody th span { color: var(--soft); font-size: 9px; font-weight: 400; }
+.research-table td { color: #4a574f; }
+.research-matrix { min-width: 790px; }
+.research-detail { margin-top: 13px; border: 1px solid #edf0ea; border-radius: 9px; background: #fff; }
+.research-detail > summary { padding: 12px 14px; color: var(--green); cursor: pointer; font-size: 11px; font-weight: 600; }
+.research-detail[open] > summary { border-bottom: 1px solid #edf0ea; }
+.research-detail .research-table-wrap { margin: 12px; }
+.research-note { margin: 10px 12px 12px; color: var(--muted); font-size: 10px; line-height: 1.6; }
 .comparison-actions { display: flex; align-items: end; gap: 12px; margin-top: 16px; }
 .comparison-actions .field { width: min(210px, 32%); }
 .comparison-actions .primary-button { min-width: 240px; }
@@ -258,7 +273,7 @@ textarea::placeholder { color: #9aa49c; }
   h1 { letter-spacing: -2px; }
   .workflow { grid-template-columns: 1fr; gap: 13px; padding: 16px; }
   .workflow-arrow { display: none; }
-  .comparison-panel { padding: 19px 16px; }
+  .comparison-panel, .research-results { padding: 19px 16px; }
   .comparison-heading, .comparison-result-heading, .predictions-heading { flex-direction: column; }
   .comparison-actions { align-items: stretch; flex-direction: column; }
   .comparison-actions .field, .comparison-actions .primary-button { width: 100%; }

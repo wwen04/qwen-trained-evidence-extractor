@@ -51,11 +51,30 @@ class WorkflowTests(unittest.TestCase):
             self.assertNotIn('PRIVATE REFERENCE',prompt)
         self.assertEqual(result['hint'],'Inspect the labels.')
 
-    def test_untrained_default_identity_and_bad_checkpoint_rejected(self):
-        config = read_runtime()
+    def test_answer_without_reasoning_checks_choice_and_only_hints_when_wrong(self):
+        for explanation in (None, '', '   '):
+            with self.subTest(explanation=explanation):
+                tutor = FakeTutor([])
+                result = run_answered_pipeline(tutor, 'example.png', public_text(self.item),
+                    'A', explanation, 'First', 'A', 'PRIVATE', evidence_inputs=self.item)
+                self.assertEqual(result['outcome'], 'correct')
+                self.assertEqual(result['explanation_status'], 'not_assessed')
+                self.assertEqual(tutor.calls, [])
+                tutor = FakeTutor(['Inspect the labels.'])
+                result = run_answered_pipeline(tutor, 'example.png', public_text(self.item),
+                    'B', explanation, 'Second', 'A', 'PRIVATE', evidence_inputs=self.item)
+                self.assertEqual(result['outcome'], 'try_again')
+                self.assertEqual(result['hint'], 'Inspect the labels.')
+                self.assertIsNone(result['diagnosis'])
+                self.assertNotIn('PRIVATE', tutor.calls[0][0])
+
+    def test_untrained_identity_and_bad_checkpoint_rejected(self):
+        from project_data import ROOT, read_json
+        baseline = {**read_json(ROOT/'configs/runtime.json'), 'selector_checkpoint': None}
+        config = read_runtime(baseline)
         self.assertEqual(config['gate_mode'],'identity')
         with self.assertRaises(ValueError):
-            read_runtime(gate_mode='soft')
+            read_runtime(baseline, gate_mode='soft')
         with self.assertRaises(FileNotFoundError):
             read_runtime(selector_checkpoint='does-not-exist')
 

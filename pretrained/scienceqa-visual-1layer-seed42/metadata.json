@@ -1,0 +1,114 @@
+{
+  "backbone": {
+    "model_path": "Qwen/Qwen2.5-VL-3B-Instruct",
+    "revision": null,
+    "resolved_revision": null
+  },
+  "backbone_signature": {
+    "model_type": "qwen2_5_vl",
+    "text": {
+      "hidden_size": 2048,
+      "vocab_size": 151936,
+      "num_hidden_layers": 36,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 2
+    },
+    "vision": {
+      "hidden_size": 1280,
+      "out_hidden_size": 2048,
+      "depth": 32,
+      "patch_size": 14,
+      "spatial_merge_size": 2
+    },
+    "image_token_id": 151655
+  },
+  "conditioning": "public-question-context-options-v1",
+  "answer_instruction_sha256": "e6ee01bbbc41ba326c39b90a2d4df1fcaf28092932a470892eb90170159f4610",
+  "preprocessing": {
+    "image_min_tokens": 256,
+    "image_max_tokens": 512
+  },
+  "letter_token_ids": [
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57
+  ],
+  "precision": "bfloat16",
+  "quantization": "4bit",
+  "target_rho": 0.3,
+  "split_manifest_sha256": "f017d725e5b0eb864cb783e3fc7bf77ece155a9ae3f61ec1773b7ec7845ccf2b",
+  "train_config": {
+    "model_path": "Qwen/Qwen2.5-VL-3B-Instruct",
+    "revision": null,
+    "device": "cuda",
+    "precision": "bfloat16",
+    "quantization": "4bit",
+    "image_min_tokens": 256,
+    "image_max_tokens": 512,
+    "gradient_checkpointing": true,
+    "selector": {
+      "width": 512,
+      "heads": 8,
+      "layers": 1,
+      "init_bias": 3.0,
+      "variant": "visual",
+      "null_type": "learned"
+    },
+    "seed": 42,
+    "epochs": 4,
+    "gradient_accumulation": 32,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.01,
+    "warmup_fraction": 0.05,
+    "target_rho": 0.3,
+    "budget_weight": 2.0,
+    "budget_anneal_fraction": 0.2,
+    "straight_through_fraction": 0.0,
+    "shuffle_options": true,
+    "null_init_images": 8,
+    "eval_every_updates": 50,
+    "max_grad_norm": 1.0,
+    "output_dir": "outputs\\training\\scienceqa-visual-1layer-seed42"
+  },
+  "training_updates": 20,
+  "validation": {
+    "questions": 219,
+    "accuracy": 0.589041095890411,
+    "mean_ce": 0.9588787213699322,
+    "mean_gate": 0.2801476181506022
+  },
+  "schema": "qwen-evidence-selector-v1",
+  "selector_config": {
+    "hidden_size": 2048,
+    "width": 512,
+    "heads": 8,
+    "layers": 1,
+    "init_bias": 3.0,
+    "variant": "visual",
+    "null_type": "learned"
+  },
+  "weights_sha256": "b796327aca56c319665a92ff1d7b902f76f5f7f3d597ab370c07770350befa3b"
+}

@@ -52,6 +52,23 @@ class FakeComparisonRuntime:
 
 
 class UIServerTests(unittest.TestCase):
+    def test_submission_requires_answer_but_reasoning_is_optional(self):
+        app = TutorWebApp()
+        item = {"choices": [{"id": "A", "text": "First"}]}
+        payload = {"mode": "check", "split": "validation", "item_id": "validation_000001"}
+        with patch('ui_server.runner.load_question', return_value=item), \
+                patch('ui_server.runner.load_reference', return_value={}), \
+                patch('ui_server.threading.Thread') as worker:
+            for answer in (None, '', 'B'):
+                with self.subTest(answer=answer), self.assertRaises(ValueError):
+                    app.start_job({**payload, 'student_answer': answer})
+            worker.assert_not_called()
+            for reasoning in (None, '', '   '):
+                with self.subTest(reasoning=reasoning):
+                    job_id = app.start_job({**payload, 'student_answer': 'A', 'explanation': reasoning})
+                    self.assertIn(job_id, app.jobs)
+            self.assertEqual(worker.call_count, 3)
+
     def test_ai2d_comparison_rejects_non_test_splits(self):
         with tempfile.TemporaryDirectory() as folder:
             app = TutorWebApp(root=Path(folder), splits=("validation", "test"))
@@ -71,7 +88,9 @@ class UIServerTests(unittest.TestCase):
                     "image_path":"data/final/scienceqa/images/validation_000001.png"}
             (root/'data/final/scienceqa/questions/validation.jsonl').write_text(json.dumps(item)+'\n')
             (root/'manifests/scienceqa/validation_final_ids.json').write_text(json.dumps([item['item_id']]))
-            app = TutorWebApp(root=root,splits=('validation',))
+            from project_data import ROOT, read_json
+            baseline = {**read_json(ROOT/'configs/runtime.json'), 'selector_checkpoint': None}
+            app = TutorWebApp(root=root,splits=('validation',),runtime_config=baseline)
             app.tutor = FakeTutor()
             server = ThreadingHTTPServer(('127.0.0.1',0),app.handler())
             thread = threading.Thread(target=server.serve_forever,daemon=True)
@@ -87,9 +106,14 @@ class UIServerTests(unittest.TestCase):
                 self.assertFalse(status['comparison_datasets']['ai2d'])
                 self.assertIn(b'id="model-status"',get('/'))
                 self.assertIn(b'status.selector',get('/assets/app.js'))
-                self.assertIn(b'id="comparison-button"',get('/'))
-                self.assertIn(b'id="comparison-dataset"',get('/'))
-                self.assertIn(b'comparisonAvailable',get('/assets/app.js'))
+                self.assertNotIn(b'id="comparison-button"',get('/'))
+                self.assertNotIn(b'id="comparison-dataset"',get('/'))
+                self.assertNotIn(b'comparisonButton',get('/assets/app.js'))
+                page = get('/')
+                self.assertNotIn(b'id="research-results"', page)
+                self.assertIn('Your reasoning <span class="optional-label">· optional</span>'.encode(), page)
+                self.assertIn('Your answer <span class="optional-label">· required to submit</span>'.encode(), page)
+                self.assertIn('Explain your thinking, or leave this blank…'.encode(), page)
                 payload = {"mode":"hint","split":"validation","item_id":item['item_id'],"hint_level":2}
                 req = Request(base+'/api/jobs',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
                 with urlopen(req,timeout=5) as response:

@@ -180,7 +180,7 @@ def package(args):
             if digest(public) != row["input_sha256"]:
                 raise ValueError("Hint public-input fingerprint differs")
             image = (ROOT / public["image_path"]).resolve()
-            if not image.is_relative_to(ROOT / "data/final") or file_hash(image) != row["image_sha256"]:
+            if not image.is_relative_to((ROOT / "data/final").resolve()) or file_hash(image) != row["image_sha256"]:
                 raise ValueError("Image differs from generation input")
             folder = attachments / "cases" / record_id
             folder.mkdir(parents=True)

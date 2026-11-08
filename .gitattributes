@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+data/final/** -text whitespace=cr-at-eol
+manifests/** -text whitespace=cr-at-eol
+*.safetensors binary

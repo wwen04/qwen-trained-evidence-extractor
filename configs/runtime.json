@@ -6,7 +6,7 @@
   "quantization": "4bit",
   "image_min_tokens": 256,
   "image_max_tokens": 512,
-  "selector_checkpoint": null,
+  "selector_checkpoint": "pretrained/scienceqa-visual-1layer-seed42",
   "gate_mode": "auto",
   "rho": null,
   "selector": {"width": 512, "heads": 8, "layers": 2, "init_bias": 3.0, "variant": "visual", "null_type": "learned"}

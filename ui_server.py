@@ -82,6 +82,16 @@ def ensure_data_prepared(root=ROOT):
 
 def ensure_data_ready(root=ROOT):
     root = Path(root).resolve()
+    # Fresh clones include the audited final export; no source download is needed.
+    if (root / "data/final/scienceqa/selection.json").is_file():
+        from project_data import load_questions, load_references
+        for split in runner.SPLITS:
+            questions = load_questions("scienceqa", split, root=root)
+            references = load_references("scienceqa", split, root=root)
+            if set(references) != {item["item_id"] for item in questions}:
+                raise ValueError(f"Final {split} answer references do not match the question selection")
+        print("Bundled ScienceQA questions, references and image fingerprints validated.", flush=True)
+        return
     ensure_data_prepared(root)
 
     script = root / "finalize_data.py"
@@ -213,8 +223,8 @@ class TutorWebApp:
         if mode == "check":
             if not isinstance(answer, str) or not answer.strip():
                 raise ValueError("Select the student's answer before checking it.")
-            if not isinstance(explanation, str) or not explanation.strip():
-                raise ValueError("Enter the student's reasoning before checking it.")
+            if explanation is not None and not isinstance(explanation, str):
+                raise ValueError("Reasoning must be text when provided.")
             if answer not in {choice["id"] for choice in item["choices"]}:
                 raise ValueError("The selected answer is not one of this question's choices.")
             reference = runner.load_reference(

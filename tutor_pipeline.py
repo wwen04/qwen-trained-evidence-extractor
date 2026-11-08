@@ -34,6 +34,18 @@ def run_answered_pipeline(tutor, image, question, student_answer, student_explan
                           correct_answer_id, reference, hint_level=1, on_stage=None, *, evidence_inputs=None):
     if hint_level not in (1,2,3):
         raise ValueError("hint level must be 1, 2, or 3")
+    if not student_explanation or not student_explanation.strip():
+        correct = student_answer == correct_answer_id
+        result = {"evidence": "Answer checked against the answer key.", "selection": None, "hint": None}
+        if not correct:
+            result = run_initial_hint(tutor, image, question, hint_level, on_stage,
+                                      evidence_inputs=evidence_inputs)
+        if on_stage:
+            on_stage("feedback")
+        return {**result, "mode": "check", "outcome": "correct" if correct else "try_again",
+                "answer_correct": correct, "explanation_status": "not_assessed",
+                "explanation_assessment": None, "diagnosis": None,
+                "feedback": "Correct—well done!" if correct else "Not quite yet. Use this hint to rethink your answer."}
     if on_stage:
         on_stage("evidence")
         on_stage("assessment")
